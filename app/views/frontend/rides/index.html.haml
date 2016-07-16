@@ -20,18 +20,18 @@
   .row
     .col-md-3
       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by bike type' }
-        %label Workplace Type
+        %label Bicycle Type
         = f.select(:with_subcategory_id, @filterrific.select_options[:with_subcategory_id],{ include_blank: '- Any -' })
 
     .col-md-3
-    /   .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Rider Height' }
-    /     %label Rider Height
-    /     = f.select(:with_rider_height, @filterrific.select_options[:with_rider_height], { include_blank: '- Any -' } )
+      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Rider Height' }
+        %label Rider Height
+        = f.select(:with_rider_height, @filterrific.select_options[:with_rider_height], { include_blank: '- Any -' } )
 
-    / .col-md-3
-    /   .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Frame Size' }
-    /     %label Frame Size
-    /     = f.select(:with_frame_size, @filterrific.select_options[:with_frame_size], { include_blank: '- Any -' } )
+    .col-md-3
+      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Frame Size' }
+        %label Frame Size
+        = f.select(:with_frame_size, @filterrific.select_options[:with_frame_size], { include_blank: '- Any -' } )
     .col-md-3
       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Rental' }
         %label Rental

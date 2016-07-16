@@ -9,8 +9,8 @@ class Ride < ActiveRecord::Base
   available_filters: [
     :sorted_by,
     :search_query,
-    # :with_rider_height,
-    # :with_frame_size,
+    :with_rider_height,
+    :with_frame_size,
     :with_subcategory_id,
     :with_created_at_gte,
     :with_morning_rental_lt

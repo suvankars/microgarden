@@ -45,8 +45,8 @@ reRenderRideList = function(rides){
               $('<div class="ride-image">').append('<img src=' + image_url +'>'),
 
               $('<div class="ride-body">').append(
-                $('<h4 class="media-heading">').text(ride.title),
-                $('<p>').text(ride.description)
+                $('<h4 class="media-heading">').text(ride.ride_title),
+-               $('<p>').text(ride.ride_description)
               )
             )
           )
@@ -423,7 +423,6 @@ computeRental = function(startTime, endTime, slotType){
   //var duration = moment.duration(startTime.diff(endTime));
 
   //debugger;
-  debugger
   var breakups= { };
   switch (slotType){
     case "morning_slot":
@@ -454,7 +453,6 @@ computeRental = function(startTime, endTime, slotType){
       };
       break;
     case "all_day":
-      debugger
       var duration = computeDuration(startTime, endTime);
       
       var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
@@ -505,7 +503,7 @@ showRentalBreakup = function(rentBreakups){
   function rentalBreakup(rentType, index, array) {
     var rentDetails = rentBreakups[slotType][rentType];
     //2 Weeks @ $70.00 / week $1200
-    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' for ' + no_of_ws + ' work station = ' + rentDetails.rent * no_of_ws + '</br>'
+    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' for ' + no_of_ws + ' bicycle = ' + rentDetails.rent * no_of_ws + '</br>'
   }
 
     rentTypes.forEach(rentalBreakup);

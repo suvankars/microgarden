@@ -29,19 +29,19 @@ default: &default
 development:
   adapter: postgresql
   encoding: unicode
-  database: stylework_development
+  database: cycleyard_development
   pool: 5
 
 
 test: &TEST
   adapter: postgresql
   encoding: unicode
-  database: stylework_test
+  database: cycleyard_test
   pool: 5
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: stylework_production
+  database: cycleyard_production
   pool: 5
 

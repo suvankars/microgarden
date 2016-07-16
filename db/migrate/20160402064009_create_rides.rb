@@ -3,7 +3,9 @@ class CreateRides < ActiveRecord::Migration
     create_table :rides do |t|
       t.string :title
       t.text :description
-      t.string :amenities
+      t.string :rider_height
+      t.string :frame_size
+      t.string :additional_offerings
       t.decimal :number_of_workstations
       t.decimal :hourly_rental
       t.decimal :morning_rental
@@ -19,6 +21,7 @@ class CreateRides < ActiveRecord::Migration
       t.string :country
       t.integer :pincode
       t.string :landmark
+      t.boolean :willing_to_deliver
 
       t.timestamps null: false
     end

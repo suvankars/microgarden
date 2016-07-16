@@ -4,7 +4,7 @@ class Frontend::RidesController < FrontendController
   before_action :set_ride, only: [:show_ride, :get_rides, :calendar, :show, :edit, :update, :destroy]
   
   RADIOUS = 15; #mile
-  DEFAULT_CATEGORY_NAME = "Workplace"
+  DEFAULT_CATEGORY_NAME = "Bicycle"
   MIN_NO_SEAT = 1
   
   def index
@@ -38,8 +38,8 @@ class Frontend::RidesController < FrontendController
       params[:filterrific],
        select_options: {
         with_subcategory_id: Subcategory.options_for_select,
-        #with_rider_height: RiderHeight.options_for_select,
-        #with_frame_size: FrameSize.options_for_select,
+        with_rider_height: RiderHeight.options_for_select,
+        with_frame_size: FrameSize.options_for_select,
         with_morning_rental_lt: Ride.options_for_select
       },
     ) or return
@@ -188,7 +188,7 @@ class Frontend::RidesController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white ride through.
     def ride_params
-      params.require(:ride).permit(:title, :description, :number_of_workstations, :amenities, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :address, :city, :state, :pincode, :landmark, :subcategory_id)
+      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :number_of_workstations)
     end
 
     def default_category

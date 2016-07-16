@@ -47,15 +47,6 @@ ActiveRecord::Schema.define(version: 20160714221431) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "contact_us", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "phone"
-    t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "contacts", force: :cascade do |t|
     t.string   "email"
     t.string   "telephone"
@@ -149,7 +140,9 @@ ActiveRecord::Schema.define(version: 20160714221431) do
   create_table "rides", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.string   "amenities"
+    t.string   "rider_height"
+    t.string   "frame_size"
+    t.string   "additional_offerings"
     t.decimal  "number_of_workstations"
     t.decimal  "hourly_rental"
     t.decimal  "morning_rental"
@@ -165,6 +158,7 @@ ActiveRecord::Schema.define(version: 20160714221431) do
     t.string   "country"
     t.integer  "pincode"
     t.string   "landmark"
+    t.boolean  "willing_to_deliver"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "category_id"

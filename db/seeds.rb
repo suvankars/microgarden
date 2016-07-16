@@ -8,7 +8,7 @@
 
 
 category_list = [
-  [ "Workplace", "All Workplace goes here" ]
+  [ "Bicycle", "All Bicycles goes here" ]
 ]
 
 
@@ -17,14 +17,14 @@ category_list.each do |name, description|
 end
 
 subcategory_list = [
-["Coffeehouse", "Coffeehouse..."],
-["Restaurant", "Beautiful Restaurant, w..."],
-["Bar", "Designed for rocking work"],
-["Club","Designed for rocking work ..."], 
-["Shopping mall","Designed for rocking work ..."] 
+["MTB", "A  mountain bicycle is a bicycle created for off-r..."],
+["Fixies", "fixies are designed to be ridden on a velodrome, w..."],
+["Road", "Designed for long ride on road"],
+["Hybrid","Originally conceived to provide the advantages of ..."],
+["Commuter", "When thinking about commuting to work ..."]
 ]
 
-category_id = Category.where( name: "Workplace").first.id
+category_id = Category.where( name: "Bicycle").first.id
 
 subcategory_list.each do |name, description|
   Subcategory.create( name: name, description: description, category_id: category_id )

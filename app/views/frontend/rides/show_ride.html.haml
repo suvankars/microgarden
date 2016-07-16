@@ -10,8 +10,11 @@
             %h3= @ride.subcategory.name
             .measurement
               %p
-                = model_class.human_attribute_name(:amenities)
-                = @ride.amenities
+                = model_class.human_attribute_name(:rider_height)
+                = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+              %p
+                = model_class.human_attribute_name(:frame_size)
+                = @ride.frame_size.to_i.to_cm 
               %p
                 = model_class.human_attribute_name(:number_of_workstations)
                 = @ride.number_of_workstations.to_i
@@ -42,7 +45,7 @@
               .row
                 .col-xs-12.col-sm-12.col-md-8.col-lg-8
                   %h3
-                    Workplace Details 
+                    Ride Details 
                 .col-xs-12.col-sm-12.col-md-4.col-lg-4
                   .panel-action  
                     = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(@ride), :class => 'btn btn-primary'
@@ -54,8 +57,12 @@
             %ul.list-group
               %li.list-group-item
                 %p
-                  %strong= model_class.human_attribute_name(:amenities) + ':'
-                  = @ride.amenities
+                  %strong= model_class.human_attribute_name(:rider_height) + ':'
+                  = @ride.rider_height
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:frame_size) + ':'
+                  = @ride.frame_size    
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:number_of_workstations) + ':'
@@ -80,6 +87,10 @@
                 %p
                   %strong= model_class.human_attribute_name(:landmark) + ':'
                   = @ride.landmark
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:willing_to_deliver) + ':'
+                  = @ride.willing_to_deliver
               %li.list-group-item
                 .panel-container
                   %h4
@@ -109,7 +120,7 @@
           .panel.panel-info.panel-schedule
             .panel-heading
               %h3
-                Working Schedule 
+                Ride Schedule 
             .panel-body
               .panel-container
                 - if !@ride.schedules.present?
@@ -122,7 +133,7 @@
           .panel.panel-info.panel-schedule
             .panel-heading
               %h3
-                Nearby Workplaces 
+                Nearby Rides 
             .panel-body
               .panel-container
                 %ul
