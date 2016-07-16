@@ -45,8 +45,8 @@ reRenderRideList = function(rides){
               $('<div class="ride-image">').append('<img src=' + image_url +'>'),
 
               $('<div class="ride-body">').append(
-                $('<h4 class="media-heading">').text(ride.ride_title),
-                $('<p>').text(ride.ride_description)
+                $('<h4 class="media-heading">').text(ride.title),
+                $('<p>').text(ride.description)
               )
             )
           )
@@ -60,7 +60,7 @@ reRenderRideList = function(rides){
 
 //On Submit a search on map
 //Reposition all available rides on map and update ride-list
-
+$('#calendar').fullCalendar();
 $(function(){ 
   $("#ajax").click(function(){
     var valuesToSubmit = $('#gmaps-input-address').val();
@@ -423,15 +423,15 @@ computeRental = function(startTime, endTime, slotType){
   //var duration = moment.duration(startTime.diff(endTime));
 
   //debugger;
-  //debugger
+  debugger
   var breakups= { };
   switch (slotType){
     case "morning_slot":
+      var duration = computeDuration(startTime, endTime);
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.hours*rate;
       //breakups += "Morning Slot @" + rate + "/slot"
       
-      var duration = computeDuration(startTime, endTime);
       var slotType = breakups.morning_slot = {} ;
       slotType.slot =  {
         duration: duration.hours.humaines(duration.hours, "hour"), 
@@ -444,7 +444,7 @@ computeRental = function(startTime, endTime, slotType){
       var duration = computeDuration(startTime, endTime);
 
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.hours*rate;
       var slotType = breakups.evening_slot = {};
       slotType.slot =  {
         duration: duration.hours.humaines(duration.hours, "hour"), 
@@ -454,10 +454,11 @@ computeRental = function(startTime, endTime, slotType){
       };
       break;
     case "all_day":
+      debugger
       var duration = computeDuration(startTime, endTime);
       
       var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
-      var rent = rate;
+      var rent = duration.days*rate;
 
       var slotType = breakups.all_day = {};
       slotType.day =  {
@@ -484,11 +485,18 @@ computeRental = function(startTime, endTime, slotType){
 };
 
 showRentalAmount = function(rentAmount){
-  document.getElementById("ride-fare").innerHTML = rentAmount;
-  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount;
+  //Quick fix for no_of_ws selection
+  var elm = document.getElementById("ride_number_of_workstations");
+  var no_of_ws = Number(elm.options[elm.selectedIndex].value)
+  document.getElementById("ride-fare").innerHTML = rentAmount * no_of_ws;
+  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount * no_of_ws;
 };
 
 showRentalBreakup = function(rentBreakups){
+  //Quick fix for no_of_ws selection
+  var elm = document.getElementById("ride_number_of_workstations");
+  var no_of_ws = Number(elm.options[elm.selectedIndex].value)
+
    //humainesRentBreakup
   var slotType = Object.keys(rentBreakups);
   var rentTypes = Object.keys(rentBreakups[slotType]);
@@ -497,7 +505,7 @@ showRentalBreakup = function(rentBreakups){
   function rentalBreakup(rentType, index, array) {
     var rentDetails = rentBreakups[slotType][rentType];
     //2 Weeks @ $70.00 / week $1200
-    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' = ' + rentDetails.rent + '</br>'
+    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' for ' + no_of_ws + ' work station = ' + rentDetails.rent * no_of_ws + '</br>'
   }
 
     rentTypes.forEach(rentalBreakup);
@@ -615,14 +623,20 @@ $(document).ready(function(){
   $('#create_reservations').on('click', function() {
     console.log("I am about to explode")
     var $spinner = $('.spinner');
+    var elm = document.getElementById("ride_number_of_workstations");
+    var no_of_ws = elm.options[elm.selectedIndex].value
     var startTime = $("#schedule-start").text();
     var endTime = $("#schedule-end").text();
     var address = $("#address").text().trim();
     var price = $("#ride-fare").text();
-    var valuesToSubmit = {startTime: startTime,
+    var ride_id = document.getElementById("ride_id").innerText
+
+    var valuesToSubmit = {id: ride_id,
+                          startTime: startTime,
                           endTime: endTime,
                           address: address,
-                          price: price};
+                          price: price,
+                          no_of_ws: no_of_ws};
   
   console.log(valuesToSubmit);
 

@@ -1,15 +1,13 @@
 %ul.nav.nav-tabs
   %li{:role => "presentation"}
-    = link_to 'List a Ride', "/rides/new"
+    = link_to 'List a Workplace', "/rides/new"
   %li{:role => "presentation"}
-    = link_to 'Rent a Ride', "/rides"
-  %li{:role => "presentation"}
-    = link_to 'Buy', "#"
-  %li{:role => "presentation"}
-    = link_to 'Sell', "#"
-  %li{:role => "presentation"}
-    = link_to 'Calendar', calendars_path     
-
-
-
-     
+    = link_to 'Rent a Workplace', "/rides"
+  / %li{:role => "presentation"}
+  /   = link_to 'Buy', "#"
+  / %li{:role => "presentation"}
+  /   = link_to 'Sell', "#"
+  / %li{:role => "presentation"}
+  /   = link_to 'Calendar', calendars_path     
+  = render 'layouts/frontend/nav_links_for_auth'
+  

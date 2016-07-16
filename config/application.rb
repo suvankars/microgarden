@@ -26,7 +26,7 @@ module Mammoth
     config.active_record.raise_in_transactional_callbacks = true
     #To get the glyphicons working
     config.assets.paths << "#{Rails}/vendor/assets/fonts"
-    
+    config.assets.paths << Rails.root.join("vendor", "assets", "images")
     config.autoload_paths << Rails.root.join('lib/core_extensions/**/')
     require 'core_extensions/string/to_bool'
     require 'core_extensions/integer/converter'

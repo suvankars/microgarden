@@ -1,18 +1,51 @@
-<h2>Log in</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email, required: false, autofocus: true %>
-    <%= f.input :password, required: false %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+<div class="border-form-div">
+  <div class="panel panel-default devise-bs">
+    <div class="panel-heading">
+      <h4><%= t('.sign_in', :default => "Sign in") %></h4>
+    </div>
+    <div class="panel-body">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f| %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        </div>
+        <% if devise_mapping.rememberable? %>
+          <div class="checkbox">
+            <%= f.label :remember_me do %>
+              <%= f.check_box :remember_me %>remember me
+            <% end %>
+          </div>
+        <% end %>
+        <div class="row-fluid">
+          <div class="span6 align">
+            <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
+          </div> 
+          <div class="span6 align">
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+              <div class=spacer>
+                <%= link_to t(".forgot_your_password", :default => "Forgot your password?"), new_password_path(resource_name) %><br />
+            <% end -%>
+            </div>
+          </div>  
+        </div>
+        </br>
+        <div class="row-fluid">
+          <div class="span6 align">
+            <p>Don't have an account?</p>  
+          </div>
+          <div class="span6 align">
+            <p>
+              <%= link_to "Sign Up", new_user_registration_path %>
+            </p>  
+          </div>
+        </div>  
+      </div>
+    </div>
   </div>
- 
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-   <div class=form-link>
-  	<%= render "devise/shared/links" %>
-  </div>
-<% end %>
-
-
+  
+      <% end %>
+      

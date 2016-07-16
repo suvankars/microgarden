@@ -1,32 +1,32 @@
 = simple_form_for @ride, :html => { :class => 'form-horizontal' } do |f|
-  = field_set_tag 'Describe your ride offer' do 
+  = field_set_tag 'Describe your unique workplace' do 
     .splitContainer
       %dl.large
-        %dd= f.input :ride_title
-        %dd= error_span(@ride[:ride_title])
+        %dd= f.input :title, :label => "Workplace Title"
+        %dd= error_span(@ride[:title])
       %dl.sixth
-        %dd= f.input :subcategory_id, :label => "Bicycle type", :collection => @subcategories, :selected => @default_subcategory
-        %dd= error_span(@ride[:frame_size]) 
+        %dd= f.input :subcategory_id, :label => "Workplace type", :collection => @subcategories, :selected => @default_subcategory
+        %dd= error_span(@ride[:subcategory_id]) 
     .description
-      = f.input :ride_description
-      = error_span(@ride[:ride_description])
+      = f.input :description
+      = error_span(@ride[:description])
 
   
-  = field_set_tag 'Pick up address' do
+  = field_set_tag 'Workplace address' do
     = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
     #gmaps-canvas
 
     = f.input :landmark
     = error_span(@ride[:landmark])
   
-  = field_set_tag 'Suitable Raider' do
+  = field_set_tag 'Additional info' do
     .splitContainer
       %dl.third
-        %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
-        %dd= error_span(@ride[:rider_height])
+        %dd= f.input :amenities
+        %dd= error_span(@ride[:amenities])
       %dl.third
-        %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
-        %dd= error_span(@ride[:frame_size])
+        %dd= f.input :number_of_workstations, :prompt => 'Select Number of Available Work Station', :collection => WorkstationCount.all
+        %dd= error_span(@ride[:number_of_workstations])
       %dl.third
 
   / = field_set_tag 'Bicycle type' do    
@@ -56,9 +56,7 @@
       %dl.sixth
         %dd= f.input :weekly_rental
         %dd= error_span(@ride[:weekly_rental])         
-      %dl
-        = f.input :willing_to_deliver
-
+     
  
   / = f.input :address
   / = error_span(@ride[:address])
@@ -81,7 +79,7 @@
     
   
   
-  = f.button :submit, :class => 'btn-primary'
+  = f.button :submit, "List Workplace", :class => 'btn-primary'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), rides_path, :class => 'btn btn-default'
 
 /Should we move this script to application.js? It is only required wen this form is opend  

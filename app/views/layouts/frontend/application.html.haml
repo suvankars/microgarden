@@ -2,16 +2,17 @@
 %html
   %head
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %title= content_for?(:title) ? yield(:title) : 'Cycleyard'
-    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Cycleyard'}"}
-    %script{:src => "//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&key=&libraries=geometry&language=&hl=&region="}
-
+    %title= content_for?(:title) ? yield(:title) : 'Stylework'
+    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Stylework'}"}
+    %script{:src => "//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&libraries=geometry&language=&hl=&region=&key=AIzaSyD6QiUKXM6e49mNNm6jEInJkPeokyXpkBs"}
     = stylesheet_link_tag 'frontend/application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'frontend/application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %header
-      = render 'layouts/frontend/navigation'
+    = render 'layouts/frontend/navigation'
+      
     %main{:role => "main"}
       = render 'layouts/frontend/messages'
       = yield
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708200132) do
+ActiveRecord::Schema.define(version: 20160714221431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20160708200132) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "contact_us", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string   "email"
     t.string   "telephone"
@@ -80,7 +89,12 @@ ActiveRecord::Schema.define(version: 20160708200132) do
 
   add_index "finances", ["supplier_id"], name: "index_finances_on_supplier_id", using: :btree
 
-  create_table "insights", force: :cascade do |t|
+  create_table "notifications", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "pincode"
+    t.text     "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -133,16 +147,15 @@ ActiveRecord::Schema.define(version: 20160708200132) do
   add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "rides", force: :cascade do |t|
-    t.string   "ride_title"
-    t.text     "ride_description"
-    t.string   "rider_height"
-    t.string   "frame_size"
+    t.string   "title"
+    t.text     "description"
+    t.string   "amenities"
+    t.decimal  "number_of_workstations"
     t.decimal  "hourly_rental"
     t.decimal  "morning_rental"
     t.decimal  "evening_rental"
     t.decimal  "daily_rental"
     t.decimal  "weekly_rental"
-    t.boolean  "willing_to_deliver"
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
@@ -152,8 +165,8 @@ ActiveRecord::Schema.define(version: 20160708200132) do
     t.string   "country"
     t.integer  "pincode"
     t.string   "landmark"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "category_id"
     t.integer  "subcategory_id"
     t.json     "images"

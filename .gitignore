@@ -10,7 +10,7 @@
 /.bundle
 /vendor/bundle/
 /vendor/ruby/
-
+/ngrok
 # minimal Rails specific artifacts
 db/*.sqlite3
 /db/*.sqlite3-journal

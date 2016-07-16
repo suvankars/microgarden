@@ -5,14 +5,14 @@
     - image = ride.images.first
     = image_tag(image["url"])
 
-  %h4= ride.ride_title
-  %p= ride.ride_description
+  %h4= ride.title
+  %p= ride.description
   %p
-    %strong= model_class.human_attribute_name(:rider_height) + ':'
-    = ride.rider_height
+    %strong= model_class.human_attribute_name(:amenities) + ':'
+    = ride.amenities
   %p
-    %strong= model_class.human_attribute_name(:frame_size) + ':'
-    = ride.frame_size
+    %strong= model_class.human_attribute_name(:number_of_workstations) + ':'
+    = ride.number_of_workstations
   %p
     %strong= model_class.human_attribute_name(:hourly_rental) + ':'
     = ride.hourly_rental

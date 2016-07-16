@@ -1,4 +1,4 @@
-class Users::RegistrationsController < Devise::RegistrationsController
+class Users::RegistrationsController < Devise::RegistrationsController 
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
 
@@ -9,9 +9,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    binding.pry
     # Tell the UserMailer to send a welcome email after save
-    UserMailer.welcome_email(params[:user]).deliver_now
+    # Uncomment below line when greetings needs to be send
+    #UserMailer.welcome_email(params[:user]).deliver_now
     super
   end
 

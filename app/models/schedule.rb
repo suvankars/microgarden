@@ -21,7 +21,7 @@ class Schedule < ActiveRecord::Base
   def format(ride)
       {
         :id => self.id,
-        :title => ride.ride_title,
+        :title => ride.title,
         :start => start_time.rfc822,
         :end => end_time.rfc822,
         :recurring => false,

@@ -5,16 +5,16 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.ride_title)
+          %h1.trim= model_class.human_attribute_name(@ride.title)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
               %p
-                = model_class.human_attribute_name(:rider_height)
-                = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+                = model_class.human_attribute_name(:amenities)
+                = @ride.amenities
               %p
-                = model_class.human_attribute_name(:frame_size)
-                = @ride.frame_size.to_i.to_cm
+                = model_class.human_attribute_name(:number_of_workstations)
+                = @ride.number_of_workstations.to_i
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
@@ -42,16 +42,18 @@
               .row
                 .col-xs-12.col-sm-12.col-md-8.col-lg-8
                   %h3
-                    Ride Details 
+                    Workplace Details 
                 .col-xs-12.col-sm-12.col-md-4.col-lg-4
                   .panel-action  
                     = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
   
             .panel-body
-              %p= @ride.ride_description
+              %p= @ride.description
             %ul.list-group
               %li.list-group-item
                 %p= @ride.address
+
+    / Resarvation             
     .col-xs-12.col-sm-12.col-md-6.col-lg-6
       .row
         .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
@@ -72,7 +74,7 @@
                               = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'btn btn-warn'
             
                       .panel-body
-                        %p= @ride.ride_title
+                        %p= @ride.title
                       %ul.list-group
                         %li.list-group-item
                           %label.info From:
@@ -86,7 +88,8 @@
                         %li.list-group-item    
                           %p= @ride.address
                 #reservation-details
-                  = form_for_filterrific @filterrific do |f|
+                  = simple_form_for @ride do |f|
+                    #ride_id{ :style => 'display: none' }= @ride.id
                     .row
                       .col-lg-6.col-sm-6.col-md-6
                         .ride-image
@@ -95,18 +98,25 @@
                           = image_tag(image["thumbnail_url"])
                       .col-lg-6.col-sm-6.col-md-6
                         .ride-body
-                          %h4.media-heading= @ride.ride_title
-                          %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
+                          %h4.media-heading= @ride.title
+                          %h4= "#{@ride.subcategory.name} ( #{@ride.amenities} )"
+                    %hr
+                    #workstation_count
+                      -if @ride.number_of_workstations <= 0
+                        %p Housefull, please try other nearby locations
+                      -else  
+                        %dd= f.input :number_of_workstations, collection:@workstations, :selected => @default_number   
                     %hr      
                     .row
                       .col-lg-6.col-sm-6.col-md-6
-                        %label Pickup
+                        %label Begin
                         #schedule-start
                       .col-lg-6.col-sm-6.col-md-6
-                        %label Drop
+                        %label Wrapup
                         #schedule-end
+                    %hr    
                     .row
-                      %label Rent Duration
+                      %label Booking Duration
                       #rent-duration
 
                     %hr    
@@ -125,21 +135,9 @@
                     .row
                       #total-fare        
                           
-                    / .row
-                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /       %label Pickup
-                    /       = f.text_field :with_created_at_gte,
-                    /        :class => 'js-datepicker form-control'
-                    / .row  
-                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /       %label Drop
-                    /       = f.text_field :with_created_at_gte,
-                    /        :class => 'js-datepicker form-control'
-                    /= link_to t('ride.reserve'), frontend_reservations_index_path, :data => { :foo => 'bar', :this => 'that' }, :class => 'btn btn-success btn-block' 
+                    
                   #create_reservations
-                    = button_to 'Reserve my slot', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
+                    = button_to 'Book My Workplace', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
                    
 
       .row

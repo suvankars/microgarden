@@ -1,0 +1,30 @@
+%section#portfolio
+  .container
+    .row
+      .col-lg-12.text-center
+        %h2 Sweet Locations 
+        %hr.star-primary
+    .row
+      .col-sm-4.portfolio-item
+        %a.portfolio-link{"data-toggle" => "modal", :href => "/rides?search=New Delhi"} 
+          .caption
+            .caption-content
+              %i.fa.fa-search-plus.fa-3x
+          .img-responsive
+            =image_tag("theme-img/portfolio/delhi.jpg", :alt =>"Edit Entry" ) 
+          
+      .col-sm-4.portfolio-item
+        %a.portfolio-link{"data-toggle" => "modal", :href => "/rides?search=Mumbai"}
+          .caption
+            .caption-content
+              %i.fa.fa-search-plus.fa-3x
+          .img-responsive
+            =image_tag("theme-img/portfolio/mumbai.jpg", :alt =>"Edit Entry" )
+      .col-sm-4.portfolio-item
+        %a.portfolio-link{"data-toggle" => "modal", :href => "/rides?search=Jaipur"}
+          .caption
+            .caption-content
+              %i.fa.fa-search-plus.fa-3x
+          .img-responsive
+            =image_tag("theme-img/portfolio/jaipur.jpg", :alt =>"Edit Entry" )
+      

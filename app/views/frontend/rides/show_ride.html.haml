@@ -5,16 +5,16 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.ride_title)
+          %h1.trim= model_class.human_attribute_name(@ride.title)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
               %p
-                = model_class.human_attribute_name(:rider_height)
-                = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+                = model_class.human_attribute_name(:amenities)
+                = @ride.amenities
               %p
-                = model_class.human_attribute_name(:frame_size)
-                = @ride.frame_size.to_i.to_cm
+                = model_class.human_attribute_name(:number_of_workstations)
+                = @ride.number_of_workstations.to_i
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
@@ -42,7 +42,7 @@
               .row
                 .col-xs-12.col-sm-12.col-md-8.col-lg-8
                   %h3
-                    Ride Details 
+                    Workplace Details 
                 .col-xs-12.col-sm-12.col-md-4.col-lg-4
                   .panel-action  
                     = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(@ride), :class => 'btn btn-primary'
@@ -50,16 +50,16 @@
   
             .panel-body
               %p 
-                = @ride.ride_description
+                = @ride.description
             %ul.list-group
               %li.list-group-item
                 %p
-                  %strong= model_class.human_attribute_name(:rider_height) + ':'
-                  = @ride.rider_height
+                  %strong= model_class.human_attribute_name(:amenities) + ':'
+                  = @ride.amenities
               %li.list-group-item
                 %p
-                  %strong= model_class.human_attribute_name(:frame_size) + ':'
-                  = @ride.frame_size
+                  %strong= model_class.human_attribute_name(:number_of_workstations) + ':'
+                  = @ride.number_of_workstations
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:address) + ':'
@@ -80,10 +80,6 @@
                 %p
                   %strong= model_class.human_attribute_name(:landmark) + ':'
                   = @ride.landmark
-              %li.list-group-item
-                %p
-                  %strong= model_class.human_attribute_name(:willing_to_deliver) + ':'
-                  = @ride.willing_to_deliver
               %li.list-group-item
                 .panel-container
                   %h4
@@ -113,7 +109,7 @@
           .panel.panel-info.panel-schedule
             .panel-heading
               %h3
-                Ride Schedule 
+                Working Schedule 
             .panel-body
               .panel-container
                 - if !@ride.schedules.present?
@@ -126,12 +122,12 @@
           .panel.panel-info.panel-schedule
             .panel-heading
               %h3
-                Nearby Rides 
+                Nearby Workplaces 
             .panel-body
               .panel-container
                 %ul
                   - if !@ride.nearby_me.present?
-                    %p =t('ride.nearbys')
+                    %p= t('ride.nearbys')
                   -else
                     - for ride in @ride.nearby_me
                       %li

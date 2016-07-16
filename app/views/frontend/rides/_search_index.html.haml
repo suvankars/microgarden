@@ -1,10 +1,17 @@
-%h3= "Rent a bike some one like you" 
-%hr
-= form_tag rides_path, :method => :get do
-  %p
-    = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-    = submit_tag "Search Near", :name => nil 
-
+/ Header
+%header
+  .container
+    .intro-text
+      .intro-lead-in= t(:tag_line)
+      .intro-heading= t(:caption)
+      = form_tag rides_path, :method => :get , :id => 'search_box', :class => 'search', :style => 'elm_styledo' do
+        .row
+          .input-group.input-group-lg
+            %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
+            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+            %span.input-group-btn
+              = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
+            
 
 :javascript
 

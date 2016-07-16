@@ -12,9 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.turbolinks
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require cloudinary
+//= require frontend/cloudinary-jquery-file-upload.min
 //= widget.cloudinary.com/global/all.js
 //= require underscore
 //= require gmaps/google
@@ -25,7 +27,11 @@
 //= require chardinjs
 //= require bootstrap-datetimepicker
 
-//= require fullcalendar
-
+//= require  fullcalendar
+//= require contact_me
+//= require jqBootstrapValidation
+//= require freelancer
+//= require freelancer.min
+//= require jquery.easing.min
 
 //= require_tree .
