@@ -21,6 +21,8 @@
 
 en:
   hello: "Hello world"
+  caption: "Re discover the joy of riding ..." 
+  tag_line: "Rent a bicycle from someone like you" 
   variants:
       no_products: 'No products to display.'
       variants_of: 'Variants of %{product}'
@@ -55,8 +57,8 @@ en:
     create_notice: 'Stock level has been adjusted successfully'
     current_stock_level_html: "Current stock level is <b>%{product_stock}</b>"
 
-  calendar_description: 'Choose your availability on the schedule below for all of your listed rides. Just choose days that you are generally Unavailable and we willl make sure no one requests your rides then'
+  calendar_description: 'Choose your ride availability schedule on the calendar'
   ride: 
-    no_schedule: "You didn't scheduled any ride, please schedule your ride"
-    schedule: "Schedule Your Ride"
-    nearbys: "No body listed ride nearby you; Make you ride stand out"
+    no_schedule: "You didn't scheduled any ride, please schedule your ride availability"
+    schedule: "Create Schedule"
+    nearbys: "No body listed any workplace nearby you; Make you listing stand out"

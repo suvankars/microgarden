@@ -5,7 +5,8 @@ class Frontend::RidesController < FrontendController
   
   RADIOUS = 15; #mile
   DEFAULT_CATEGORY_NAME = "Bicycle"
-
+  MIN_NO_SEAT = 1
+  
   def index
     #binding.pry
     # If search box is clicked without typing any address 
@@ -32,7 +33,6 @@ class Frontend::RidesController < FrontendController
 
     rides = Ride.near(params[:search], RADIOUS)
     
-   
     @filterrific = initialize_filterrific(
       rides.empty? ? Ride.all : rides,
       params[:filterrific],
@@ -60,7 +60,6 @@ class Frontend::RidesController < FrontendController
     
     if request.xhr?
       payload = {"rides": JSON::parse(@rides.to_json), "hash": @hash }
-      p payload
       respond_to do |format|
         format.json { render :json => payload}
         format.js 
@@ -99,6 +98,9 @@ class Frontend::RidesController < FrontendController
       format.html {  }
       format.js {}
     end
+    max_available_seat = @ride.number_of_workstations
+    @workstations = (MIN_NO_SEAT..max_available_seat)
+    @default_number = @workstations.first
   end
 
   def show_ride
@@ -137,7 +139,7 @@ class Frontend::RidesController < FrontendController
     @ride.user = current_user
     respond_to do |format|
       if @ride.save
-        format.html { redirect_to show_ride_ride_path(@ride), notice: 'Ride was successfully created.' }
+        format.html { redirect_to show_ride_ride_path(@ride), notice: 'Listing was successfully created.' }
         format.json { render :show, status: :created, location: @ride }
       else
         format.html { render :new }
@@ -156,7 +158,7 @@ class Frontend::RidesController < FrontendController
     
     respond_to do |format|
       if @ride.update(ride_params)
-        format.html { redirect_to @ride, notice: 'Ride was successfully updated.' }
+        format.html { redirect_to show_ride_ride_path(@ride), notice: 'Listing was successfully updated.' }
         format.json { render :show, status: :ok, location: @ride }
       else
         format.html { render :edit }
@@ -166,13 +168,14 @@ class Frontend::RidesController < FrontendController
   end
 
   def destroy
+    @ride.schedules.destroy_all
     @ride.destroy
     #ride_id will be used to remove rideing from index page
     #TBD remove marker from map. is it required?
 
     @ride_id = @ride.id #or params[:id]
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Ride was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Listing was successfully destroyed.' }
       format.js {}
     end
   end
@@ -185,7 +188,7 @@ class Frontend::RidesController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white ride through.
     def ride_params
-      params.require(:ride).permit(:ride_title, :ride_description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id)
+      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :number_of_workstations)
     end
 
     def default_category

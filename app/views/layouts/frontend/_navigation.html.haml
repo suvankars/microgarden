@@ -1,16 +1,27 @@
 -# navigation styled for Bootstrap 3.0
-%nav.navbar.navbar-default.navbar-fixed-top
-  .container
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    %p.buttons
-      = link_to 'Seller Hub', "admin/dashboard", :class => 'btn btn-primary'
+%body#page-top.index
+  %nav#mainNav.navbar.navbar-default.navbar-fixed-top.navbar-custom
+    .container
+      / Brand and toggle get grouped for better mobile display
+      .navbar-header.page-scroll
+        %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          Menu
+          %i.fa.fa-bars
+        = link_to 'Cycle Yard', root_path, class: 'navbar-brand'
+      / Collect the nav links, forms, and other content for toggling
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav.navbar-right
+          %li.hidden
+            %a{:href => "#page-top"}
+          %li.page-scroll
+            = link_to 'List a Ride', "/rides/new"
+          %li.page-scroll
+            = link_to 'Rent a Ride', "/rides"  
+          %li.page-scroll
+            = link_to 'About', "/#about"
+          %li.page-scroll
+            = link_to 'Contact', "/#contact"
+          %li.page-scroll  
+            = render 'layouts/frontend/nav_links_for_auth'    
 
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        = render 'layouts/frontend/navigation_links'

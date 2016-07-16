@@ -1,18 +1,26 @@
 - model_class = Ride
 %p
 %p
+%hr
 /TBD: refactor, Same form as search_index except 'id' field
-= form_tag rides_path, :method => :get, remote: true do
-  %p
-    = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-    = submit_tag "Search Near", :name => nil, :id=>"ajax" 
+/ = form_tag rides_path, :method => :get, remote: true do
+/   %p
+/     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+/     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
 
+= form_tag rides_path, :method => :get, :class => 'search', :style => 'elm_styledo' do
+  .row
+    .input-group.input-group-lg
+      %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
+      = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+      %span.input-group-btn
+        = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
 //Adding filter
 = form_for_filterrific @filterrific do |f|
   .row
     .col-md-3
       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by bike type' }
-        %label Bike Type
+        %label Bicycle Type
         = f.select(:with_subcategory_id, @filterrific.select_options[:with_subcategory_id],{ include_blank: '- Any -' })
 
     .col-md-3
@@ -61,7 +69,7 @@
 /   = render :partial => 'students/ride',
 /            :locals => { :students => @students }
 
-= link_to t('.new', :default => t("helpers.links.new")), new_ride_path, :class => 'btn btn-primary'
+/ = link_to t('.new', :default => t("helpers.links.new")), new_ride_path, :class => 'btn btn-primary'
 
 / Downloaded those js files and kept under assets folder
 

@@ -16,8 +16,16 @@ class Frontend::ReservationsController < FrontendController
     end_time = params[:endTime]
     address = params[:address]
     price = params[:price]
-    UserMailer.reservation_email(current_user, start_time, end_time, address, price).deliver_now!
+    requested_ws_count = params[:no_of_ws].to_i
+    
+    ride = Ride.find(params[:id])
+    remaining_ws = ride.number_of_workstations - requested_ws_count
+    ride.update_column :number_of_workstations, remaining_ws if remaining_ws >= 0
+    
+
+
     #redirect_to frontend_reservations_index_path
     head :ok, content_type: "text/html", notice: "Pay attention to the road" 
+    #UserMailer.reservation_email(current_user, start_time, end_time, address, price).deliver_now!
   end
 end

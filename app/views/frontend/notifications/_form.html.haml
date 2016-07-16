@@ -1,0 +1,32 @@
+%section#contact
+  .container
+    .row
+      .col-lg-12.text-center
+        %h2  Tell Us 
+        %p If there is no bycycle available in your area send us your location and we will notify you; promise :)
+        %hr.star-primary
+        #contact_status
+    .row
+      .col-lg-8.col-lg-offset-2
+        = simple_form_for [@notification],  remote: true, :html => { :class => 'form-horizontal' } do |f|
+          = f.input :name
+          = error_span(@notification[:name])
+          = f.input :email
+          = error_span(@notification[:email])
+          = f.input :phone
+          = error_span(@notification[:phone])
+          = f.input :pincode
+          = error_span(@notification[:pincode])
+          = f.input :message
+          = error_span(@notification[:message])
+          = f.button :submit , "Send", :class => 'btn-primary'
+          / = link_to t('.cancel', :default => t("helpers.links.cancel")), notifications_path, :class => 'btn btn-default'
+
+:javascript
+$(document).ready(function() {
+  $("#new_notification").on("ajax:success", function(e, data, status, xhr) {
+    $("#new_notification").append(xhr.responseText);
+  }).on("ajax:error", function(e, xhr, status, error) {
+    $("#new_notification").append("<p>ERROR</p>");
+  });
+});

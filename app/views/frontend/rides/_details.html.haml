@@ -5,8 +5,8 @@
     - image = ride.images.first
     = image_tag(image["url"])
 
-  %h4= ride.ride_title
-  %p= ride.ride_description
+  %h4= ride.title
+  %p= ride.description
   %p
     %strong= model_class.human_attribute_name(:rider_height) + ':'
     = ride.rider_height

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
+    resources :notifications
     resources :calendars, :only => [:index ]
     resources :rides do
       get 'search_index', :on => :collection 
@@ -22,14 +23,15 @@ Rails.application.routes.draw do
 
 
   namespace :frontend do
+    
     get 'home/index'
     get 'reservations/index'
     post 'reservations/create'
   end
 
   #devise_for :users
-  devise_for :users, controllers: { sessions: 'users/sessions', 
-                                    registrations: 'users/registrations' }
+  devise_for :users#, controllers: { sessions: 'users/sessions', 
+                                #    registrations: 'users/registrations' }
 
   apipie
   

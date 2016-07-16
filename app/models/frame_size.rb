@@ -12,4 +12,3 @@ class FrameSize
       all.map{ |r| [r.to_cm, r.inch] }
   end
 end
-

@@ -5,7 +5,7 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.ride_title)
+          %h1.trim= model_class.human_attribute_name(@ride.title)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
@@ -14,7 +14,10 @@
                 = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
               %p
                 = model_class.human_attribute_name(:frame_size)
-                = @ride.frame_size.to_i.to_cm
+                = @ride.frame_size.to_i.to_cm 
+              %p
+                = model_class.human_attribute_name(:number_of_workstations)
+                = @ride.number_of_workstations.to_i
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
@@ -50,7 +53,7 @@
   
             .panel-body
               %p 
-                = @ride.ride_description
+                = @ride.description
             %ul.list-group
               %li.list-group-item
                 %p
@@ -59,7 +62,11 @@
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:frame_size) + ':'
-                  = @ride.frame_size
+                  = @ride.frame_size    
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:number_of_workstations) + ':'
+                  = @ride.number_of_workstations
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:address) + ':'
@@ -131,7 +138,7 @@
               .panel-container
                 %ul
                   - if !@ride.nearby_me.present?
-                    %p =t('ride.nearbys')
+                    %p= t('ride.nearbys')
                   -else
                     - for ride in @ride.nearby_me
                       %li

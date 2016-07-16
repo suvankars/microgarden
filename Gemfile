@@ -29,6 +29,7 @@ gem 'jquery-fileupload-rails'
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -77,6 +78,7 @@ gem 'nifty-dialog'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', :git => 'git://github.com/minimagick/minimagick.git', :ref => '6d0f8f953112cce6324a524d76c7e126ee14f392'
 gem 'devise'
+gem 'devise-bootstrap-views'
 gem 'cancancan', '~> 1.10' 
 gem 'cloudinary' #Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline
 

@@ -20,7 +20,8 @@ subcategory_list = [
 ["MTB", "A  mountain bicycle is a bicycle created for off-r..."],
 ["Fixies", "fixies are designed to be ridden on a velodrome, w..."],
 ["Road", "Designed for long ride on road"],
-["Hybrid","Originally conceived to provide the advantages of ..."] 
+["Hybrid","Originally conceived to provide the advantages of ..."],
+["Commuter", "When thinking about commuting to work ..."]
 ]
 
 category_id = Category.where( name: "Bicycle").first.id
