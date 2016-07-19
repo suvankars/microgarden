@@ -177,3 +177,49 @@ form#new_user {
 .alert.alert-success {
     margin-top: 50px;
 }
+
+.glyphicon-search {
+  top: 0px;
+}
+
+.search-box {
+    margin-left: -6px;
+}
+
+.col-md-3.search-box {
+  margin-left: -16px;
+}
+
+form.search {
+    overflow: initial;
+}
+
+input#pick_up {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  padding-left: 9px;
+  padding-right: 10px;
+}
+
+input#drop_of {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  padding-left: 9px;
+  padding-right: 10px;
+}
+
+.col-md-6.search-box {
+  padding-right: 0px;
+}
+
+.col-md-3.search-box {
+  padding-right: 0px;
+  width: 26%
+}
+
+.input-group-addon.search-box-icon {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}

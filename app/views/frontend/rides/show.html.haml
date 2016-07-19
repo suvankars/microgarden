@@ -150,19 +150,19 @@
               .panel-body
                 .panel-container.no-border
                   #calendar
-                    /= form_for_filterrific @filterrific do |f|
-                    / .row
-                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /       %label Pickup
-                    /       = f.text_field :with_created_at_gte,
-                    /        :class => 'js-datepicker form-control'
-                    / .row  
-                    /   .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /     .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /       %label Drop
-                    /       = f.text_field :with_created_at_gte,
-                    /        :class => 'js-datepicker form-control'     
+                    / = form_for_filterrific @filterrific do |f|
+                    /   .row
+                    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /         %label Pickup
+                    /         = f.text_field :with_created_at_gte,
+                    /          :class => 'js-datepicker form-control'
+                    /   .row  
+                    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+                    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+                    /         %label Drop
+                    /         = f.text_field :with_created_at_gte,
+                    /          :class => 'js-datepicker form-control'     
                     
     /   .container
     /     .col-md-5

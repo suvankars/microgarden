@@ -31,7 +31,10 @@ class Frontend::RidesController < FrontendController
     #save search params to session for future requests, like filter
     session[:search] = params[:search] if !params[:search].nil?
 
+    #binding.pry
     rides = Ride.near(params[:search], RADIOUS)
+    
+    
     
     @filterrific = initialize_filterrific(
       rides.empty? ? Ride.all : rides,
@@ -40,10 +43,13 @@ class Frontend::RidesController < FrontendController
         with_subcategory_id: Subcategory.options_for_select,
         with_rider_height: RiderHeight.options_for_select,
         with_frame_size: FrameSize.options_for_select,
-        with_morning_rental_lt: Ride.options_for_select
+        with_morning_rental_lt: Ride.options_for_select,
+        with_created_at_gte: Ride.options_for_select,
+        with_created_at_lt: Ride.options_for_select
       },
     ) or return
 
+  
     if params[:filterrific].present?
       @rides = @filterrific.find.page(params[:page])
     elsif params[:search].present?
@@ -52,6 +58,11 @@ class Frontend::RidesController < FrontendController
       @rides = Ride.all
     end
 
+    #again filter by date.. bad
+    if params[:drop_of].present? && params[:drop_of].present?
+      @rides = filter_by_date(@rides, params[:pick_up], params[:drop_of])
+    end
+    
     @hash = Gmaps4rails.build_markers(@rides) do |ride, marker|
       marker.lat ride.latitude
       marker.lng ride.longitude
@@ -193,5 +204,15 @@ class Frontend::RidesController < FrontendController
 
     def default_category
       Category.where( name: DEFAULT_CATEGORY_NAME).first
+    end
+
+    def filter_by_date(rides, pick_up, drop_of)
+      pick_up_time = DateTime.strptime(pick_up, "%m/%d/%Y %H:%M %P")
+      drop_of_time = DateTime.strptime(drop_of, "%m/%d/%Y %H:%M %P")
+      scheduled_ride = []
+      rides.each do |ride|
+          scheduled_ride.push(ride) if ride.avilable?(pick_up_time, drop_of_time)
+      end
+      scheduled_ride
     end
 end

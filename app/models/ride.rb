@@ -13,6 +13,7 @@ class Ride < ActiveRecord::Base
     :with_frame_size,
     :with_subcategory_id,
     :with_created_at_gte,
+    :with_created_at_lt,
     :with_morning_rental_lt
   ]
   )
@@ -35,6 +36,22 @@ class Ride < ActiveRecord::Base
 
   scope :with_created_at_gte, lambda { |ref_date|
     where('rides.created_at >= ?', ref_date)
+  }
+
+  scope :with_created_at_lt, lambda { |ref_date|
+    where('rides.created_at <= ?', ref_date)
+  }
+  scope :with_schedule_date_gte, lambda { |ref_date|
+    binding.pry
+    rides.collect do  |ride|
+      schedules = ride.schedules.where("start_time >=? AND end_time <= ?", start_time, end_time.at_end_of_day) 
+      ride if schedules.empty?
+    end  
+    binding.pry
+  }
+
+  scope :with_schedule_date_lt, lambda { |ref_date|
+    where('rides.created_at <= ?', ref_date)
   }
 
   scope :with_subcategory_id, lambda { |subcategory_id|
@@ -69,6 +86,12 @@ class Ride < ActiveRecord::Base
 
   def nearby_me
     self.nearbys(SHORT_DISTANCE)
+  end
+
+  def avilable?(pick_up_time, drop_of_time)
+    #If any rent schedule exists on the ride then return availability true
+    schedules = self.schedules.where("start_time >=? AND end_time <= ?", pick_up_time, drop_of_time) 
+    schedules.any? ? true : false
   end
 end
 

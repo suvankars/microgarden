@@ -12,7 +12,32 @@
   .row
     .input-group.input-group-lg
       %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
-      = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+      .row
+        .col-md-6.search-box
+          .input-group.input-group-lg.col-md-12
+            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+        .col-md-3.search-box
+          #datetimepicker6.input-group.input-group-lg.col-md-12.date
+            = text_field_tag :pick_up, params[:pick_up], :class => 'form-control'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar
+        .col-md-3.search-box
+          #datetimepicker7.input-group.input-group-lg.col-md-12.date
+            = text_field_tag :drop_of, params[:drop_of], :class => 'form-control'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar        
+      / %span
+      /   .row
+      /     .col-md-2
+      /       .col-xs-12.col-sm-8.col-md-8.col-lg-8
+      /         .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+      /           %label Pickup
+      /           = text_field_tag :with_created_at_gte, params[:with_created_at_gte], :class => 'js-datepicker form-control'
+      /     .col-md-2  
+      /       .col-xs-12.col-sm-8.col-md-8.col-lg-8
+      /         .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+      /           %label Drop
+      /           = text_field_tag :with_created_at_lt, params[:with_created_at_lt], :class => 'js-datepicker form-control'
       %span.input-group-btn
         = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
 //Adding filter
@@ -37,6 +62,19 @@
         %label Rental
         = f.select(:with_morning_rental_lt, @filterrific.select_options[:with_morning_rental_lt], { include_blank: '- Any -' } )         
                         
+    / .row
+    /   .col-md-2
+    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+    /         %label Pickup
+    /         = f.text_field :with_created_at_gte,
+    /          :class => 'js-datepicker form-control'
+    /   .col-md-2  
+    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+    /         %label Drop
+    /         = f.text_field :with_created_at_lt,
+    /                      :class => 'js-datepicker form-control'
     / .col-md-2
     /   .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
     /     %label Listed after
@@ -96,3 +134,16 @@
     $('body').chardinJs('start');
   });
   
+
+  $(function () {
+      $('#datetimepicker6').datetimepicker();
+      $('#datetimepicker7').datetimepicker({
+          useCurrent: false //Important! See issue #1075
+      });
+      $("#datetimepicker6").on("dp.change", function (e) {
+          $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+      });
+      $("#datetimepicker7").on("dp.change", function (e) {
+          $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+      });
+  });  
