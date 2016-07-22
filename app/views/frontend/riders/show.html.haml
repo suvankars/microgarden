@@ -1,0 +1,85 @@
+%p#notice= notice
+
+%p
+  %b First name:
+  = @rider.first_name
+%p
+  %b Last name:
+  = @rider.last_name
+%p
+  %b Email:
+  = @rider.email
+%p
+  %b Phone number:
+  = @rider.phone_number
+%p
+  %b Profile picture:
+  = @rider.profile_picture
+%p
+  %b Address line 1:
+  = @rider.address_line_1
+%p
+  %b Address line2:
+  = @rider.address_line2
+%p
+  %b City:
+  = @rider.city
+%p
+  %b State:
+  = @rider.state
+%p
+  %b Country:
+  = @rider.country
+%p
+  %b Pincode:
+  = @rider.pincode
+%p
+  %b Parmanent address:
+  = @rider.parmanent_address
+%p
+  %b Office email:
+  = @rider.office_email
+%p
+  %b Id proof documents:
+  = @rider.id_proof_documents
+%p
+  %b Age:
+  = @rider.age
+%p
+  %b Height:
+  = @rider.height
+%p
+  %b Number of bike:
+  = @rider.number_of_bike
+%p
+  %b Price segment:
+  = @rider.price_segment
+%p
+  %b Market price:
+  = @rider.market_price
+%p
+  %b Reference:
+  = @rider.reference
+%p
+  %b Reference name:
+  = @rider.reference_name
+%p
+  %b Reference email:
+  = @rider.reference_email
+%p
+  %b Reference phone number:
+  = @rider.reference_phone_number
+%p
+  %b Verified:
+  = @rider.verified
+%p
+  %b Verification comment:
+  = @rider.verification_comment
+%p
+  %b Verified by:
+  = @rider.verified_by
+
+= link_to 'Edit', edit_rider_path(@rider)
+\|
+= link_to 'Back', riders_path
+

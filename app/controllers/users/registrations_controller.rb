@@ -12,9 +12,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # Tell the UserMailer to send a welcome email after save
     # Uncomment below line when greetings needs to be send
     #UserMailer.welcome_email(params[:user]).deliver_now
+    #redirect_to new_rider_path
+    #redirect_to rider_path(@rider)
     super
   end
 
+  def instruction
+    puts "after acreta"
+    #redirect_to registrations_instruction_path
+    #render :template => "devise/registrations/instruction" 
+    
+    #render partial: 'registrations/instruction'
+  end
   # GET /resource/edit
   # def edit
   #   super
@@ -52,9 +61,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    registrations_instruction_path
+    #super(resource)
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

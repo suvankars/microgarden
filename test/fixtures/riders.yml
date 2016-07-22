@@ -1,0 +1,57 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  phone_number: MyString
+  profile_picture: 
+  address_line_1: MyString
+  address_line2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  pincode: 
+  parmanent_address: MyText
+  office_email: MyString
+  id_proof_documents: 
+  age: 
+  height: MyString
+  number_of_bike: 
+  price_segment: MyString
+  market_price: MyString
+  reference: false
+  reference_name: MyString
+  reference_email: MyString
+  reference_phone_number: MyString
+  verified: false
+  verification_comment: MyText
+  verified_by: MyString
+
+two:
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  phone_number: MyString
+  profile_picture: 
+  address_line_1: MyString
+  address_line2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  pincode: 
+  parmanent_address: MyText
+  office_email: MyString
+  id_proof_documents: 
+  age: 
+  height: MyString
+  number_of_bike: 
+  price_segment: MyString
+  market_price: MyString
+  reference: false
+  reference_name: MyString
+  reference_email: MyString
+  reference_phone_number: MyString
+  verified: false
+  verification_comment: MyText
+  verified_by: MyString

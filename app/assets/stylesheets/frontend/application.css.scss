@@ -51,7 +51,7 @@ main {
 
 form {
       overflow:hidden;
-      box-shadow: 0 0px 15px -2px rgba(0, 0, 0, 0.2);
+      /*box-shadow: 0 0px 15px -2px rgba(0, 0, 0, 0.2);*/
       padding:15px;
       padding-left: 40px;
       padding-right: 40px;
@@ -94,6 +94,14 @@ fieldset {
           &:last-child { float:right; width:32%;}
     }
 
+    dl.half {
+          width: 49%;
+          margin: 0;
+          float: left;
+          &:nth-child(2) { margin-left:3%; width:31%;}
+          &:last-child { float:left; width:32%;}
+    }
+
     dl.sixth {
           width: 12%;
           margin: 0px;
@@ -111,6 +119,9 @@ fieldset {
 
 }  
 
+.splitContainer {
+    clear: both;
+}
 fieldset .description{
   
 }
@@ -222,4 +233,12 @@ input#drop_of {
 .input-group-addon.search-box-icon {
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
+}
+
+hr.star-light.registration {
+    border-color: #ED7115;
+}
+
+.left-align {
+  
 }
