@@ -53,10 +53,32 @@ class Common::ImagesController < BackendController
     
     if params[:data_value].present?
       data_values = params[:data_value]
-      data_values.each do |index, image_metadata|
-        metadata = image_metadata.permit(:public_id, :version, :signature, :width, :height, :format, :resource_type, :created_at, :bytes, :type, :etag, :url, :secure_url, :original_filename, :delete_token, :path, :thumbnail_url)
-        images << metadata.to_h
-      end
+
+      # A bad patch 
+      # For Rider profie
+      # There are two kind of image need to handel in a single 
+      # post request one is for Profile picture
+      # Another are for documents 
+      # Here I add a bad patch based on image type, will add a flag 
+      # For profile pic "image_type" flag will be set to "profile_pic"
+      # Ex. "image_type"=>"profile_pic"
+      # for documents imge_type will be "documents"
+      # TBD refactor the if block
+
+      if params[:image_type].present?
+        image_info = {}
+        data_values.each do |index, image_metadata|
+          metadata = image_metadata.permit(:public_id, :version, :signature, :width, :height, :format, :resource_type, :created_at, :bytes, :type, :etag, :url, :secure_url, :original_filename, :delete_token, :path, :thumbnail_url)
+          metadata_hash = metadata.to_h
+          metadata_hash[:image_type] = params[:image_type]
+          images << metadata_hash
+        end
+      else 
+        data_values.each do |index, image_metadata|
+          metadata = image_metadata.permit(:public_id, :version, :signature, :width, :height, :format, :resource_type, :created_at, :bytes, :type, :etag, :url, :secure_url, :original_filename, :delete_token, :path, :thumbnail_url)
+          images << metadata.to_h
+        end
+      end  
     end
     images
   end
@@ -76,8 +98,8 @@ class Common::ImagesController < BackendController
   private
 
   def set_resource
-    #Deter mine wheather this delete request for which type of resource
-    #Product or List 
+    #Determine wheather this delete request for which type of resource
+    #Product or List  or Ride or Rider or Lister
     #There are few issue in this dynamic calls finder.. will work on letter
     #bad patch
     if (!params[:resource_type].nil? && !params[:id].nil?) 

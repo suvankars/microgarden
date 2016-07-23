@@ -5,7 +5,7 @@ class CreateRiders < ActiveRecord::Migration
       t.string :last_name
       t.string :email
       t.string :phone_number
-      t.json :profile_picture
+      t.json :profile_picture, array: true, default: []
       t.string :address_line_1
       t.string :address_line2
       t.string :city
@@ -14,7 +14,7 @@ class CreateRiders < ActiveRecord::Migration
       t.decimal :pincode
       t.text :parmanent_address
       t.string :office_email
-      t.json :id_proof_documents
+      t.json :id_proof_documents, array: true, default: []
       t.decimal :age
       t.string :height
       t.decimal :number_of_bike

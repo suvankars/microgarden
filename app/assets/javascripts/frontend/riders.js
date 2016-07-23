@@ -21,9 +21,10 @@ uploadImage = function(uploadWidget, imagePreview){
 };
 
 displayImage = function(error, result, imagePreview){
-  console.log("Print from fun");
   var preview = imagePreview.lastElementChild;
+  var image_type = preview.id;
   //Need to check this html() stuff
+  debugger;
   
   imagePreview.firstElementChild.innerText="";
  
@@ -50,14 +51,14 @@ displayImage = function(error, result, imagePreview){
   }
       
        
-  processResponse(result); 
+  processResponse(result, image_type); 
       
 };
 
-processResponse =  function(result){
+processResponse =  function(result, image_type){
     //Can we make it more generic so that in ride and rider
     // both case we could use it
-    
+
     var form_type = $("[class^=simple_form]").attr('id');
     var resource_id = form_type.split('_').splice(-1)[0];
     var action_path = "/images/park_images";
@@ -67,10 +68,10 @@ processResponse =  function(result){
     var edit_ride = form_type.match(re);
 
     if (form_type == "new_rider"){
-      var json_data = { resource_type: resource_type, data_value: result }
+      var json_data = { image_type: image_type, resource_type: resource_type, data_value: result }
       saveResponse(action_path, request_type, json_data);
     } else if ( edit_ride ){
-      var json_data = { id: resource_id, resource_type: resource_type, data_value: result }
+      var json_data = { image_type: image_type, id: resource_id, resource_type: resource_type, data_value: result }
       saveResponse(action_path, request_type, json_data);
     }
 };

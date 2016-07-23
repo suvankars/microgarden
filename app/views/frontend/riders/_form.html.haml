@@ -11,12 +11,14 @@
         %dl.third 
           = field_set_tag 'Profile Picture' do
             %p Upload a clear picture of you
+            /DONT CHANGE ANY TAG NAME UNLESS U R ABSOLUTELY SURE
+            /WAHT U R DOING, all those tag has hard dependency
             %upload_image
               %upload_widget_opener
                 %a.btn.btn-primary{:href => "#"} Upload
               %ul#images
                 %span.status
-                .preview#profile
+                .preview#profile_pic
                 -if !@rider.new_record?
                   = render partial: 'rides/images', rider: @rider 
       .splitContainer 
@@ -50,12 +52,14 @@
         /= f.input :office_email
         = field_set_tag 'Attach address proofs' do
           %p Please attach scanned copy of gov. issued id proof and address proof
+          /DONT CHANGE ANY TAG NAME UNLESS UR ABSOLUTELY SURE
+          /WAHT U R DOING, all those tag has hard dependency 
           %upload_image
             %upload_widget_opener
               %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload 
             %ul#images
               %span.status 
-              .preview#document
+              .preview#documents
               -if !@rider.new_record?
                 = render partial: 'rides/images', rider: @rider
     /= f.input :age
