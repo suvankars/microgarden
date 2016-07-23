@@ -8,7 +8,7 @@ class Common::ImagesController < BackendController
   end
 
   def destroy
-    remove_by_pub_id(params[:img_pub_id], params[:resource] )
+    remove_by_pub_id(params[:img_pub_id], params[:resource], params[:image_type] )
     # Use this public id ro remove images from UI
     @public_id = params[:img_pub_id] 
     flash[:error] = "Failed deleting image" unless @resource.save
@@ -117,11 +117,27 @@ class Common::ImagesController < BackendController
     @product.images = images # assign back
   end
 
-  def remove_by_pub_id(img_public_id, resource_type)
-    remain_images = @resource.images # copy the array
-    deleted_image = @resource.images.delete_if { |image| image["public_id"] == img_public_id } # delete the target image
+  def remove_by_pub_id(img_public_id, resource_type, image_type)
+    # A quick fix 
+    image_type = "other" if image_type.nil? 
+    case image_type
+      when "profile_pic"
+        remain_images = @resource.profile_picture # copy the array
+        deleted_image = @resource.profile_picture.delete_if { |image| image["public_id"] == img_public_id } 
+        @resource.profile_picture = remain_images
+      when "documents"
+        remain_images = @resource.id_proof_documents # copy the array
+        deleted_image = @resource.id_proof_documents.delete_if { |image| image["public_id"] == img_public_id } 
+        @resource.id_proof_documents = remain_images
+      when "other"
+        remain_images = @resource.images # copy the array
+        deleted_image = @resource.images.delete_if { |image| image["public_id"] == img_public_id } # delete the target image
+        @resource.images = remain_images
+      end
+
+    #Remove from cloude storage  
     Cloudinary::Uploader.destroy(img_public_id, options = {})
-    @resource.images = remain_images # re-assign back
+    @resource
   end
 
   

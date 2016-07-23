@@ -12,104 +12,122 @@
                   %h3
                     My Profile  
                 .col-xs-12.col-sm-12.col-md-4.col-lg-4
-                  .panel-action  
-                    = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
+                  .panel-action 
+                    = link_to 'Edit', edit_rider_path(@rider), :class => 'btn btn-primary' 
   
             .panel-body
-              %p= @rider.first_name + " "+ @rider.first_name
+              %h3
+                =@rider.first_name + " "+ @rider.last_name
             %ul.list-group
-              %li.list-group-item
-                %p
-                  %b Email:
-                  = @rider.email
-                %p
-                  %b Phone number:
-                  = @rider.phone_number
-                %p
-                  %b Profile picture:
-                  = @rider.profile_picture
-                %p
-                  %b Address line 1:
-                  = @rider.address_line_1
-                %p
-                  %b Address line2:
-                  = @rider.address_line2
-                %p
-                  %b City:
-                  = @rider.city
-                %p
-                  %b State:
-                  = @rider.state
-                %p
-                  %b Country:
-                  = @rider.country
-                %p
-                  %b Pincode:
-                  = @rider.pincode
-                %p
-                  %b Parmanent address:
-                  = @rider.parmanent_address
-                %p
-                  %b Office email:
-                  = @rider.office_email
-                %p
-                  %b Id proof documents:
-                  = @rider.id_proof_documents
-                %p
-                  %b Age:
-                  = @rider.age
-                %p
-                  %b Height:
-                  = @rider.height
-                %p
-                  %b Number of bike:
-                  = @rider.number_of_bike
-                %p
-                  %b Price segment:
-                  = @rider.price_segment
-                %p
-                  %b Market price:
-                  = @rider.market_price
-                %p
-                  %b Reference:
-                  = @rider.reference
-                %p
-                  %b Reference name:
-                  = @rider.reference_name
-                %p
-                  %b Reference email:
-                  = @rider.reference_email
-                %p
-                  %b Reference phone number:
-                  = @rider.reference_phone_number
-                %p
-                  %b Verified:
-                  = @rider.verified
-                %p
-                  %b Verification comment:
-                  = @rider.verification_comment
-                %p
-                  %b Verified by:
-                  = @rider.verified_by
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-8
+                  .row
+                    %li.list-group-item
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Email:
+                          = @rider.email
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Phone number:
+                          = @rider.phone_number
+                  .row
+                    %li.list-group-item
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Address
+                          %p
+                            = @rider.address_line_1
+                          %p
+                            = @rider.address_line2= @rider.city
+                          %p  
+                            = "#{@rider.city}" " - #{@rider.pincode.to_i}"
+                          %p  
+                            = "#{@rider.state}" " (#{@rider.country})"
+                           
+               
+                              
+                .col-xs-12.col-sm-12.col-md-12.col-lg-4
+                  .show_profile_picture
+                    = image_tag(@profile_picture, :class => "img-rounded pull-xs-left")
+              .row
                 %li.list-group-item
-                .panel-container
-                  %h4
-                    Submitted Documents    
-                  %p
-                    - if !@rider.id_proof_documents.nil?
-                      .row
-                        - @rider.id_proof_documents.each_with_index do |image, index|
-                          .col-xs-6.col-md-2.col-sm-2
-                            %ride_image
-                              /{:id => image["public_id"]}
-                              .image
-                                = image_tag(image["thumbnail_url"], :class => "img-rounded pull-xs-left")
-                              .action  
-                                = link_to "Delete", image_path(:id => @rider.id, :resource_type => @rider.class, :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
-  
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                    / %p
+                    /   %b Parmanent address:
+                    /   = @rider.parmanent_address
+                    / %p
+                    /   %b Office email:
+                    /   = @rider.office_email
+                    
+                    %p
+                      %b Number of bike:
+                      = @rider.number_of_bike
+                    %p
+                      %b Price segment:
+                      = @rider.price_segment
+                    %p
+                      %b Market price:
+                      = @rider.market_price
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                    / %p
+                    /   %b Reference:
+                    /   = @rider.reference
+                    %p
+                      %b Reference name:
+                      = @rider.reference_name
+                    %p
+                      %b Reference email:
+                      = @rider.reference_email
+                    %p
+                      %b Reference phone number:
+                      = @rider.reference_phone_number
+              -if(@rider.verified)
+                .row
+                  %li.list-group-item
+                    .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                      %p
+                        %b Verification comment:
+                        = @rider.verification_comment
+                      %p
+                        %b Verified by:
+                        = @rider.verified_by        
+                  / %p
+                  /   %b Id proof documents:
+                  /= @rider.id_proof_documents
+                  / %p
+                  /   %b Age:
+                  /   = @rider.age
+                  / %p
+                  /   %b Height:
+                  /   = @rider.height
+                  
+               
+                
+              .row
+                %li.list-group-item
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    .panel-container
+                      %h4
+                        Submitted Documents
+                      %br      
+                      %p
+                        - if @rider.id_proof_documents.empty?
+                          %p.large You haven't submitted any document yet, please submit soon
+                        - else
+                          .row
+                            - @rider.id_proof_documents.each_with_index do |image, index|
+                              .col-xs-6.col-md-2.col-sm-2
+                                %ride_image{:id => image["public_id"]}
+                                  .image
+                                    = image_tag(image["thumbnail_url"], :class => "img-rounded pull-xs-left")
+                                  .action  
+                                    -if(!@rider.verified)
+                                      = link_to "Delete", image_path(:id => @rider.id, :resource_type => @rider.class, :image_type => image["image_type"], :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
 
+              .panel-footer.footer-action
+                = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
 
-= link_to 'Edit', edit_rider_path(@rider)
-\|
-= link_to 'Back', riders_path
+                = link_to 'Edit', edit_rider_path(@rider), :class => 'btn btn-info'
+
 
