@@ -5,12 +5,14 @@ $(document).ready(function() {
     var element = uploaderElements[i]
     var uploadWidget = element.firstElementChild;
     var imagePreview = element.lastElementChild;
+    //debugger;
     uploadImage(uploadWidget, imagePreview);
   };
   
 });
 
 uploadImage = function(uploadWidget, imagePreview){
+  //debugger;
   uploadWidget.addEventListener("click", function() {
     cloudinary.openUploadWidget({ cloud_name: 'dijs1yfba', upload_preset: 'sample_a3cb73f3e13fc75f53e20e800352e1b509ee1f7b'}, 
       function(error, result) { 
@@ -21,10 +23,10 @@ uploadImage = function(uploadWidget, imagePreview){
 };
 
 displayImage = function(error, result, imagePreview){
-  var preview = imagePreview.lastElementChild;
+  var preview = imagePreview.children[1];
   var image_type = preview.id;
   //Need to check this html() stuff
-  debugger;
+  //debugger;
   
   imagePreview.firstElementChild.innerText="";
  
@@ -58,7 +60,7 @@ displayImage = function(error, result, imagePreview){
 processResponse =  function(result, image_type){
     //Can we make it more generic so that in ride and rider
     // both case we could use it
-
+    //debugger;
     var form_type = $("[class^=simple_form]").attr('id');
     var resource_id = form_type.split('_').splice(-1)[0];
     var action_path = "/images/park_images";

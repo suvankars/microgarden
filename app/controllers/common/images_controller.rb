@@ -39,8 +39,17 @@ class Common::ImagesController < BackendController
 
   def previous_images
       # Incase of park_images action; no product object is initialized; till then return an empty []   
-    if !@resource.nil? 
-      images = @resource.images # copy the old images 
+
+    image_type = "other" if params[:image_type].nil?  
+    if !@resource.nil?
+      case image_type
+      when "profile_pic"
+        images = @resource.profile_picture
+      when "documents"
+        images = @resource.id_proof_documents
+      when "other" 
+        images = @resource.images 
+      end
     else
       images = !Rails.cache.read("images").nil? ? Rails.cache.read("images") : []
     end

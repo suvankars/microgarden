@@ -12,7 +12,7 @@
           = field_set_tag 'Profile Picture' do
             %p Upload a clear picture of you
             /DONT CHANGE ANY TAG NAME UNLESS U R ABSOLUTELY SURE
-            /WAHT U R DOING, all those tag has hard dependency
+            /WAHT U R DOING, all those tag has hard dependency.
             %upload_image
               %upload_widget_opener
                 %a.btn.btn-primary{:href => "#"} Upload
@@ -20,7 +20,7 @@
                 %span.status
                 .preview#profile_pic
                 -if !@rider.new_record?
-                  = render partial: 'rides/images', rider: @rider 
+                  = render partial: 'profile_pic', rider: @rider 
       .splitContainer 
         %dl.third  
           %dd= f.input :email#current_user.email
@@ -61,7 +61,7 @@
               %span.status 
               .preview#documents
               -if !@rider.new_record?
-                = render partial: 'rides/images', rider: @rider
+                = render partial: 'documents', rider: @rider
     /= f.input :age
     /= f.input :height
     = field_set_tag 'Tell us about your bicycle' do 

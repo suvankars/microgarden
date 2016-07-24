@@ -26,7 +26,6 @@ class Frontend::RidersController < FrontendController
   # POST /riders.json
   def create
     @rider = Rider.new(rider_params)
-    binding.pry
     pictures = Rails.cache.read("images")
     pictures.each do |picture|
       case picture[:image_type]
@@ -38,13 +37,6 @@ class Frontend::RidersController < FrontendController
       else
         "Why I see this??"
       end
-        
-        
-      # if picture[:image_type] == "profile_pic"
-      #   @rider.profile_picture = picture
-      # elsif picture[:image_type] == "documents"
-      #   @rider.id_proof_documents = picture
-      # end
     end
 
     Rails.cache.delete('images')
@@ -63,6 +55,20 @@ class Frontend::RidersController < FrontendController
   # PATCH/PUT /riders/1
   # PATCH/PUT /riders/1.json
   def update
+    pictures = Rails.cache.read("images")
+    pictures.each do |picture|
+      case picture[:image_type]
+      
+      when "profile_pic"
+        @rider.profile_picture.push(picture)
+      when "documents"
+        @rider.id_proof_documents.push(picture)
+      else
+        "Why I see this??"
+      end
+    end
+
+    Rails.cache.delete('images')
     respond_to do |format|
       if @rider.update(rider_params)
         format.html { redirect_to rider_path(@rider), notice: 'Rider was successfully updated.' }

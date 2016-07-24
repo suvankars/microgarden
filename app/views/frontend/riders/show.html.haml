@@ -1,5 +1,3 @@
-%p#notice= notice
-
 .container
   .row
     .col-xs-12.col-sm-12.col-md-6.col-lg-12
@@ -117,13 +115,14 @@
                         - else
                           .row
                             - @rider.id_proof_documents.each_with_index do |image, index|
-                              .col-xs-6.col-md-2.col-sm-2
-                                %ride_image{:id => image["public_id"]}
-                                  .image
-                                    = image_tag(image["thumbnail_url"], :class => "img-rounded pull-xs-left")
-                                  .action  
-                                    -if(!@rider.verified)
-                                      = link_to "Delete", image_path(:id => @rider.id, :resource_type => @rider.class, :image_type => image["image_type"], :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+                              .col-xs-6.col-md-2.col-sm-2.col-lg-4
+                                .show_document_picture
+                                  %ride_image{:id => image["public_id"]}
+                                    .image
+                                      = image_tag(image["url"], :class => "img-rounded pull-xs-left")
+                                    .action  
+                                      -if(!@rider.verified)
+                                        = link_to "Delete", image_path(:id => @rider.id, :resource_type => @rider.class, :image_type => image["image_type"], :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
 
               .panel-footer.footer-action
                 = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
