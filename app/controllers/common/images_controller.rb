@@ -92,6 +92,16 @@ class Common::ImagesController < BackendController
     images
   end
   
+  def removed_parked_image
+    # In case user want to delete image DURING filling up
+    # FORM, removing those images from stagged area (Cache)
+    binding.pry
+    images = !Rails.cache.read("images").nil? ? Rails.cache.read("images") : []
+    remaning_image = images.reject{|c| c["public_id"] == params[:image_id]}
+    Rails.cache.write("images", remaning_image)
+    render nothing: true
+  end
+
   def park_images
     #Rails casche provides a way to pass temporary objects between controller actions. 
     

@@ -1,3 +1,5 @@
+$.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
+
 $(document).ready(function() {
   var uploaderElements = document.getElementsByTagName("upload_image");
  
@@ -10,6 +12,7 @@ $(document).ready(function() {
   };
   
 });
+
 
 uploadImage = function(uploadWidget, imagePreview){
   //debugger;
@@ -31,21 +34,40 @@ displayImage = function(error, result, imagePreview){
   imagePreview.firstElementChild.innerText="";
  
   var arrayLength = result.length;
+  // var bsRow = document.createElement("div")
+  // bsRow.className = "row"
+  // preview.appendChild(bsRow);
+
   for (var i = 0; i < arrayLength; i++) {
     var imageMetadata = result[i];
-    
+    var bsGrid = document.createElement("div")
+    bsGrid.className = "col-xs-12 col-sm-12 col-md-12 col-lg-3"
+    //public id => "preset_folder/vbq2nef9th8hyxvxnhai"
+    //after split and pop => vbq2nef9th8hyxvxnhai
+    var image_id = imageMetadata.public_id.split("/").pop();
+    bsGrid.id = image_id;
+    preview.appendChild(bsGrid);
+
     $.cloudinary.image(imageMetadata.public_id, {
         format: result.format, width: 200, height: 200, crop: "fit"
-      }).appendTo(preview);
+      }).appendTo(bsGrid);
 
-      $('<a/>').
+      var image_tag = $('<a/>').
       addClass('delete_by_token').
       attr({href: '#'}).
-      html('&times;').
-      appendTo(preview).click(function() {
+      html('&times;')
+
+      image_tag.appendTo(bsGrid).click(function(e) {
+        e.preventDefault();
+        debugger;
+
         $.cloudinary.delete_by_token(imageMetadata.delete_token).done(function(){
-         
-          
+          //Remove the image div from the dom
+          $("#" + image_id).html('');
+          //REMOVE FROM PARK IMAGE AREA other wise it will only delete from cloudinary
+          //Not from our server
+          var data = { image_id: imageMetadata.public_id};
+          removedParkedImage(data);
         }).fail(function() {
             $('.status').text("Cannot delete image");
           });
@@ -83,5 +105,14 @@ saveResponse = function(action_path, request_type, json_data){
     url : action_path,
     type : request_type,
     data : json_data
+  });
+};
+
+
+removedParkedImage = function (data){
+  $.ajax({
+    url : "/images/removed_parked_image",
+    type : 'post',
+    data : data
   });
 };

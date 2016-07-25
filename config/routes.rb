@@ -97,6 +97,7 @@ Rails.application.routes.draw do
   scope module: 'common' do
     resources :images do 
       post 'park_images', :on => :collection
+      post 'removed_parked_image', :on => :collection
     end
   end
   mount FullcalendarEngine::Engine => "/fullcalendar_engine"

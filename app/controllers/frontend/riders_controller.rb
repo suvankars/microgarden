@@ -55,7 +55,7 @@ class Frontend::RidersController < FrontendController
   # PATCH/PUT /riders/1
   # PATCH/PUT /riders/1.json
   def update
-    pictures = Rails.cache.read("images")
+    pictures = Rails.cache.read("images").nil? ? []:Rails.cache.read("images")
     pictures.each do |picture|
       case picture[:image_type]
       

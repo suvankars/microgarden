@@ -21,6 +21,11 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    submit:
+      rider:
+        create: "Create My Profile"
+        update: "Update My Profile"
   caption: "Re discover the joy of riding ..." 
   tag_line: "Rent a bicycle from someone like you" 
   variants:
