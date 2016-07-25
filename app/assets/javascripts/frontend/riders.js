@@ -47,9 +47,16 @@ displayImage = function(error, result, imagePreview){
     var image_id = imageMetadata.public_id.split("/").pop();
     bsGrid.id = image_id;
     preview.appendChild(bsGrid);
+    debugger;
+    //A quick fix for not showing pdf thumbnil 
+    var format = imageMetadata.format
+    if (format == "pdf"){
+      //Then down load a png thumb nil for quick response
+      format = "png"
+    }  
 
     $.cloudinary.image(imageMetadata.public_id, {
-        format: result.format, width: 200, height: 200, crop: "fit"
+        format: format, width: 200, height: 200, crop: "fit"
       }).appendTo(bsGrid);
 
       var image_tag = $('<a/>').
@@ -59,7 +66,7 @@ displayImage = function(error, result, imagePreview){
 
       image_tag.appendTo(bsGrid).click(function(e) {
         e.preventDefault();
-        debugger;
+        
 
         $.cloudinary.delete_by_token(imageMetadata.delete_token).done(function(){
           //Remove the image div from the dom
