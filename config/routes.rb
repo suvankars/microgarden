@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   
   
+  
   #get '/rides/:id/calendar' => 'frontend/rides#calendar'
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
     resources :riders
+    resources :owners
     resources :notifications
     resources :calendars, :only => [:index ]
     resources :rides do

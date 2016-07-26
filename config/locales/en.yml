@@ -24,8 +24,12 @@ en:
   helpers:
     submit:
       rider:
-        create: "Create My Profile"
-        update: "Update My Profile"
+        create: "Create Rider Profile"
+        update: "Update Rider Profile"
+      rider:
+        create: "Create Owner Profile"
+        update: "Update Owner Profile"
+          
   caption: "Re discover the joy of riding ..." 
   tag_line: "Rent a bicycle from someone like you" 
   variants:

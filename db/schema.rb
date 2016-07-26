@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721162245) do
+ActiveRecord::Schema.define(version: 20160726165039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,37 @@ ActiveRecord::Schema.define(version: 20160721162245) do
     t.text     "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "owners", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.json     "profile_picture",        default: [],              array: true
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.decimal  "pincode"
+    t.text     "parmanent_address"
+    t.string   "office_email"
+    t.json     "id_proof_documents",     default: [],              array: true
+    t.decimal  "age"
+    t.string   "height"
+    t.decimal  "number_of_bike"
+    t.string   "price_segment"
+    t.string   "market_price"
+    t.boolean  "reference"
+    t.string   "reference_name"
+    t.string   "reference_email"
+    t.string   "reference_phone_number"
+    t.boolean  "verified"
+    t.text     "verification_comment"
+    t.string   "verified_by"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "product_fields", force: :cascade do |t|

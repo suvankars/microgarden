@@ -10,7 +10,7 @@ class Frontend::RidersController < FrontendController
   # GET /riders/1
   # GET /riders/1.json
   def show
-    @profile_picture = @rider.profile_picture.first["url"] if @rider.profile_picture?
+    @profile_picture = @rider.profile_picture.last["url"] if @rider.profile_picture?
   end
 
   # GET /riders/new

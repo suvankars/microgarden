@@ -1,0 +1,140 @@
+.container
+  .row
+    .col-xs-12.col-sm-12.col-md-6.col-lg-12
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          .panel.panel-info
+            .panel-heading
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-8 
+                  %h3
+                    My Profile  
+                .col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  .panel-action 
+                    = link_to 'Edit', edit_owner_path(@owner), :class => 'btn btn-primary' 
+  
+            .panel-body
+              %h3
+                =@owner.first_name + " "+ @owner.last_name
+            %ul.list-group
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-8
+                  .row
+                    %li.list-group-item
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Email:
+                          = @owner.email
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Phone number:
+                          = @owner.phone_number
+                  .row
+                    %li.list-group-item
+                      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        %p
+                          %b Address
+                          %p
+                            = @owner.address_line_1
+                          %p
+                            = @owner.address_line_2= @owner.city
+                          %p  
+                            = "#{@owner.city}" " - #{@owner.pincode.to_i}"
+                          %p  
+                            = "#{@owner.state}" " (#{@owner.country})"
+                           
+               
+                              
+                .col-xs-12.col-sm-12.col-md-12.col-lg-4
+                  .show_profile_picture
+                    = image_tag(@profile_picture, :class => "img-rounded pull-xs-left")
+              .row
+                %li.list-group-item
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                    / %p
+                    /   %b Parmanent address:
+                    /   = @owner.parmanent_address
+                    / %p
+                    /   %b Office email:
+                    /   = @owner.office_email
+                    
+                    %p
+                      %b Number of bike:
+                      = @owner.number_of_bike
+                    %p
+                      %b Price segment:
+                      = @owner.price_segment
+                    %p
+                      %b Market price:
+                      = @owner.market_price
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                    / %p
+                    /   %b Reference:
+                    /   = @owner.reference
+                    %p
+                      %b Reference name:
+                      = @owner.reference_name
+                    %p
+                      %b Reference email:
+                      = @owner.reference_email
+                    %p
+                      %b Reference phone number:
+                      = @owner.reference_phone_number
+              -if(@owner.verified)
+                .row
+                  %li.list-group-item
+                    .col-xs-12.col-sm-12.col-md-12.col-lg-6
+                      %p
+                        %b Verification comment:
+                        = @owner.verification_comment
+                      %p
+                        %b Verified by:
+                        = @owner.verified_by        
+                  / %p
+                  /   %b Id proof documents:
+                  /= @owner.id_proof_documents
+                  / %p
+                  /   %b Age:
+                  /   = @owner.age
+                  / %p
+                  /   %b Height:
+                  /   = @owner.height
+                  
+               
+                
+              .row
+                %li.list-group-item
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    .panel-container
+                      %h4
+                        Submitted Documents
+                      %br      
+                      %p
+                        - if @owner.id_proof_documents.empty?
+                          %p.large You haven't submitted any document yet, please submit soon
+                        - else
+                          .row
+                            - @owner.id_proof_documents.each_with_index do |image, index|
+                              .col-xs-12.col-md-12.col-sm-12.col-lg-6
+                                .show_document_picture
+                                  %ride_image{:id => image["public_id"]}
+                                    -if image["format"] == "pdf"
+                                      %iframe{ :src => image["url"], :style => "border: none;"}
+
+                                      %a{:href => "https://docs.google.com/gview?url=#{image['url']}&embedded=true", :target => "_blank", :width => "500",:height => "350" } View in Google Pdf Viewer
+                                      \|
+                                      -if(!@owner.verified)
+                                        = link_to "Delete", image_path(:id => @owner.id, :resource_type => @owner.class, :image_type => image["image_type"], :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+                                    -else
+                                      .image
+                                        = image_tag(image["url"], :class => "img-rounded pull-xs-left")
+                                      .action  
+                                        -if(!@owner.verified)
+                                          = link_to "Delete", image_path(:id => @owner.id, :resource_type => @owner.class, :image_type => image["image_type"], :img_pub_id => image["public_id"] ), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" , :remote => true}
+
+              .panel-footer.footer-action
+                = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
+
+                = link_to 'Edit', edit_owner_path(@owner), :class => 'btn btn-info'
+
+

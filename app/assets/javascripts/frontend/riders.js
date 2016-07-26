@@ -30,7 +30,9 @@ displayImage = function(error, result, imagePreview){
   var image_type = preview.id;
   //Need to check this html() stuff
   //debugger;
+
   
+ 
   imagePreview.firstElementChild.innerText="";
  
   var arrayLength = result.length;
@@ -41,13 +43,20 @@ displayImage = function(error, result, imagePreview){
   for (var i = 0; i < arrayLength; i++) {
     var imageMetadata = result[i];
     var bsGrid = document.createElement("div")
-    bsGrid.className = "col-xs-12 col-sm-12 col-md-12 col-lg-3"
+    
+
+    //temporary fix for enlarge profile pic thumb
+    
+    bsGrid = addStyleClass(bsGrid, image_type)
+    
+
     //public id => "preset_folder/vbq2nef9th8hyxvxnhai"
     //after split and pop => vbq2nef9th8hyxvxnhai
+    //debugger;
     var image_id = imageMetadata.public_id.split("/").pop();
     bsGrid.id = image_id;
     preview.appendChild(bsGrid);
-    debugger;
+    //debugger;
     //A quick fix for not showing pdf thumbnil 
     var format = imageMetadata.format
     if (format == "pdf"){
@@ -62,7 +71,7 @@ displayImage = function(error, result, imagePreview){
       var image_tag = $('<a/>').
       addClass('delete_by_token').
       attr({href: '#'}).
-      html('&times;')
+      html('&times;');
 
       image_tag.appendTo(bsGrid).click(function(e) {
         e.preventDefault();
@@ -86,25 +95,47 @@ displayImage = function(error, result, imagePreview){
       
 };
 
+addStyleClass = function(bsGrid, image_type){
+  if (image_type == "profile_pic"){
+      bsGrid.className = "col-xs-12 col-sm-12 col-md-12 col-lg-9"
+    }
+  else{
+      bsGrid.className = "col-xs-12 col-sm-12 col-md-12 col-lg-3"
+  }
+  return bsGrid;
+};
+
 processResponse =  function(result, image_type){
     //Can we make it more generic so that in ride and rider
     // both case we could use it
     //debugger;
     var form_type = $("[class^=simple_form]").attr('id');
-    var resource_id = form_type.split('_').splice(-1)[0];
+
+
+    //new_rider, new_owner, edit_rider_1, edit_owner_1
+
+    var resource_id = form_type.split('_').splice(-1)[0]; //ex.  1, 2, 3
+    var resource_type = form_type.split('_')[1]; //ex. "rider", "owner"
+    var form_type = form_type.split('_')[0];   //ex. "new" ,"edit"
+
     var action_path = "/images/park_images";
     var request_type = "post";
-    var resource_type = "Rider";
-    var re = /edit_rider_\d+/i;
-    var edit_ride = form_type.match(re);
+    //var resource_type = "Rider";
+    // var re = /edit_rider_\d+/i;
+    // var edit_ride = form_type.match(re);
 
-    if (form_type == "new_rider"){
+    // var regx = /new_[a-z]+*/i;
+    // var new_form = form_type.match(regx);
+
+
+    if (form_type == "new"){
       var json_data = { image_type: image_type, resource_type: resource_type, data_value: result }
       saveResponse(action_path, request_type, json_data);
-    } else if ( edit_ride ){
+    } else if ( form_type == "edit" ){
       var json_data = { image_type: image_type, id: resource_id, resource_type: resource_type, data_value: result }
       saveResponse(action_path, request_type, json_data);
     }
+    
 };
 
 saveResponse = function(action_path, request_type, json_data){

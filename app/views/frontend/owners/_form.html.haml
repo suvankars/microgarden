@@ -1,4 +1,4 @@
-= simple_form_for @rider, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @owner, :html => { :class => 'form-horizontal' } do |f|
   = f.error_notification
 
   .form-inputs
@@ -19,9 +19,10 @@
                   %dd= f.input :email
               .col-xs-12.col-sm-12.col-md-12.col-lg-5
                 %dl  
-                  %dd= f.input :phone_number 
+                  %dd= f.input :phone_number      
+            
           .col-xs-12.col-sm-12.col-md-12.col-lg-4
-            %dl        
+            %dl
               = field_set_tag 'Profile Picture' do
                 %p Upload a clear picture of you
                 /DONT CHANGE ANY TAG NAME UNLESS U R ABSOLUTELY SURE
@@ -32,15 +33,16 @@
                   %ul#images
                     %span.status
                     .preview#profile_pic
-                    -if !@rider.new_record?
-                      = render partial: 'profile_pic', rider: @rider 
+                    -if !@owner.new_record?
+                      = render partial: 'profile_pic', rider: @owner 
+       
       
     = field_set_tag 'Where do you live?' do
       .splitContainer
         %dl.half
           %dd= f.input :address_line_1
         %dl.half  
-          %dd= f.input :address_line2
+          %dd= f.input :address_line_2
       .splitContainer    
         %dl.third  
           %dd= f.input :city
@@ -68,8 +70,8 @@
             .row#images
               %span.status 
               .preview.col-xs-12.col-sm-12.col-md-12.col-lg-12#documents
-              -if !@rider.new_record?
-                = render partial: 'documents', rider: @rider
+              -if !@owner.new_record?
+                = render partial: 'documents', rider: @owner
     /= f.input :age
     /= f.input :height
     = field_set_tag 'Tell us about your bicycle' do 
