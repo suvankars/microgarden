@@ -11,6 +11,8 @@ class Ability
         can :manage, :all
       else
         can :manage, :all
+        cannot :manage, User
+        #can :manage, :all
         # can :manage, Product do |p|
         #     p.user == user
         # end  

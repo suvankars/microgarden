@@ -44,15 +44,15 @@
           %li
             %span.glyphicon.glyphicon-cloud-upload
             = link_to "Suppliers", "/admin/suppliers"
-          %li
-            %span.glyphicon.glyphicon-star-empty
-            = link_to "Brands", "/admin/brands"
-          %li
-            %span.glyphicon.glyphicon-usd
-            = link_to "Tax Rates", "/admin/tax_rates"
-          %li
-            %span.glyphicon.glyphicon-glass
-            = link_to "Sizes", "/admin/sizes"
+          / %li
+          /   %span.glyphicon.glyphicon-star-empty
+          /   = link_to "Brands", "/admin/brands"
+          / %li
+          /   %span.glyphicon.glyphicon-usd
+          /   = link_to "Tax Rates", "/admin/tax_rates"
+          / %li
+          /   %span.glyphicon.glyphicon-glass
+          /   = link_to "Sizes", "/admin/sizes"
             
           %li
             %span.glyphicon.glyphicon-book
@@ -64,13 +64,27 @@
             %li
               %span.glyphicon.glyphicon-log-out
               = link_to "Sign out", destroy_user_session_path, :method => :delete
+            - if current_user.try(:admin?)
+              %li
+                %span.glyphicon.glyphicon-user
+                = link_to 'Users', users_path
+              %li
+                %span.glyphicon.glyphicon-user
+                = link_to 'Riders', '/admin/riders'
+              %li
+                %span.glyphicon.glyphicon-user
+                = link_to 'Owners', '/admin/owners' 
+              %li
+                %span.glyphicon.glyphicon-user
+                = link_to 'Riders', rides_path          
           -else
             %li
               %span.glyphicon.glyphicon-log-in
               = link_to "Sign in", new_user_session_path 
             %li
               %span.glyphicon.glyphicon-new-window
-              = link_to "Sign up", new_user_registration_path  
+              = link_to "Sign up", new_user_registration_path 
+         
 
     .container
       %header.main

@@ -6,15 +6,18 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-   protected
 
-   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :admin
-    # devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :admin])
-   end
-
+  rescue_from CanCan::AccessDenied do |exception|
+    #TBDDDDDDDDDD redirect thing
+    redirect_to request.referrer.nil? ? root_path : request.referrer, :alert => exception.message
+  end
 
   protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :admin
+  # devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :admin])
+  end
 
   def layout_by_resource
     if devise_controller?

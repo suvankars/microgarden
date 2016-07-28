@@ -62,8 +62,11 @@ Rails.application.routes.draw do
 
   get 'backend/welcome/index'
 
-  scope '/admin', :module => 'backend' do
   
+
+  scope '/admin', :module => 'backend' do
+      resources :riders
+      resources :owners
       resources :sizes
       resources :tax_rates
       resources :brands
