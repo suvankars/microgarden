@@ -26,7 +26,7 @@ en:
       rider:
         create: "Create Rider Profile"
         update: "Update Rider Profile"
-      rider:
+      owner:
         create: "Create Owner Profile"
         update: "Update Owner Profile"
           

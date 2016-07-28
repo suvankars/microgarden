@@ -22,6 +22,9 @@
             = link_to 'About', "/#about"
           %li.page-scroll
             = link_to 'Contact', "/#contact"
+          -if current_user.present? && current_user.admin?  
+            %li.page-scroll
+              = link_to 'Dashboard', "/admin/dashboard"  
           %li.page-scroll  
             = render 'layouts/frontend/nav_links_for_auth'    
 

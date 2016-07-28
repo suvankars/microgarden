@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   
   
   
+  get 'users/index'
+
   #get '/rides/:id/calendar' => 'frontend/rides#calendar'
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
@@ -27,7 +29,6 @@ Rails.application.routes.draw do
 
 
   namespace :frontend do
-    
     get 'home/index'
     get 'reservations/index'
     post 'reservations/create'
@@ -39,6 +40,10 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: "users/registrations" }                                
 
+  
+  resources :users do
+      get 'users', :on => :collection 
+  end
   devise_scope :user do
     get '/registrations/instruction' => 'users/registrations#instruction'
   end
