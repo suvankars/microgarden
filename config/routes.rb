@@ -8,13 +8,16 @@ Rails.application.routes.draw do
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
-    resources :riders
+    resources :riders do
+      get 'my_rider_profile', :on => :collection
+    end
     resources :owners
     resources :notifications
     resources :calendars, :only => [:index ]
     resources :rides do
       get 'search_index', :on => :collection 
       get 'get_rides', :on => :collection
+      get 'my_ride_offers', :on => :collection
        member do
         get 'show_ride'
         get 'calendar'
@@ -67,6 +70,7 @@ Rails.application.routes.draw do
   scope '/admin', :module => 'backend' do
       resources :riders
       resources :owners
+      resources :rides
       resources :sizes
       resources :tax_rates
       resources :brands

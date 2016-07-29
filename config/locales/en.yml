@@ -70,4 +70,7 @@ en:
   ride: 
     no_schedule: "You didn't scheduled any ride, please schedule your ride availability"
     schedule: "Create Schedule"
-    nearbys: "No body listed any workplace nearby you; Make you listing stand out"
+    nearbys: "No body listed any ride nearby you; Make you listing stand out"
+    no_ride_1_line: "You have not offered any ride yet, you could "
+    no_ride_2_line: " now"
+    new_ride: "Offer a Ride"

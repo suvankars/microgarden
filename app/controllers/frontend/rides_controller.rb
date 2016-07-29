@@ -1,5 +1,5 @@
 class Frontend::RidesController < FrontendController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:index, :show]
 
   before_action :set_ride, only: [:show_ride, :get_rides, :calendar, :show, :edit, :update, :destroy]
   
@@ -79,6 +79,17 @@ class Frontend::RidesController < FrontendController
 
   end
 
+  def my_ride_offers
+    if current_user.admin?
+      @rides = Ride.all
+    else
+      @rides = current_user.rides.all
+    end
+  end
+
+  def my_rides
+
+  end
   
 
   def get_rides

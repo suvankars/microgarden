@@ -7,6 +7,12 @@ class Frontend::RidersController < FrontendController
     @riders = Rider.all
   end
 
+  def my_rider_profile
+    #One User should have one rider profile only 
+    # TBD 
+    @rider = current_user.rider
+    render :show
+  end
   # GET /riders/1
   # GET /riders/1.json
   def show
@@ -16,6 +22,7 @@ class Frontend::RidersController < FrontendController
   # GET /riders/new
   def new
     @rider = Rider.new
+    @rider.user = current_user
   end
 
   # GET /riders/1/edit
@@ -26,16 +33,19 @@ class Frontend::RidersController < FrontendController
   # POST /riders.json
   def create
     @rider = Rider.new(rider_params)
+    @rider.user = current_user
     pictures = Rails.cache.read("images")
-    pictures.each do |picture|
-      case picture[:image_type]
-      
-      when "profile_pic"
-        @rider.profile_picture.push(picture)
-      when "documents"
-        @rider.id_proof_documents.push(picture)
-      else
-        "Why I see this??"
+    if pictures
+      pictures.each do |picture|
+        case picture[:image_type]
+        
+        when "profile_pic"
+          @rider.profile_picture.push(picture)
+        when "documents"
+          @rider.id_proof_documents.push(picture)
+        else
+          "Why I see this??"
+        end
       end
     end
 
@@ -98,6 +108,6 @@ class Frontend::RidersController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rider_params
-      params.require(:rider).permit(:first_name, :last_name, :email, :phone_number, :profile_picture, :address_line_1, :address_line2, :city, :state, :country, :pincode, :parmanent_address, :office_email, :id_proof_documents, :age, :height, :number_of_bike, :price_segment, :market_price, :reference, :reference_name, :reference_email, :reference_phone_number, :verified, :verification_comment, :verified_by)
+      params.require(:rider).permit(:user_id, :first_name, :last_name, :email, :phone_number, :profile_picture, :address_line_1, :address_line2, :city, :state, :country, :pincode, :parmanent_address, :office_email, :id_proof_documents, :age, :height, :number_of_bike, :price_segment, :market_price, :reference, :reference_name, :reference_email, :reference_phone_number, :verified, :verification_comment, :verified_by)
     end
 end

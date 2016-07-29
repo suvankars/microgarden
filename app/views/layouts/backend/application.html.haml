@@ -41,9 +41,9 @@
           %li
             %span.glyphicon.glyphicon-th-large
             = link_to "Categories", "/admin/categories"
-          %li
-            %span.glyphicon.glyphicon-cloud-upload
-            = link_to "Suppliers", "/admin/suppliers"
+          / %li
+          /   %span.glyphicon.glyphicon-cloud-upload
+          /   = link_to "Suppliers", "/admin/suppliers"
           / %li
           /   %span.glyphicon.glyphicon-star-empty
           /   = link_to "Brands", "/admin/brands"
@@ -75,8 +75,8 @@
                 %span.glyphicon.glyphicon-user
                 = link_to 'Owners', '/admin/owners' 
               %li
-                %span.glyphicon.glyphicon-user
-                = link_to 'Riders', rides_path          
+                %span.glyphicon.glyphicon-star-empty
+                = link_to 'Rides', '/admin/rides'          
           -else
             %li
               %span.glyphicon.glyphicon-log-in

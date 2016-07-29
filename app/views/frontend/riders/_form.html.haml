@@ -16,7 +16,7 @@
             .row
               .col-xs-12.col-sm-12.col-md-12.col-lg-5
                 %dl
-                  %dd= f.input :email
+                  %dd= f.input :email, :input_html => { :value => @rider.user.email }, readonly: true, hint: 'You cannot change your registered email.'
               .col-xs-12.col-sm-12.col-md-12.col-lg-5
                 %dl  
                   %dd= f.input :phone_number 

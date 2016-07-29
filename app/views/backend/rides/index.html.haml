@@ -1,0 +1,70 @@
+- model_class = Ride
+= content_for :header do
+  /%p.buttons= link_to t('.new', :default => t("helpers.links.new")), new_size_path, :class => 'btn btn-primary'
+  %h2=t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:title)
+      %th= model_class.human_attribute_name(:description)
+      %th= model_class.human_attribute_name(:rider_height)
+      %th= model_class.human_attribute_name(:frame_size)
+      %th= model_class.human_attribute_name(:additional_offerings)
+      %th= model_class.human_attribute_name(:number_of_workstations)
+      %th= model_class.human_attribute_name(:hourly_rental)
+      %th= model_class.human_attribute_name(:morning_rental)
+      %th= model_class.human_attribute_name(:evening_rental)
+      %th= model_class.human_attribute_name(:daily_rental)
+      %th= model_class.human_attribute_name(:weekly_rental)
+      %th= model_class.human_attribute_name(:address)
+      %th= model_class.human_attribute_name(:latitude)
+      %th= model_class.human_attribute_name(:longitude)
+      %th= model_class.human_attribute_name(:street)
+      %th= model_class.human_attribute_name(:city)
+      %th= model_class.human_attribute_name(:state)
+      %th= model_class.human_attribute_name(:country)
+      %th= model_class.human_attribute_name(:pincode)
+      %th= model_class.human_attribute_name(:landmark)
+      %th= model_class.human_attribute_name(:willing_to_deliver)
+      %th= model_class.human_attribute_name(:category_id)
+      %th= model_class.human_attribute_name(:subcategory_id)
+      /%th= model_class.human_attribute_name(:images)
+      %th= model_class.human_attribute_name(:user_id)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @rides.each do |ride|
+      %tr
+        %td= link_to ride.id, ride_path(ride)
+        %td= ride.title
+        %td= ride.description
+        %td= ride.rider_height
+        %td= ride.frame_size
+        %td= ride.additional_offerings
+        %td= ride.number_of_workstations
+        %td= ride.hourly_rental
+        %td= ride.morning_rental
+        %td= ride.evening_rental
+        %td= ride.daily_rental
+        %td= ride.weekly_rental
+        %td= ride.address
+        %td= ride.latitude
+        %td= ride.longitude
+        %td= ride.street
+        %td= ride.city
+        %td= ride.state
+        %td= ride.country
+        %td= ride.pincode
+        %td= ride.landmark
+        %td= ride.willing_to_deliver
+        %td= ride.category_id
+        %td= ride.subcategory_id
+        /%td= ride.images
+        %td= ride.user_id
+        %td=l ride.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_ride_path(ride), :class => 'btn btn-default btn-xs'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), ride_path(ride), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs btn-danger'
+
+= link_to t('.new', :default => t("helpers.links.new")), new_ride_path, :class => 'btn btn-primary'
