@@ -7,25 +7,28 @@
       %br
       /%hr.star-light.registration
   .row
-    .col-lg-4.col-lg-offset-2
-      %p.large
-        You must Register as
-        %b
-          Rider
-        before you can rent a ride
-      
-    .col-lg-4
-      %p.large
-        You must Register as
-        %b
-          Owner
-        before you can can list a ride
-     
-  .row  
-    .col-lg-4.col-lg-offset-2
-      = link_to "Register as Rider", new_rider_path, :class => "btn btn-lg btn-success btn-outline"
-    .col-lg-4
-      = link_to "Register as Owner", new_owner_path, :class => "btn btn-lg btn-success btn-outline"     
+    - if !current_user.is_rider?
+      .col-lg-4.col-lg-offset-2
+        %p.large
+          You must Register as
+          %b
+            Rider
+          before you can rent a ride
+    - if !current_user.is_owner?   
+      .col-lg-4
+        %p.large
+          You must Register as
+          %b
+            Owner
+          before you can can list a ride
+       
+  .row
+    - if !current_user.is_rider?
+      .col-lg-4.col-lg-offset-2
+        = link_to "Register as Rider", new_rider_path, :class => "btn btn-lg btn-success btn-outline"
+    - if !current_user.is_owner?  
+      .col-lg-4
+        = link_to "Register as Owner", new_owner_path, :class => "btn btn-lg btn-success btn-outline"     
   %br
   %br
   %br
@@ -35,4 +38,4 @@
       %p 
         Or 
         search near rides, as guest
-      = link_to "Search Rides", root_path, :class => "btn btn-info btn-outline"      
+      = link_to "Search Rides", root_path, :class => "btn btn-primary btn-outline"      

@@ -32,6 +32,8 @@
                   %ul#images
                     %span.status
                     .preview#profile_pic
+                    -if !@rider.profile_picture.nil?
+                      = render partial: 'profile_pic', rider: @rider 
                     -if !@rider.new_record?
                       = render partial: 'profile_pic', rider: @rider 
       
@@ -49,7 +51,7 @@
         %dl.third  
       .splitContainer  
         %dl.third  
-          %dd= f.input :pincode
+          %dd= f.input :pincode,  :as => "string"
         %dl.third  
           %dd= f.input :country
         %dl.third    
@@ -68,6 +70,10 @@
             .row#images
               %span.status 
               .preview.col-xs-12.col-sm-12.col-md-12.col-lg-12#documents
+              /Quick fix for profile copy
+              -if @rider.new_record?
+                -if !@rider.id_proof_documents .nil?
+                  = render partial: 'documents', rider: @rider 
               -if !@rider.new_record?
                 = render partial: 'documents', rider: @rider
     /= f.input :age

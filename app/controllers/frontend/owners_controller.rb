@@ -13,31 +13,83 @@ class Frontend::OwnersController < FrontendController
     @profile_picture = @owner.profile_picture.last["url"] if @owner.profile_picture?
   end
 
+  def my_owner_profile
+    if !current_user.owner.nil?
+      @owner = current_user.owner
+      @profile_picture = @owner.profile_picture.last["url"] if @owner.profile_picture?
+      render :show
+    else
+      render 'devise/registrations/instruction'
+    end
+  end
+
+  def copy_rider
+    rider_attrs = current_user.rider.attributes.reject{|r| r["id"]}
+    @owner = Owner.new(rider_attrs.select{ |key, _| Owner.attribute_names.include? key })
+    @owner.address_line_2 = current_user.rider.address_line2
+    #To show thumb nil in new form
+    @owner.profile_picture = current_user.rider.profile_picture
+    @owner.id_proof_documents = current_user.rider.id_proof_documents
+
+
+    #To send those images to "create" action
+    Rails.cache.write("profile_images", current_user.rider.profile_picture) 
+    Rails.cache.write("document_images", current_user.rider.id_proof_documents) 
+
+    @owner
+  end
+
   # GET /owners/new
   def new
-    @owner = Owner.new
+    if current_user.is_rider?
+      @owner = copy_rider
+    else
+      @owner = Owner.new  
+    end
+    @owner.user = current_user
   end
 
   # GET /owners/1/edit
   def edit
   end
 
+  def copy_images(owner)
+    profile_picture = Rails.cache.read("profile_images")
+    if profile_picture
+      owner.profile_picture.push(*profile_picture)
+      Rails.cache.delete('profile_images')
+    end
+      
+    document_images = Rails.cache.read("document_images")
+    if document_images
+      owner.id_proof_documents.push(*document_images)
+      Rails.cache.delete('document_images')
+    end
+    owner    
+  end
+
   # POST /owners
   # POST /owners.json
   def create
     @owner = Owner.new(owner_params)
+    @owner.user = current_user
     pictures = Rails.cache.read("images")
-    pictures.each do |picture|
-      case picture[:image_type]
-      
-      when "profile_pic"
-        @owner.profile_picture.push(picture)
-      when "documents"
-        @owner.id_proof_documents.push(picture)
-      else
-        "Why I see this??"
+    if pictures
+      pictures.each do |picture|
+        case picture[:image_type]
+        
+        when "profile_pic"
+          @owner.profile_picture.push(picture)
+        when "documents"
+          @owner.id_proof_documents.push(picture)
+        else
+          "Why I see this??"
+        end
       end
-    end
+    end  
+
+    #This is a quck fix for copy profile
+    @owner = copy_images(@owner)
 
     Rails.cache.delete('images')
     

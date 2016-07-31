@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729205432) do
+ActiveRecord::Schema.define(version: 20160731094327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,7 +119,10 @@ ActiveRecord::Schema.define(version: 20160729205432) do
     t.string   "verified_by"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "user_id"
   end
+
+  add_index "owners", ["user_id"], name: "index_owners_on_user_id", using: :btree
 
   create_table "product_fields", force: :cascade do |t|
     t.string   "name"
@@ -318,6 +321,7 @@ ActiveRecord::Schema.define(version: 20160729205432) do
   add_foreign_key "addresses", "suppliers"
   add_foreign_key "contacts", "suppliers"
   add_foreign_key "finances", "suppliers"
+  add_foreign_key "owners", "users"
   add_foreign_key "product_fields", "subcategories"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "sizes"

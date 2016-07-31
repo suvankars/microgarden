@@ -7,4 +7,15 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :rides
   has_one :rider
+  has_one :owner
+
+  
+  def is_owner?
+    #Is user had any associated owner profile it will be true
+    !self.owner.nil?
+  end
+  def is_rider?
+    #Is user had any associated rider profile it will be true
+    !self.rider.nil?
+  end
 end

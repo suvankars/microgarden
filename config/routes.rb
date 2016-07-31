@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     resources :riders do
       get 'my_rider_profile', :on => :collection
     end
-    resources :owners
+    resources :owners do
+      get 'my_owner_profile', :on => :collection
+    end
     resources :notifications
     resources :calendars, :only => [:index ]
     resources :rides do
