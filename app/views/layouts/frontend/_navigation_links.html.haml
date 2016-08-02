@@ -11,28 +11,30 @@
     %li.page-scroll
       = link_to 'Contact', "/#contact"
     - if user_signed_in?
-      %li.dropdown.page-scroll
-        %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-          = current_user.email
-          %span.caret
-        %ul.dropdown-menu
-          %li
-            = link_to 'My Offerd Ride', "/rides/my_ride_offers"
-          %li
-            = link_to 'My Rider Profile', "/riders/my_rider_profile"
-          %li
-            = link_to 'My Owner Profile', "/owners/my_owner_profile"  
-          %li
-            %a{:href => "#"} Something else here
-          %li.divider{:role => "separator"}
-          %li
-            = render 'layouts/frontend/nav_links_for_auth'
+      -if current_user.admin?  
+        %li.page-scroll
+          = link_to 'Dashboard', "/admin/dashboard" 
+      -else    
+        %li.dropdown.page-scroll
+          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            = current_user.email
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              = link_to 'My Offerd Ride', "/rides/my_ride_offers"
+            %li
+              = link_to 'My Rider Profile', "/riders/my_rider_profile"
+            %li
+              = link_to 'My Owner Profile', "/owners/my_owner_profile"  
+            %li
+              %a{:href => "#"} Something else here
+            %li.divider{:role => "separator"}
+            %li
+              = render 'layouts/frontend/nav_links_for_auth'
     - else
       %li.page-scroll
         = render 'layouts/frontend/nav_links_for_auth'           
-    -if current_user.present? && current_user.admin?  
-      %li.page-scroll
-        = link_to 'Dashboard', "/admin/dashboard"  
+     
         
     
     
