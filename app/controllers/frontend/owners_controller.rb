@@ -1,4 +1,5 @@
 class Frontend::OwnersController < FrontendController
+  load_and_authorize_resource
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   # GET /owners

@@ -1,7 +1,18 @@
-%h1 Editing Profile
+%br
+.row
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1
+  .col-xs-12.col-sm-12.col-md-12.col-lg-10
+  
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Edit My Profile
+      .panel-body
+        = render 'form'
+      .panel-footer.footer-action
+        = link_to t('rider.cancel'), riders_path(@rider), :class => 'btn btn-info'
+        /= link_to t('.back', :default => t("helpers.links.back")), registrations_instruction_path, :class => 'btn btn-info'
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1    
 
-= render 'form'
-
-= link_to 'Show', @rider
-\|
-= link_to 'Back', riders_path
+/= link_to 'Show', @rider
+/\|
+/= link_to 'Back', riders_path

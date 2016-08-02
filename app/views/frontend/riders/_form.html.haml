@@ -5,7 +5,7 @@
     = field_set_tag 'Personal Details' do 
       .splitContainer
         .row
-          .col-xs-12.col-sm-12.col-md-12.col-lg-8
+          .col-xs-12.col-sm-12.col-md-12.col-lg-7
             .row
               .col-xs-12.col-sm-12.col-md-12.col-lg-5
                 %dl
@@ -20,7 +20,7 @@
               .col-xs-12.col-sm-12.col-md-12.col-lg-5
                 %dl  
                   %dd= f.input :phone_number 
-          .col-xs-12.col-sm-12.col-md-12.col-lg-4
+          .col-xs-12.col-sm-12.col-md-12.col-lg-5
             %dl        
               = field_set_tag 'Profile Picture' do
                 %p Upload a clear picture of you
@@ -39,28 +39,36 @@
       
     = field_set_tag 'Where do you live?' do
       .splitContainer
-        %dl.half
-          %dd= f.input :address_line_1
-        %dl.half  
-          %dd= f.input :address_line2
-      .splitContainer    
-        %dl.third  
-          %dd= f.input :city
-        %dl.third
-          %dd= f.input :state
-        %dl.third  
-      .splitContainer  
-        %dl.third  
-          %dd= f.input :pincode,  :as => "string"
-        %dl.third  
-          %dd= f.input :country
-        %dl.third    
+        .row
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12
+            .row
+              .col-xs-12.col-sm-12.col-md-12.col-lg-7
+                %dl
+                  %dd= f.input :address_line_1
+              .col-xs-12.col-sm-12.col-md-12.col-lg-5
+                %dl  
+                  %dd= f.input :address_line2
+            .row
+              .col-xs-12.col-sm-12.col-md-12.col-lg-5
+                %dl
+                  %dd= f.input :city
+              .col-xs-12.col-sm-12.col-md-12.col-lg-5
+                %dl  
+                  %dd= f.input :state 
+            .row
+              .col-xs-12.col-sm-12.col-md-12.col-lg-5
+                %dl
+                  %dd= f.input :pincode
+              .col-xs-12.col-sm-12.col-md-12.col-lg-5
+                %dl  
+                  %dd= f.input :country           
+        
       %br  
       .splitContainer  
         /= f.input :parmanent_address
         /= f.input :office_email
         = field_set_tag 'Attach address proofs' do
-          %p Please attach scanned copy of gov. issued id proof and address proof
+          %p Please attach scanned copy of gov. issued id proof (PAN/Passport/DL/Aadhar) and address proof (Passport/DL/Aadhar)
           /DONT CHANGE ANY TAG NAME UNLESS UR ABSOLUTELY SURE
           /WAHT U R DOING, all those tag has hard dependency 
           %upload_image
@@ -78,25 +86,25 @@
                 = render partial: 'documents', rider: @rider
     /= f.input :age
     /= f.input :height
-    = field_set_tag 'Tell us about your bicycle' do 
-      .splitContainer
-        %dl.third
-          %dd= f.input :number_of_bike
-        %dl.third
-          %dd= f.input :price_segment
-        %dl.third  
-          %dd= f.input :market_price
-    /= f.input :reference
+    / = field_set_tag 'Tell us about your bicycle' do 
+    /   .splitContainer
+    /     %dl.third
+    /       %dd= f.input :number_of_bike
+    /     %dl.third
+    /       %dd= f.input :price_segment
+    /     %dl.third  
+    /       %dd= f.input :market_price
+    / /= f.input :reference
 
-    = field_set_tag 'Reference details' do
-      %p Only in case of emergency we may contact
-      .splitContainer
-        %dl.third
-          %dd= f.input :reference_name
-        %dl.third  
-          %dd= f.input :reference_email
-        %dl.third
-          %dd= f.input :reference_phone_number
+    / = field_set_tag 'Reference details' do
+    /   %p Only in case of emergency we may contact
+    /   .splitContainer
+    /     %dl.third
+    /       %dd= f.input :reference_name
+    /     %dl.third  
+    /       %dd= f.input :reference_email
+    /     %dl.third
+    /       %dd= f.input :reference_phone_number
 
     /= f.input :verified
     /= f.input :verification_comment

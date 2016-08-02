@@ -1,10 +1,15 @@
 class Frontend::RidersController < FrontendController
+  load_and_authorize_resource
   before_action :set_rider, only: [:show, :edit, :update, :destroy]
 
   # GET /riders
   # GET /riders.json
   def index
-    @riders = Rider.all
+    #if current_user.admin?
+      @riders = Rider.all
+    # else
+    #   @riders = current_user.rider
+    # end
   end
 
   def my_rider_profile

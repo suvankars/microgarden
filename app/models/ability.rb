@@ -10,8 +10,17 @@ class Ability
       #  binding.pry
         can :manage, :all
       else
-        can :manage, :all
-        cannot :manage, User
+        #can :manage, :all
+        #cannot :manage, User
+        
+        #can :read, Rider, :user_id => user.id
+        #cannot [:index], Rider
+        #can [:show, :update], Rider, :user_id => user.id
+        #cannot [:destroy], Rider
+
+        can :manage, Rider, :user_id => user.id
+        cannot [:index], Rider
+        can :manage, Owner, :user_id => user.id
         #can :manage, :all
         # can :manage, Product do |p|
         #     p.user == user
