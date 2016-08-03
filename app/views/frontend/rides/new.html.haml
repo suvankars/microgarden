@@ -1,4 +1,13 @@
-- model_class = Ride
-.page-header
-  %h1="Create a new Ride"
-= render :partial => "form"
+%br
+.row
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1
+  .col-xs-12.col-sm-12.col-md-12.col-lg-10
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Offer a Ride
+      .panel-body
+        = render 'form'
+        
+      .panel-footer.footer-action
+        = link_to t('.back', :default => t("helpers.links.back")), registrations_instruction_path, :class => 'btn btn-info'  
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1      

@@ -1,4 +1,15 @@
-- model_class = Owner
-.page-header
-  %h1=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
-= render :partial => "form"
+%br
+.row
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1
+  .col-xs-12.col-sm-12.col-md-12.col-lg-10
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title My Owner Profile
+      .panel-body
+        = render :partial => "form"
+        
+      .panel-footer.footer-action
+        = link_to t('.back', :default => t("helpers.links.back")), registrations_instruction_path, :class => 'btn btn-info'  
+  .col-xs-12.col-sm-12.col-md-12.col-lg-1    
+
+

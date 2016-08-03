@@ -1,17 +1,34 @@
 //For gmap auto complete
 
+
 $(function() {
   var completer;
 
   completer = new GmapsCompleter({
-    inputField: '#gmaps-input-address',
-    errorField: '#gmaps-error'
+    
+      mapElem: "#gmaps-canvas", 
+      zoomLevel: 4, 
+      mapType: google.maps.MapTypeId.ROADMAP,
+      pos: [20.5937, 78.9629],
+      inputField: '#gmaps-input-address',
+      errorField: '#gmaps-error',
+      debugOn: false
+    
 
   });
 
   completer.autoCompleteInit({
-    country: "in"
-  })
+  region: 'IN', 
+  country: 'India',
+  zoom : 21,
+  autocomplete: {
+    minLength: 2,
+    position: {
+      my: "center top",
+      at: "center bottom"
+    }
+  }
+});
 });
 
 
@@ -60,7 +77,7 @@ reRenderRideList = function(rides){
 
 //On Submit a search on map
 //Reposition all available rides on map and update ride-list
-$('#calendar').fullCalendar();
+
 $(function(){ 
   $("#ajax").click(function(){
     var valuesToSubmit = $('#gmaps-input-address').val();
@@ -82,6 +99,7 @@ $(function(){
 
 
 //For Schedule Calendar 
+$('#calendar').fullCalendar();
 var updateEvent;
 var display;
 var refetch_events_and_close_dialog;

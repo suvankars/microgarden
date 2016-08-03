@@ -13,23 +13,32 @@
 
   
   = field_set_tag 'Pickup address' do
-    = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-    #gmaps-canvas
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-6
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+      
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          #gmaps-canvas   
+      .col-xs-12.col-sm-12.col-md-12.col-lg-6
+        = f.input :landmark
+        = error_span(@ride[:landmark])  
+    
 
-    = f.input :landmark
-    = error_span(@ride[:landmark])
-  
   = field_set_tag 'Suitable Raider' do
     .splitContainer
-      %dl.third
-        %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
-        %dd= error_span(@ride[:rider_height])
-      %dl.third
-        %dd= f.input :number_of_workstations, :label => "Number of avilable Cycle", :prompt => 'Select Number of Available Cycle', :collection => WorkstationCount.all
-        %dd= error_span(@ride[:number_of_workstations])
-      %dl.third
-        %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
-        %dd= error_span(@ride[:frame_size])
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          %dl
+            %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
+            %dd= error_span(@ride[:rider_height])
+            / %dl.third
+            /   %dd= f.input :number_of_workstations, :label => "Number of avilable Cycle", :prompt => 'Select Number of Available Cycle', :collection => WorkstationCount.all
+            /   %dd= error_span(@ride[:number_of_workstations])
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          %dl
+            %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
+            %dd= error_span(@ride[:frame_size])
   / = field_set_tag 'Bicycle type' do    
   /   .splitContainer
   /     %dl.third
@@ -41,24 +50,29 @@
   /       %dd= error_span(@product[:brand])
             
   = field_set_tag 'Rental information' do    
-    .splitContainer
-      %dl.sixth
-        %dd= f.input :morning_rental
-        %dd= error_span(@ride[:morning_rental])
-      %dl.sixth
-        %dd= f.input :evening_rental
-        %dd= error_span(@ride[:evening_rental])
-      %dl.sixth
-        %dd= f.input :hourly_rental
-        %dd= error_span(@ride[:hourly_rental])
-      %dl.sixth
-        %dd= f.input :daily_rental
-        %dd= error_span(@ride[:daily_rental])  
-      %dl.sixth
-        %dd= f.input :weekly_rental
-        %dd= error_span(@ride[:weekly_rental])         
-      %dl
-        = f.input :willing_to_deliver
+    .row
+      .col-xs-6.col-sm-6.col-md-6.col-lg-3
+        %dl
+          %dd= f.input :morning_rental
+          %dd= error_span(@ride[:morning_rental])
+      .col-xs-6.col-sm-6.col-md-6.col-lg-3
+        %dl
+          %dd= f.input :evening_rental
+          %dd= error_span(@ride[:evening_rental])
+      .col-xs-6.col-sm-6.col-md-6.col-lg-2
+        %dl  
+          %dd= f.input :hourly_rental
+          %dd= error_span(@ride[:hourly_rental])
+      .col-xs-6.col-sm-6.col-md-6.col-lg-2
+        %dl
+          %dd= f.input :daily_rental
+          %dd= error_span(@ride[:daily_rental])  
+      .col-xs-6.col-sm-6.col-md-6.col-lg-2  
+        %dl
+          %dd= f.input :weekly_rental
+          %dd= error_span(@ride[:weekly_rental])         
+    %dl
+      = f.input :willing_to_deliver
  
   / = f.input :address
   / = error_span(@ride[:address])
@@ -93,17 +107,7 @@
 = cloudinary_js_config
 
 :javascript
-jQuery(function() {
-  var completer;
-  completer = new GmapsCompleter({
-    inputField: '#gmaps-input-address',
-    errorField: '#gmaps-error'
-  });
 
-  completer.autoCompleteInit({
-    country: "ind"
-  });
-});
 
 $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
 
