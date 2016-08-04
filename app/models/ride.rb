@@ -93,6 +93,15 @@ class Ride < ActiveRecord::Base
     schedules = self.schedules.where("start_time >=? AND end_time <= ?", pick_up_time, drop_of_time) 
     schedules.any? ? true : false
   end
+
+  def models
+    Choices['models']
+  end
+
+  def makes
+    Choices['makes']
+  end
+
 end
 
 

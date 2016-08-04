@@ -15,9 +15,7 @@
               %p
                 = model_class.human_attribute_name(:frame_size)
                 = @ride.frame_size.to_i.to_cm 
-              %p
-                = model_class.human_attribute_name(:number_of_workstations)
-                = @ride.number_of_workstations.to_i
+              
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
@@ -65,8 +63,20 @@
                   = @ride.frame_size    
               %li.list-group-item
                 %p
-                  %strong= model_class.human_attribute_name(:number_of_workstations) + ':'
-                  = @ride.number_of_workstations
+                  %strong= model_class.human_attribute_name(:make) + ':'
+                  = @ride.make
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:model) + ':'
+                  = @ride.model
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:purchase_year) + ':'
+                  = @ride.purchase_year
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:market_price) + ':'
+                  = @ride.market_price            
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:address) + ':'

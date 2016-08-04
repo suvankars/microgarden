@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 20160731094327) do
     t.string   "rider_height"
     t.string   "frame_size"
     t.string   "additional_offerings"
-    t.decimal  "number_of_workstations"
+    t.decimal  "number_of_bikes"
     t.decimal  "hourly_rental"
     t.decimal  "morning_rental"
     t.decimal  "evening_rental"
@@ -227,8 +227,13 @@ ActiveRecord::Schema.define(version: 20160731094327) do
     t.integer  "pincode"
     t.string   "landmark"
     t.boolean  "willing_to_deliver"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "make"
+    t.string   "model"
+    t.string   "purchase_year"
+    t.integer  "market_price"
+    t.string   "extras"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "category_id"
     t.integer  "subcategory_id"
     t.json     "images"

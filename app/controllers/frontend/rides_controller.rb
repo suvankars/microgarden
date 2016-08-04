@@ -210,7 +210,7 @@ class Frontend::RidesController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white ride through.
     def ride_params
-      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :number_of_workstations)
+      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :model, :purchase_year, :make, :market_price)
     end
 
     def default_category

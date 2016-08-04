@@ -25,20 +25,32 @@
         = error_span(@ride[:landmark])  
     
 
-  = field_set_tag 'Suitable Raider' do
+  = field_set_tag 'About Your Bike' do
     .splitContainer
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-6
           %dl
             %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
             %dd= error_span(@ride[:rider_height])
-            / %dl.third
-            /   %dd= f.input :number_of_workstations, :label => "Number of avilable Cycle", :prompt => 'Select Number of Available Cycle', :collection => WorkstationCount.all
-            /   %dd= error_span(@ride[:number_of_workstations])
         .col-xs-12.col-sm-12.col-md-12.col-lg-6
           %dl
             %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
             %dd= error_span(@ride[:frame_size])
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %dl
+            %dd= f.input :make, :prompt => 'Select Maker', :collection => @ride.makes
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %dl
+            %dd= f.input :model, :prompt => 'Select Model', :collection => @ride.models
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %d
+            %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2000..2016
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %dl
+            %dd= f.input :market_price      
+              
+              
   / = field_set_tag 'Bicycle type' do    
   /   .splitContainer
   /     %dl.third

@@ -52,3 +52,15 @@ price:
   - 300
   - 400
   - 500
+
+makes:
+ - Hero
+ - Solar
+ - Montra
+ - RAND
+ - BTWN
+
+models: 
+  - trek
+  - rock rider
+  - river side

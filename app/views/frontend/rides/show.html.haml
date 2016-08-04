@@ -15,9 +15,7 @@
               %p
                 = model_class.human_attribute_name(:frame_size)
                 = @ride.frame_size.to_i.to_cm
-              %p
-                = model_class.human_attribute_name(:number_of_workstations)
-                = @ride.number_of_workstations.to_i  
+               
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
