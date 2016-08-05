@@ -120,9 +120,9 @@ class Frontend::RidesController < FrontendController
       format.html {  }
       format.js {}
     end
-    max_available_seat = @ride.number_of_workstations
-    @workstations = (MIN_NO_SEAT..max_available_seat)
-    @default_number = @workstations.first
+    #max_available_seat = @ride.number_of_workstations
+    #@workstations = (MIN_NO_SEAT..max_available_seat)
+    #@default_number = @workstations.first
   end
 
   def show_ride
@@ -210,7 +210,7 @@ class Frontend::RidesController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white ride through.
     def ride_params
-      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :model, :purchase_year, :make, :market_price)
+      params.require(:ride).permit(:title, :description, :rider_height, :frame_size, :hourly_rental, :morning_rental, :evening_rental, :daily_rental, :weekly_rental, :willing_to_deliver, :address, :city, :state, :pincode, :landmark, :subcategory_id, :model, :purchase_year, :make, :market_price, :extras=>[])
     end
 
     def default_category

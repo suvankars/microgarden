@@ -15,6 +15,7 @@
  *= require_tree .
  *= require_self
  *= require freelancer
+ *= require bootstrap-multiselect
  */
 
 
@@ -33,7 +34,7 @@ p.buttons {
 }  
 
 #gmaps-canvas {
-  height: 400px;
+  height: 320px;
   
   -moz-box-shadow:    0px 0px 5px #ccc;
   -webkit-box-shadow: 0px 0px 5px #ccc;
@@ -84,7 +85,7 @@ fieldset {
     }
     dd {
         margin-bottom: 10px;
-        font-size: 1.2em;
+        font-size: 1em;
     }
     dl.third {
           width: 31%;
@@ -122,9 +123,9 @@ fieldset {
 .splitContainer {
     clear: both;
 }
-fieldset .description{
-  
-}
+
+
+
 
 #cont{
   margin: 0px;

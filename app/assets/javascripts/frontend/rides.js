@@ -502,10 +502,10 @@ computeRental = function(startTime, endTime, slotType){
 
 showRentalAmount = function(rentAmount){
   //Quick fix for no_of_ws selection
-  var elm = document.getElementById("ride_number_of_workstations");
-  var no_of_ws = Number(elm.options[elm.selectedIndex].value)
-  document.getElementById("ride-fare").innerHTML = rentAmount * no_of_ws;
-  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount * no_of_ws;
+  //var elm = document.getElementById("ride_number_of_workstations");
+  //var no_of_ws = Number(elm.options[elm.selectedIndex].value)
+  document.getElementById("ride-fare").innerHTML = rentAmount;
+  document.getElementById("total-fare").innerHTML = "Total: " + rentAmount;
 };
 
 showRentalBreakup = function(rentBreakups){

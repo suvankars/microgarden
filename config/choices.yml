@@ -30,17 +30,7 @@ workstations:
   - 6
   - 7
   - 8
-  - 10
-  - 12
-  - 14
-  - 16
-  - 18
-  - 20
-  - 22
-  - 24
-  - 26
-  - 28
-  - 30
+  
 
 price:  
   - 50
@@ -59,8 +49,18 @@ makes:
  - Montra
  - RAND
  - BTWN
+ - Others
 
 models: 
   - trek
   - rock rider
   - river side
+  - Others
+
+extras:
+  - Lock
+  - Helmet
+  - Lights
+  - Bell
+  - Reflectors
+  - Basket

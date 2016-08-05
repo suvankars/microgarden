@@ -33,6 +33,6 @@
 //= require freelancer
 //= require freelancer.min
 //= require jquery.easing.min
-
+//= require bootstrap-multiselect
 //= require_tree .
 

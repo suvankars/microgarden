@@ -27,7 +27,7 @@ class CreateRides < ActiveRecord::Migration
       t.string :model
       t.string :purchase_year
       t.integer :market_price
-      t.string :extras
+      t.string :extras, array: true, default: []
 
 
       t.timestamps null: false

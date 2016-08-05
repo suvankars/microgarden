@@ -76,7 +76,12 @@
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:market_price) + ':'
-                  = @ride.market_price            
+                  = @ride.market_price
+              %li.list-group-item
+                %p
+                  %strong= model_class.human_attribute_name(:extras) + ':'
+                  -@ride.extras.each do |extra|
+                    %p=extra                 
               %li.list-group-item
                 %p
                   %strong= model_class.human_attribute_name(:address) + ':'

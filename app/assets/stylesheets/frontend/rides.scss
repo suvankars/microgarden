@@ -14,6 +14,17 @@ li.list {
   height: 50px;
 }
 
+.btn-group{
+  display: block;
+}
+
+ul.multiselect-container.dropdown-menu {
+    background-color: rgb(250, 247, 255);
+}
+
+textarea#ride_description {
+    height: 353px;
+}
 .jumbotron {
     position: relative;
     //background: #000 url("jumbotron-bg.png") center center;

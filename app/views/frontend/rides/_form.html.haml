@@ -1,55 +1,67 @@
 = simple_form_for @ride, :html => { :class => 'form-horizontal' } do |f|
   = field_set_tag 'Describe your unique ride' do 
-    .splitContainer
-      %dl.large
-        %dd= f.input :title
-        %dd= error_span(@ride[:title])
-      %dl.sixth
-        %dd= f.input :subcategory_id, :label => "Bicycle type", :collection => @subcategories, :selected => @default_subcategory
-        %dd= error_span(@ride[:subcategory_id]) 
-    .description
-      = f.input :description
-      = error_span(@ride[:description])
-
-  
-  = field_set_tag 'Pickup address' do
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-6
+        %dl
+          %dd= f.input :title, :placeholder=>"Like 'Rock Rider' or '2016 Specialized Shiv'" 
+          %dd= error_span(@ride[:title])
+        %dl.description
+          %dd= f.input :description, :placeholder=>"Is this ride unique? Does it have any special components or parts? Renters want to know why they should rent your ride."
+          %dd= error_span(@ride[:description])
+
+      .col-xs-12.col-sm-12.col-md-12.col-lg-6
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          = f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-      
+          %dd= f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           #gmaps-canvas   
-      .col-xs-12.col-sm-12.col-md-12.col-lg-6
-        = f.input :landmark
-        = error_span(@ride[:landmark])  
-    
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          %dd= f.input :landmark
+          %dd= error_span(@ride[:landmark])  
+        
 
   = field_set_tag 'About Your Bike' do
     .splitContainer
       .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+        .col-xs-12.col-sm-12.col-md-12.col-lg-4
           %dl
-            %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
-            %dd= error_span(@ride[:rider_height])
-        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+            %dd= f.input :subcategory_id, :label => "Bicycle type", :collection => @subcategories, :selected => @default_subcategory
+            %dd= error_span(@ride[:subcategory_id])
+        .col-xs-12.col-sm-12.col-md-12.col-lg-4
           %dl
-            %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
-            %dd= error_span(@ride[:frame_size])
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-3
-          %dl
-            %dd= f.input :make, :prompt => 'Select Maker', :collection => @ride.makes
-        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+            %dd= f.input :make, :label => "Brand", :prompt => 'Select Brand', :collection => @ride.makes
+        .col-xs-12.col-sm-12.col-md-12.col-lg-4
           %dl
             %dd= f.input :model, :prompt => 'Select Model', :collection => @ride.models
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
-          %d
-            %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2000..2016
+        
+      .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
           %dl
-            %dd= f.input :market_price      
-              
+            %dd= f.input :rider_height, prompt: 'Select Rider Height', :collection => RiderHeight.all, :label_method => :to_ft_cm, :value_method => :length
+            %dd= error_span(@ride[:rider_height])
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %dl
+            %dd= f.input :frame_size, :prompt => 'Select Frame Size', :collection => FrameSize.all, :label_method => :to_cm, :value_method => :length
+            %dd= error_span(@ride[:frame_size])
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3  
+          %dl
+            %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2000..2016
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          .row
+            .input-group
+              %span#basic-addon1.input-group-addon @
+              .row
+                .col-md-6.search-box
+                  .input-group
+                    = f.input :market_price, :label => false, :class => "form-control", :aria_describedby => "basic-addon1", :placeholder => "Price"
+
+
+      .row
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          %dl
+            %dd= f.input :extras, :label => "Extras included in this ride", :prompt => 'Select Extras', :collection => @ride.included_extras, input_html: { multiple: true }
+                    
+                  
               
   / = field_set_tag 'Bicycle type' do    
   /   .splitContainer
@@ -63,23 +75,23 @@
             
   = field_set_tag 'Rental information' do    
     .row
-      .col-xs-6.col-sm-6.col-md-6.col-lg-3
+      .col-xs-6.col-sm-6.col-md-6.col-lg-4
         %dl
           %dd= f.input :morning_rental
           %dd= error_span(@ride[:morning_rental])
-      .col-xs-6.col-sm-6.col-md-6.col-lg-3
-        %dl
-          %dd= f.input :evening_rental
-          %dd= error_span(@ride[:evening_rental])
-      .col-xs-6.col-sm-6.col-md-6.col-lg-2
-        %dl  
-          %dd= f.input :hourly_rental
-          %dd= error_span(@ride[:hourly_rental])
-      .col-xs-6.col-sm-6.col-md-6.col-lg-2
+      / .col-xs-6.col-sm-6.col-md-6.col-lg-3
+      /   %dl
+      /     %dd= f.input :evening_rental
+      /     %dd= error_span(@ride[:evening_rental])
+      / .col-xs-6.col-sm-6.col-md-6.col-lg-2
+      /   %dl  
+      /     %dd= f.input :hourly_rental
+      /     %dd= error_span(@ride[:hourly_rental])
+      .col-xs-6.col-sm-6.col-md-6.col-lg-4
         %dl
           %dd= f.input :daily_rental
           %dd= error_span(@ride[:daily_rental])  
-      .col-xs-6.col-sm-6.col-md-6.col-lg-2  
+      .col-xs-6.col-sm-6.col-md-6.col-lg-4  
         %dl
           %dd= f.input :weekly_rental
           %dd= error_span(@ride[:weekly_rental])         
@@ -120,6 +132,11 @@
 
 :javascript
 
+$(document).ready(function() {
+  $('#ride_extras').multiselect({
+    includeSelectAllOption: true
+  });
+});
 
 $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
 

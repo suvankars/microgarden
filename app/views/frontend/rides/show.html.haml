@@ -101,12 +101,7 @@
                         .ride-body
                           %h4.media-heading= @ride.title
                           %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
-                    %hr
-                    #workstation_count
-                      -if @ride.number_of_workstations <= 0
-                        %p Housefull, please try other nearby locations
-                      -else  
-                        %dd= f.input :number_of_workstations, collection:@workstations, :selected => @default_number   
+                     
                     %hr      
                     .row
                       .col-lg-6.col-sm-6.col-md-6

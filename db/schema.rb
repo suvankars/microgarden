@@ -231,9 +231,9 @@ ActiveRecord::Schema.define(version: 20160731094327) do
     t.string   "model"
     t.string   "purchase_year"
     t.integer  "market_price"
-    t.string   "extras"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.string   "extras",               default: [],              array: true
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "category_id"
     t.integer  "subcategory_id"
     t.json     "images"

@@ -102,6 +102,9 @@ class Ride < ActiveRecord::Base
     Choices['makes']
   end
 
+  def included_extras
+    Choices['extras']
+  end
 end
 
 
