@@ -80,7 +80,7 @@
               .preview.col-xs-12.col-sm-12.col-md-12.col-lg-12#documents
               /Quick fix for profile copy
               -if @rider.new_record?
-                -if !@rider.id_proof_documents .nil?
+                -if !@rider.id_proof_documents.nil?
                   = render partial: 'documents', rider: @rider 
               -if !@rider.new_record?
                 = render partial: 'documents', rider: @rider

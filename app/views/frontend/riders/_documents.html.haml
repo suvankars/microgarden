@@ -1,6 +1,6 @@
 - if @rider.id_proof_documents.present?
   -@rider.id_proof_documents.each do |image|
-    .col-xs-6.col-md-2.col-sm-2.col-lg-
+    .col-xs-6.col-md-2.col-sm-2.col-lg-3
       .show_document_thumbnail{:id => image["public_id"]}
         = image_tag(image["thumbnail_url"])
         /PUKTIJAM for copy profile

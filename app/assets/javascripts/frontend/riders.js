@@ -2,7 +2,6 @@ $.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
 
 $(document).ready(function() {
   var uploaderElements = document.getElementsByTagName("upload_image");
- 
   for (var i=0; i < uploaderElements.length; i++){
     var element = uploaderElements[i]
     var uploadWidget = element.firstElementChild;

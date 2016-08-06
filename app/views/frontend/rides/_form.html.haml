@@ -22,17 +22,19 @@
   = field_set_tag 'About Your Bike' do
     .splitContainer
       .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-4
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
           %dl
             %dd= f.input :subcategory_id, :label => "Bicycle type", :collection => @subcategories, :selected => @default_subcategory
             %dd= error_span(@ride[:subcategory_id])
-        .col-xs-12.col-sm-12.col-md-12.col-lg-4
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
           %dl
             %dd= f.input :make, :label => "Brand", :prompt => 'Select Brand', :collection => @ride.makes
-        .col-xs-12.col-sm-12.col-md-12.col-lg-4
+        .col-xs-12.col-sm-12.col-md-12.col-lg-3
           %dl
             %dd= f.input :model, :prompt => 'Select Model', :collection => @ride.models
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
+          %dl
+            %dd= f.input :extras, :label => "Extras included in this ride", :collection => @ride.included_extras, input_html: { multiple: true }
         
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
@@ -47,19 +49,11 @@
           %dl
             %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2000..2016
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
-          .row
-            .input-group
-              %span#basic-addon1.input-group-addon @
-              .row
-                .col-md-6.search-box
-                  .input-group
-                    = f.input :market_price, :label => false, :class => "form-control", :aria_describedby => "basic-addon1", :placeholder => "Price"
-
-
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-6
-          %dl
-            %dd= f.input :extras, :label => "Extras included in this ride", :prompt => 'Select Extras', :collection => @ride.included_extras, input_html: { multiple: true }
+          %label{:for => "price_info"} Purchase Price
+          .input-group
+            %span#basic-addon3.input-group-addon ₹
+            = f.input_field :market_price, class: "form-control", :aria_describedby => "basic-addon3", :id => "price_info"
+   
                     
                   
               
@@ -76,9 +70,11 @@
   = field_set_tag 'Rental information' do    
     .row
       .col-xs-6.col-sm-6.col-md-6.col-lg-4
-        %dl
-          %dd= f.input :morning_rental
-          %dd= error_span(@ride[:morning_rental])
+        %label Morning Rental
+        .input-group
+          %span#basic-addon3.input-group-addon ₹
+          = f.input_field :morning_rental, class: "form-control", :aria_describedby => "basic-addon3"
+          = error_span(@ride[:morning_rental])
       / .col-xs-6.col-sm-6.col-md-6.col-lg-3
       /   %dl
       /     %dd= f.input :evening_rental
@@ -88,13 +84,17 @@
       /     %dd= f.input :hourly_rental
       /     %dd= error_span(@ride[:hourly_rental])
       .col-xs-6.col-sm-6.col-md-6.col-lg-4
-        %dl
-          %dd= f.input :daily_rental
-          %dd= error_span(@ride[:daily_rental])  
+        %label Daily Rental
+        .input-group
+          %span#basic-addon3.input-group-addon ₹
+          = f.input_field :daily_rental, class: "form-control", :aria_describedby => "basic-addon3"  
+          = error_span(@ride[:daily_rental])  
       .col-xs-6.col-sm-6.col-md-6.col-lg-4  
-        %dl
-          %dd= f.input :weekly_rental
-          %dd= error_span(@ride[:weekly_rental])         
+        %label Weekly Rental
+        .input-group
+          %span#basic-addon3.input-group-addon ₹
+          = f.input_field :weekly_rental, class: "form-control", :aria_describedby => "basic-addon3"
+          = error_span(@ride[:weekly_rental])         
     %dl
       = f.input :willing_to_deliver
  
@@ -110,14 +110,20 @@
   /1= error_span(@ride[:landmark])
 
   = field_set_tag 'Attach Images' do
-    %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload multiple images
-    %ul#images
-      %span.status 
-      .preview
-      -if !@ride.new_record?
-        = render partial: 'images', ride: @ride
-    
-  
+    %p Please attach scanned copy of gov. issued id proof (PAN/Passport/DL/Aadhar) and address proof (Passport/DL/Aadhar)
+    /DONT CHANGE ANY TAG NAME UNLESS UR ABSOLUTELY SURE
+    /WAHT U R DOING, all those tag has hard dependency 
+    %upload_image
+      %upload_widget_opener
+        %a.btn.btn-primary#upload_widget_opener{:href => "#"} Upload
+        %br 
+      .row#images
+        %span.status 
+        .preview.col-xs-12.col-sm-12.col-md-12.col-lg-12#cycle_images
+        -if !@ride.new_record?
+          = render partial: 'images', ride: @ride 
+
+   
   
   = f.button :submit, "List Ride", :class => 'btn-primary'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), rides_path, :class => 'btn btn-default'
@@ -137,149 +143,3 @@ $(document).ready(function() {
     includeSelectAllOption: true
   });
 });
-
-$.cloudinary.config({ cloud_name: 'dijs1yfba', api_key: '488196417269728'});
-
-
-  document.getElementById("upload_widget_opener").addEventListener("click", function() {
-
-    cloudinary.openUploadWidget({ cloud_name: 'dijs1yfba', upload_preset: 'sample_a3cb73f3e13fc75f53e20e800352e1b509ee1f7b'}, 
-      function(error, result) { console.log(error, result);
-      var preview = $(".preview");
-      $(".status").text("");
- 
-      var arrayLength = result.length;
-      for (var i = 0; i < arrayLength; i++) {
-        var imageMetadata = result[i];
-        
-        $.cloudinary.image(imageMetadata.public_id, {
-            format: result.format, width: 100, height: 100, crop: "fit"
-          }).appendTo(preview);
-
-           $('<a/>').
-          addClass('delete_by_token').
-          attr({href: '#'}).
-          html('&times;').
-          appendTo(preview).click(function() {
-            $.cloudinary.delete_by_token(imageMetadata.delete_token).done(function(){
-             
-              
-            }).fail(function() {
-                $('.status').text("Cannot delete image");
-              });
-        });
-      }
-      
-       
-      /*Make a function  How bad one can code, I wonder of myself:) */
-      var form_type = $("[class^=simple_form]").attr('id');
-      /*var action_path = '/images' + $("[class^=simple_form]").attr('action');*/
-      var resource_id = form_type.split('_').splice(-1)[0];
-      var action_path = "/images/park_images";
-      var request_type = "post";
-      var resource_type = "List";
-
-      if (form_type == "new_ride"){
-        request_type = "post";
-        resource_type = "List"
-      }
-
-      var json_data = { resource_type: resource_type, data_value: result }
-
-      var re = /edit_ride_\d+/i;
-      var edit_resource = form_type.match(re);
-      if (edit_resource){
-        var json_data = { id: resource_id, resource_type: resource_type, data_value: result }
-
-      }
-
-      $.ajax({
-        url : action_path,
-        type : request_type,
-        data : json_data
-      });
-
-
-      });
-
-  }, false);
-
-
-
-
-$(document).ready(function() {
-  console.log("page has loaded!");
-});
-
-  $(document).ready(function() {
-    /*
-    // Cloudinary jQuery integration library uses jQuery File Upload widget
-    // (see http://blueimp.github.io/jQuery-File-Upload/).
-    // Any file input field with cloudinary-fileupload class is automatically
-    // wrapped using the File Upload widget and configured for Cloudinary uploads.
-    // You can further customize the configuration using .fileupload method
-    // as we do below.*/
-    $(".cloudinary-fileupload")
-      .cloudinary_fileupload({
-        // Uncomment the following lines to enable client side image resizing and valiation.
-        // Make sure cloudinary/processing is included the js file
-        //disableImageResize: false,
-        //imageMaxWidth: 800,
-        //imageMaxHeight: 600,
-        //acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i,
-        //maxFileSize: 20000000, // 20MB
-        dropZone: "#direct_upload",
-        start: function (e) {
-          $(".status").text("Starting upload...");
-        },
-        progress: function (e, data) {
-          $(".status").text("Uploading... " + Math.round((data.loaded * 100.0) / data.total) + "%");
-        },
-        fail: function (e, data) {
-          $(".status").text("Upload failed");
-        }
-      })
-      .off("cloudinarydone").on("cloudinarydone", function (e, data) {
-        $("#photo_bytes").val(data.result.bytes);
-        $(".status").text("");
-        var preview = $(".preview").html('');
-        $.cloudinary.image(data.result.public_id, {
-          format: data.result.format, width: 50, height: 50, crop: "fit"
-        }).appendTo(preview);
-
-        $('<a/>').
-          addClass('delete_by_token').
-          attr({href: '#'}).
-          data({delete_token: data.result.delete_token}).
-          html('&times;').
-          appendTo(preview).
-          click(function(e) {
-            e.preventDefault();
-            $.cloudinary.delete_by_token($(this).data('delete_token')).done(function(){
-              $('.preview').html('');
-              $('#info').html('');
-              $("#photo_bytes").val('');
-              $('input[name="photo[image]"]').remove();
-              $('.status').text("Deleted image");
-            }).fail(function() {
-              $('.status').text("Cannot delete image");
-          });
-        });
-        view_upload_details(data.result);
-      });
-    });
-    
-    function view_upload_details(upload) {
-      // Build an html table out of the upload object
-      var rows = [];
-      $.each(upload, function(k,v){
-        rows.push(
-          $("<tr>")
-            .append($("<td>").text(k))
-            .append($("<td>").text(JSON.stringify(v))));
-      });
-      $("#info").html(
-        $("<div class=\"upload_details\">")
-          .append("<h2>Upload metadata:</h2>")
-          .append($("<table>").append(rows)));
-    }
