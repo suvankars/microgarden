@@ -104,7 +104,7 @@ var updateEvent;
 var display;
 var refetch_events_and_close_dialog;
 var show_resarvation_status;
-
+debugger;
 $(document).ready(function() {
   if(document.getElementById("ride-info")){
     var ride_id = $("#ride-info").data('ride').ride_id  
@@ -117,6 +117,7 @@ $(document).ready(function() {
     modal: true,
     buttons: {
         'Create event': function () {
+            debugger;
             $(this).dialog('close');
         },
         Cancel: function () {
@@ -155,6 +156,7 @@ $(document).ready(function() {
       resize(event, delta, revertFunc, jsEvent, ui, view);
     },
     eventClick: function(event, jsEvent, view){
+      debugger;
       console.log("Event click happened....")
       var path  = window.location.pathname;
       var regexp = /rides\/\d+$/;
@@ -173,7 +175,7 @@ $(document).ready(function() {
       display({ 
         starttime: new Date(startDate.toDate()), 
         endtime:   endDate.toDate(), 
-        allDay:    allDay 
+        allDay:    allDay
       })
     },
   });
@@ -200,6 +202,10 @@ destroy = function(action_url){
 },
 
 render= function(options){
+      debugger;
+      console.log(options['starttime']);
+
+      console.log(options['endtime']);
       $('#event_form').trigger('reset');
       
       var startTime = options['starttime']
@@ -698,28 +704,28 @@ show_resarvation_status = function (startTime, endTime, price){
   }
 
 //To Show the map in the ride details page
-$(document).ready(function() {
-    var lat = $("#bike_latitude").val();
-    var long = $("#bike_longitude").val();
-    var ride_title = $("#ride_title").text();
+// $(document).ready(function() {
+//     var lat = $("#bike_latitude").val();
+//     var long = $("#bike_longitude").val();
+//     var ride_title = $("#ride_title").text();
 
-    handler = Gmaps.build('Google');
-    handler.buildMap({ 
-    internal: {id: 'ride_marker'},
-    provider: {
-      zoom:15,
-    }
-    }, function(){
-    var marker = handler.addMarker({
-      lat: lat,
-      lng: long,
-      infowindow: ride_title
-    });
+//     handler = Gmaps.build('Google');
+//     handler.buildMap({ 
+//     internal: {id: 'ride_marker'},
+//     provider: {
+//       zoom:15,
+//     }
+//     }, function(){
+//     var marker = handler.addMarker({
+//       lat: lat,
+//       lng: long,
+//       infowindow: ride_title
+//     });
     
-      handler.map.centerOn(marker);
-    });
+//       handler.map.centerOn(marker);
+//     });
     
-  });    
+//   });    
 
 
 

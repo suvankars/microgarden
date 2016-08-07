@@ -3,7 +3,7 @@
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-6
         %dl
-          %dd= f.input :title, :placeholder=>"Like 'Rock Rider 5.0' or 'MERIDA MATTS 20 MD Bicycle'", :input_html => {:maxlength => 300}
+          %dd= f.input :title, :placeholder=>"Like 'Rock Rider 5.0' or 'MERIDA MATTS 20 MD Bicycle'", :input_html => {:maxlength => 30}
           %dd= error_span(@ride[:title])
         %dl.description
           %dd= f.input :description, :placeholder=>"Renters want to know why they should rent your ride.", :input_html => {:maxlength => 1000}
@@ -14,7 +14,7 @@
 
       .col-xs-12.col-sm-12.col-md-12.col-lg-6
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          %dd= f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
+          %dd= f.input :address, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing your location...'
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
           #gmaps-canvas   
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -50,7 +50,7 @@
             %dd= error_span(@ride[:frame_size])
         .col-xs-12.col-sm-12.col-md-12.col-lg-3  
           %dl
-            %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2000..2016
+            %dd= f.input :purchase_year, :prompt => 'Select Purchase Year', :collection => 2006..2016
         .col-xs-12.col-sm-12.col-md-12.col-lg-3
           %label{:for => "price_info"} Purchase Price
           .input-group
@@ -111,10 +111,10 @@
         %p.large Price Suggestions
         %p You choose your rental prices, but based on our suggestion 
         %p 1% of your bike price per day is a good starting point
-        %p Example: if your bike price is 1000/-
-        %p Rs. 100/day
-        %p Rs. 50/slot (3 hr or less) 
-        %p Rs. 600/week 
+        %p Example: if your bike price is 10000/-, our suggested rentals 
+        %p.large Rs. 100 /day
+        %p.large Rs. 50 /slot (3 hr or less) 
+        %p.large Rs. 600 /week 
         %p An 8 day rental is charged 1 week and 1 day                   
     / %dl
     /   = f.input :willing_to_deliver

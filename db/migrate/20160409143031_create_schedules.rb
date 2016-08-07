@@ -3,9 +3,11 @@ class CreateSchedules < ActiveRecord::Migration
     create_table :schedules do |t|
       t.datetime :start_time
       t.datetime :end_time
-      t.boolean :morning_ride
-      t.boolean :evening_ride
-      t.boolean :all_day
+      t.boolean :morning_ride, default: false
+      t.boolean :evening_ride, default: false
+      t.boolean :all_day, default: false
+      t.boolean :weekly_ride, default: false
+      t.boolean :custom_ride, default: false
       t.references :ride, index: true, foreign_key: true
 
       t.timestamps null: false

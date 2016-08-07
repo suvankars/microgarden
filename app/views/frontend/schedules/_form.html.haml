@@ -4,21 +4,22 @@
     #slot
       %span#cont
         = f.input :morning_ride
-        = error_span(@schedule[:morning_ride])
       %span#cont  
-        = f.input :evening_ride
-        = error_span(@schedule[:evening_ride])
+        = f.input :weekly_ride
+      %span#cont  
+        = f.input :custom_ride
 
     #allday  
-      = f.input :all_day
-      = error_span(@schedule[:all_day])
-  
-  = f.input :start_time
-  = error_span(@schedule[:start_time])
-  = f.input :end_time
-  = error_span(@schedule[:end_time])
+      = f.input :all_day, :label => 'Daily ride'
+  #custom-time
+    = f.input :start_time
+    = error_span(@schedule[:start_time])
+    = f.input :end_time
+    = error_span(@schedule[:end_time])
   
   %p
     = f.submit
     %span#creating_events.spinner{:style => "display:none;"} Creating, Please wait...
   %hr
+:javascript
+  $("#custom-time").hide()

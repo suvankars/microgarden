@@ -6,25 +6,39 @@
     = image_tag(image["url"])
 
   %h4= ride.title
-  %p= ride.description
-  %p
-    %strong= model_class.human_attribute_name(:rider_height) + ':'
-    = ride.rider_height
-  %p
-    %strong= model_class.human_attribute_name(:frame_size) + ':'
-    = ride.frame_size
-  %p
-    %strong= model_class.human_attribute_name(:hourly_rental) + ':'
-    = ride.hourly_rental
-  %p
-    %strong= model_class.human_attribute_name(:morning_rental) + ':'
-    = ride.morning_rental
-  %p
-    %strong= model_class.human_attribute_name(:evening_rental) + ':'
-    = ride.evening_rental
+  %p= simple_format(ride.description)
+  .row
+    .col-xs-12.col-sm-12.col-md-12.col-lg-6
+      .row
+        %span
+          %p.large
+            %strong= model_class.human_attribute_name(:rider_height) + ':'
+            = "#{ride.rider_height.to_i.to_feet} ( #{ride.rider_height.to_i.to_cm })"
+        %span
+          %p.large 
+            %strong= model_class.human_attribute_name(:frame_size) + ':'
+            = ride.frame_size.to_i.to_cm    
+    .col-xs-12.col-sm-12.col-md-12.col-lg-6
+      .row
+        %span
+          %p.large
+            %strong= model_class.human_attribute_name(:morning_rental) + ':'
+            = '₹' + ride.morning_rental.to_s + ' /slot'
+        %span
+          %p.large
+            %strong= model_class.human_attribute_name(:daily_rental) + ':'
+            = '₹' + ride.daily_rental.to_s + ' /day' 
+        %span
+          %p.large  
+            %strong= model_class.human_attribute_name(:weekly_rental) + ':'
+            = '₹' + ride.weekly_rental.to_s + ' /week'  
+    
+  / %p
+  /   %strong= model_class.human_attribute_name(:evening_rental) + ':'
+  /   = ride.evening_rental
   
 
-  = link_to t('.book', :default => t("helpers.links.book")), ride_path(ride), :class => 'btn btn-default'
+  = link_to t('ride.show_me'), ride_path(ride), :class => 'btn btn-default'
   = link_to "Close", "#", :id => 'close-expansion', :class => 'btn btn-default'
 
 :javascript

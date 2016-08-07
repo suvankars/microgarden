@@ -1,10 +1,13 @@
 class Schedule < ActiveRecord::Base
   belongs_to :ride
   
-  MORNING_START = 6
+  MORNING_START = 6  #(time)
   MORNING_END = 9
   EVENING_START = 16
   EVENING_END = 20
+  DAILY_START = 6
+  DAILY_END = 20
+  WEEK_DURATION = 6  #(6 day will add to start date)
 
   scope :between, -> (start_time, end_time) { where('
                 (start_time >= :start_time and end_time <= :end_time) or
@@ -34,12 +37,25 @@ class Schedule < ActiveRecord::Base
   end
 
   def set_morning_slot
+    binding.pry
     self.start_time = self.start_time.change({ hour: MORNING_START, min: 0, sec: 0 })
-    self.end_time = self.end_time.change({ hour: MORNING_END, min: 0, sec: 0 })
+    self.end_time = self.end_time.change({ day: self.start_time.day, hour: MORNING_END, min: 0, sec: 0 })
   end
 
   def set_evening_slot
     self.start_time = self.start_time.change({ hour: EVENING_START, min: 0, sec: 0 })
-    self.end_time = self.end_time.change({ hour: EVENING_END, min: 0, sec: 0 })
+    self.end_time = self.end_time.change({ day: self.start_time.day, hour: EVENING_END, min: 0, sec: 0 })
+  end
+
+  def set_daily_slot
+    self.start_time = self.start_time.change({ hour: DAILY_START, min: 0, sec: 0 })
+    self.end_time = self.end_time.change({day: self.start_time.day,  hour: DAILY_END, min: 0, sec: 0 })
+  end
+
+  def set_weekly_slot
+    binding.pry
+    self.start_time = self.start_time.change({ hour: DAILY_START, min: 0, sec: 0 })
+    after_a_week = self.start_time + WEEK_DURATION.days
+    self.end_time = self.end_time.change({day: after_a_week.day, month: after_a_week.month, year: after_a_week.year, hour: DAILY_END, min: 0, sec: 0 })
   end
 end

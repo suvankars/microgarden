@@ -247,12 +247,14 @@ ActiveRecord::Schema.define(version: 20160731094327) do
   create_table "schedules", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
-    t.boolean  "morning_ride"
-    t.boolean  "evening_ride"
-    t.boolean  "all_day"
+    t.boolean  "morning_ride", default: false
+    t.boolean  "evening_ride", default: false
+    t.boolean  "all_day",      default: false
+    t.boolean  "weekly_ride",  default: false
+    t.boolean  "custom_ride",  default: false
     t.integer  "ride_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "schedules", ["ride_id"], name: "index_schedules_on_ride_id", using: :btree

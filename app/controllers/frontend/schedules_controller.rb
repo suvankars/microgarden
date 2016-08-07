@@ -36,23 +36,27 @@ class Frontend::SchedulesController < FrontendController
     #TODO Clean it
     @schedule = @ride.schedules.new(schedule_params)
     morning_ride  = params[:schedule][:morning_ride]
-    evening_ride = params[:schedule][:evening_ride]
+    #evening_ride = params[:schedule][:evening_ride]
 
-    if (  morning_ride.to_bool and evening_ride.to_bool )
-      if ( create_slot(:morning, @ride.schedule.new(schedule_params)) and create_slot(:evening, @ride.schedule.new(schedule_params)) )
-        render nothing: true
-      else
-      end
+    # if (  morning_ride and evening_ride )
+    #   if ( create_slot(:morning, @ride.schedule.new(schedule_params)) and create_slot(:evening, @ride.schedule.new(schedule_params)) )
+    #     render nothing: true
+    #   else
+    #   end
+    
+    @schedule.set_morning_slot if params[:schedule][:morning_ride] 
+    @schedule.set_daily_slot if params[:schedule][:all_day]
+
+    #Start time end time will be same as daily ride for weekly ride
+    @schedule.set_weekly_slot if params[:schedule][:weekly_ride]
+
+    
+    if @schedule.save
+      render nothing: true
     else
-      @schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
-      @schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
-      
-      if @schedule.save
-        render nothing: true
-      else
-        render text: @schedule.errors.full_messages.to_sentence, status: 422
-      end
+      render text: @schedule.errors.full_messages.to_sentence, status: 422
     end
+    
   end
 
   def create_slot(slot_time, schedule )
@@ -73,14 +77,14 @@ class Frontend::SchedulesController < FrontendController
     respond_to do |format|
       if @schedule.update(schedule_params.except(:start_time, :end_time))
         
-        if @morning_ride.to_bool
+        if @morning_ride
           create_slot(:morning, @schedule )
-        elsif @evening_ride.to_bool
+        elsif @evening_ride
           create_slot(:evening, @schedule )
         end
 
-        #@schedule.set_morning_slot if params[:schedule][:morning_ride].to_bool 
-        #@schedule.set_evening_slot if params[:schedule][:evening_ride].to_bool
+        #@schedule.set_morning_slot if params[:schedule][:morning_ride] 
+        #@schedule.set_evening_slot if params[:schedule][:evening_ride]
         #@schedule.save
         #format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
         #format.json { render :show, status: :ok, location: @schedule }

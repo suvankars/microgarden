@@ -1,11 +1,48 @@
 - model_class = Ride
+%br
+#myCarousel.carousel.slide{"data-ride" => "carousel", "data-interval"=>"false"}
+  / Indicators
+  %ol.carousel-indicators
+    %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
+    %li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
+    %li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
+    %li{"data-slide-to" => "3", "data-target" => "#myCarousel"}
+  / Wrapper for slides
+  .carousel-inner{:role => "listbox"}
+    .item.active
+      %img{:alt => "Chania", :src => @cover_image}
+      .carousel-caption
+        %h3 Chania
+        %p The atmosphere in Chania has a touch of Florence and Venice.
+    .item
+      %img{:alt => "Chania", :src => @cover_imageg}
+      .carousel-caption
+        %h3 Chania
+        %p The atmosphere in Chania has a touch of Florence and Venice.
+    .item
+      %img{:alt => "Flower", :src => @cover_image}
+      .carousel-caption
+        %h3 Flowers
+        %p Beatiful flowers in Kolymbari, Crete.
+    .item
+      %img{:alt => "Flower", :src => @cover_image}
+      .carousel-caption
+        %h3 Flowers
+        %p Beatiful flowers in Kolymbari, Crete.
+  / Left and right controls
+  %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
+    %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
+    %span.sr-only Previous
+  %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+    %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+    %span.sr-only Next
 
 .jumbotron.jumbotron-md-cover.img-fluid{:style => "background-image: url(#{@cover_image});"}
   .ride-caption
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim#ride_title= model_class.human_attribute_name(@ride.title)
+          %h2#ride_title= word_wrap(@ride.title, line_width:20)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
@@ -19,9 +56,9 @@
         .col-xs-12.col-sm-4.col-md-4.col-lg-4
           #timer{"data-animated" => "FadeIn"}
             %p#message
-            #hours.timer_box
-              %h1= @ride.hourly_rental.to_i
-              %p= "/Hour"
+            / #hours.timer_box
+            /   %h1= @ride.hourly_rental.to_i
+            /   %p= "/Hour"
             #days.timer_box
               %h1= @ride.daily_rental.to_i 
               %p= "/Day"
@@ -35,26 +72,72 @@
 
 .container
   .row
-    .col-xs-12.col-sm-12.col-md-12.col-lg-12
+    .col-xs-12.col-sm-12.col-md-12.col-lg-12#ride_details_panel
       .row
         /Ride details
-        .col-xs-12.col-sm-12.col-md-12.col-lg-6
-          .panel.panel-info
-            .panel-heading
-              .row
-                .col-xs-12.col-sm-12.col-md-8.col-lg-8
-                  %h3
-                    Ride Details 
-                .col-xs-12.col-sm-12.col-md-4.col-lg-4
-                  .panel-action  
-                    = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
+        .col-xs-12.col-sm-12.col-md-12.col-lg-8
+          #exTab2
+            %ul.nav.nav-tabs
+              %li.active
+                %a{"data-toggle" => "tab", :href => "#1"} Description
+              %li
+                %a{"data-toggle" => "tab", :href => "#2"} Specification
+            .tab-content
+              #1.tab-pane.active
+                %p= simple_format(@ride.description)
+                %hr
+                %p.large Free extras included in this ride
+                .row
+                  -@ride.extras.delete_if(&:empty?).each do |extra|
+                    .col-xs-12.col-sm-12.col-md-4.col-lg-2
+                      %p.large#extra-stuff
+                        %kbd
+                          =extra
+                %hr           
+              #2.tab-pane
+                %ul.list-group
+                  %li.list-group-item
+                    %p
+                      %strong= model_class.human_attribute_name(:rider_height) + ':'
+                      = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+                  %li.list-group-item
+                    %p
+                      %strong= model_class.human_attribute_name(:frame_size) + ':'
+                      = @ride.frame_size.to_i.to_cm    
+                  %li.list-group-item
+                    %p
+                      %strong= "Brand" + ':'
+                      = @ride.make
+                  %li.list-group-item
+                    %p
+                      %strong= model_class.human_attribute_name(:model) + ':'
+                      = @ride.model
+               
+             
+
+          / .panel.panel-info
+          /   .panel-heading
+          /     .row
+          /       .col-xs-12.col-sm-12.col-md-8.col-lg-8
+          /         %h3
+          /           Ride Details 
+          /       .col-xs-12.col-sm-12.col-md-4.col-lg-4
+          /         .panel-action  
+          /           = link_to t('.back', :default => t("helpers.links.back")), rides_path, :class => 'btn btn-info'
   
-            .panel-body
-              %p= @ride.description
-            %ul.list-group
-              %li.list-group-item
-                %p= @ride.address
-        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          /   .panel-body
+          /     %p= simple_format(@ride.description)
+          /   /Extras 
+          /   %ul.list-group
+          /     %li.list-group-item
+          /       %p Free extras included in this ride
+          /       .row
+          /         -@ride.extras.delete_if(&:empty?).each do |extra|
+          /           .col-xs-12.col-sm-12.col-md-4.col-lg-2
+          /             %p.large#extra-stuff
+          /               %kbd
+          /                 =extra  
+        .col-xs-12.col-sm-12.col-md-12.col-lg-4
           /map
           %div
             #ride_marker
@@ -154,19 +237,19 @@
                         
                       #create_reservations
                         = button_to 'Book My Bike', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
-                       
+      /Owner Profile                 
       .row
         .col-xs-12.col-sm-6.col-md-12.col-lg-6
         .col-xs-12.col-sm-6.col-md-12.col-lg-6
           .panel.panel-default.panel-profile
             .panel-heading.no-padding
-              .profile-img-blur{:style => "background-image: url(#{@profile_picture});"}
+              .img-blur{:style => "background-image: url(#{@profile_picture});"}
 
               = link_to owner_path(@ride.user.owner), :class => "profile" do
                 = image_tag(@profile_picture, :class => "img-rounded pull-xs-left", :id => "owner_profile_pic")
             .panel-body    
               .panel-container
-                %h3=@ride.user.owner.first_name + " "+ @ride.user.owner.last_name
+                %h3="Posted by " + @ride.user.owner.first_name + " "+ @ride.user.owner.last_name
 
                 / .col-xs-12.col-sm-12.col-md-12.col-lg-8 
                 /   %h3= @ride.user.owner.first_name + " "+ @ride.user.owner.last_name

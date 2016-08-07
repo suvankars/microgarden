@@ -5,7 +5,7 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.title)
+          %h2#ride_title= word_wrap(@ride.title, line_width:20)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
