@@ -4,15 +4,18 @@ class Ability
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
-      user ||= User.new # guest user (not logged in)
+    user ||= User.new # guest user (not logged in)
 
-      if user.admin?
-      #  binding.pry
+    if user.admin?
+        #  binding.pry
         can :manage, :all
-      else
+
+    # elsif user.is_owner?
+    #     can :manage, Ride, :user_id => user.id
+    else
         #can :manage, :all
         #cannot :manage, User
-        
+
         #can :read, Rider, :user_id => user.id
         #cannot [:index], Rider
         #can [:show, :update], Rider, :user_id => user.id
@@ -21,11 +24,13 @@ class Ability
         can :manage, Rider, :user_id => user.id
         cannot [:index], Rider
         can :manage, Owner, :user_id => user.id
+        can :manage, Ride
+
         #can :manage, :all
         # can :manage, Product do |p|
         #     p.user == user
         # end  
-      end
+    end
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.

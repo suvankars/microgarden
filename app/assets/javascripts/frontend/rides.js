@@ -136,8 +136,9 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'month',
-    height: 600,
-    height: 600,
+    height: 400,
+
+     
     slotMinutes: 30,
     eventSources: [
       {
@@ -696,7 +697,29 @@ show_resarvation_status = function (startTime, endTime, price){
     console.log("A Slot has been booked")
   }
 
+//To Show the map in the ride details page
+$(document).ready(function() {
+    var lat = $("#bike_latitude").val();
+    var long = $("#bike_longitude").val();
+    var ride_title = $("#ride_title").text();
 
+    handler = Gmaps.build('Google');
+    handler.buildMap({ 
+    internal: {id: 'ride_marker'},
+    provider: {
+      zoom:15,
+    }
+    }, function(){
+    var marker = handler.addMarker({
+      lat: lat,
+      lng: long,
+      infowindow: ride_title
+    });
+    
+      handler.map.centerOn(marker);
+    });
+    
+  });    
 
 
 
@@ -1009,3 +1032,4 @@ $(document).ready(function() {
           .append($("<table>").append(rows)));
     }
 */
+

@@ -1,5 +1,8 @@
 class Frontend::RidesController < FrontendController
   before_filter :authenticate_user!, :except => [:index, :show]
+  
+
+  load_and_authorize_resource
 
   before_action :set_ride, only: [:show_ride, :get_rides, :calendar, :show, :edit, :update, :destroy]
   
@@ -7,6 +10,10 @@ class Frontend::RidesController < FrontendController
   DEFAULT_CATEGORY_NAME = "Bicycle"
   MIN_NO_SEAT = 1
   
+  def is_owner?
+    render 'devise/registrations/instruction' and return unless current_user.is_owner?
+  end
+
   def index
     #binding.pry
     # If search box is clicked without typing any address 
@@ -116,6 +123,7 @@ class Frontend::RidesController < FrontendController
     ) or return
 
     @cover_image = @ride.images.first["url"] if @ride.images?
+    @profile_picture = @ride.user.owner.profile_picture.last["url"] if @ride.user.owner.profile_picture?
     respond_to do |format|
       format.html {  }
       format.js {}
@@ -134,6 +142,7 @@ class Frontend::RidesController < FrontendController
 
 
   def new
+    is_owner?
     #TBD: refactor
     #Run rake db:seed to populate categories
 

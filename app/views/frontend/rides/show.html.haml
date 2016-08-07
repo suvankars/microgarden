@@ -5,7 +5,7 @@
     .container
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-          %h1.trim= model_class.human_attribute_name(@ride.title)
+          %h1.trim#ride_title= model_class.human_attribute_name(@ride.title)
           .hidden-xs.ride-details
             %h3= @ride.subcategory.name
             .measurement
@@ -35,9 +35,10 @@
 
 .container
   .row
-    .col-xs-12.col-sm-12.col-md-6.col-lg-6
+    .col-xs-12.col-sm-12.col-md-12.col-lg-12
       .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        /Ride details
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
           .panel.panel-info
             .panel-heading
               .row
@@ -53,109 +54,141 @@
             %ul.list-group
               %li.list-group-item
                 %p= @ride.address
-
-    / Resarvation             
-    .col-xs-12.col-sm-12.col-md-6.col-lg-6
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          /map
+          %div
+            #ride_marker
+            = hidden_field_tag 'bike_latitude', @ride.latitude
+            = hidden_field_tag 'bike_longitude', @ride.longitude
+    .col-xs-12.col-sm-12.col-md-12.col-lg-12
       .row
-        .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
-          .panel.panel-default.panel-picker.js-panel-picker
-            .panel-body
-              .panel-container.no-border
-                #after-reservation.pading-15
-                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                    .panel.panel-info
-                      .panel-heading
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          /calendar
+          .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12#revervaion-calendar
+              .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
+                .panel.panel-default.panel-picker.js-panel-picker
+                  .panel-body
+                    .panel-container.no-border
+                      #calendar
+          
+
+                
+        /Reservation
+        .col-xs-12.col-sm-12.col-md-12.col-lg-6
+          .row
+            .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
+              .panel.panel-default.panel-picker.js-panel-picker
+                .panel-body
+                  .panel-container.no-border
+                    #after-reservation.pading-15
+                      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                        .panel.panel-info
+                          .panel-heading
+                            .row
+                              .col-xs-12.col-sm-12.col-md-8.col-lg-8
+                                %p A ride has been booked for you :)
+                                %h3
+                                  Reservation Details 
+                              .col-xs-12.col-sm-12.col-md-4.col-lg-4
+                                .panel-action  
+                                  = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'btn btn-warn'
+                
+                          .panel-body
+                            %p= @ride.title
+                          %ul.list-group
+                            %li.list-group-item
+                              %label.info From:
+                              #ride-start-time
+                            %li.list-group-item  
+                              %label.info To:
+                              #ride-end-time
+                            %li.list-group-item
+                              %label.info Price:
+                              #ride-price
+                            %li.list-group-item    
+                              %p= @ride.address
+                    #reservation-details
+                      = simple_form_for @ride do |f|
+                        #ride_id{ :style => 'display: none' }= @ride.id
                         .row
-                          .col-xs-12.col-sm-12.col-md-8.col-lg-8
-                            %p A ride has been booked for you :)
-                            %h3
-                              Reservation Details 
-                          .col-xs-12.col-sm-12.col-md-4.col-lg-4
-                            .panel-action  
-                              = link_to t('.cancel', :default => t("helpers.links.cancel")), '#', :class => 'btn btn-warn'
-            
-                      .panel-body
-                        %p= @ride.title
-                      %ul.list-group
-                        %li.list-group-item
-                          %label.info From:
-                          #ride-start-time
-                        %li.list-group-item  
-                          %label.info To:
-                          #ride-end-time
-                        %li.list-group-item
-                          %label.info Price:
-                          #ride-price
-                        %li.list-group-item    
-                          %p= @ride.address
-                #reservation-details
-                  = simple_form_for @ride do |f|
-                    #ride_id{ :style => 'display: none' }= @ride.id
-                    .row
-                      .col-lg-6.col-sm-6.col-md-6
-                        .ride-image
-                        - if !@ride.images.nil?
-                          - image = @ride.images.first
-                          = image_tag(image["thumbnail_url"])
-                      .col-lg-6.col-sm-6.col-md-6
-                        .ride-body
-                          %h4.media-heading= @ride.title
-                          %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
-                     
-                    %hr      
-                    .row
-                      .col-lg-6.col-sm-6.col-md-6
-                        %label Pickup
-                        #schedule-start
-                      .col-lg-6.col-sm-6.col-md-6
-                        %label Drop
-                        #schedule-end
-                    %hr    
-                    .row
-                      %label Booking Duration
-                      #rent-duration
+                          .col-lg-6.col-sm-6.col-md-6
+                            .ride-image
+                            - if !@ride.images.nil?
+                              - image = @ride.images.first
+                              = image_tag(image["thumbnail_url"])
+                          .col-lg-6.col-sm-6.col-md-6
+                            .ride-body
+                              %h4.media-heading= @ride.title
+                              %h4= "#{@ride.subcategory.name} ( #{@ride.frame_size.to_i.to_cm} )"
+                         
+                        %hr      
+                        .row
+                          .col-lg-6.col-sm-6.col-md-6
+                            %label Pickup
+                            #schedule-start
+                          .col-lg-6.col-sm-6.col-md-6
+                            %label Drop
+                            #schedule-end
+                        %hr    
+                        .row
+                          %label Booking Duration
+                          #rent-duration
 
-                    %hr    
-                    .row 
-                      #address 
-                        %p= @ride.address
-                        %span.f-w100.size-12.help.pointer.blue{"data-original-title" => "", :onclick => "showModal('GVK One Mall (P3 parking)', '/map?lat=17.41910479096239&amp;lng=78.44821074977517&amp;title=GVK One Mall (P3 parking)');", :title => "sa"}(view map) 
-                    %hr    
-                    .row
-                      %label Price Details
-                      #ride-fare
-                    %hr    
-                    .row
-                      %label Price Breakups
-                      #fare-breakup
-                    .row
-                      #total-fare        
-                          
-                    
-                  #create_reservations
-                    = button_to 'Book My Bike', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
-                   
-
+                        %hr    
+                        .row 
+                          #address 
+                            %p= @ride.address
+                            %span.f-w100.size-12.help.pointer.blue{"data-original-title" => "", :onclick => "showModal('GVK One Mall (P3 parking)', '/map?lat=17.41910479096239&amp;lng=78.44821074977517&amp;title=GVK One Mall (P3 parking)');", :title => "sa"}(view map) 
+                        %hr    
+                        .row
+                          %label Price Details
+                          #ride-fare
+                        %hr    
+                        .row
+                          %label Price Breakups
+                          #fare-breakup
+                        .row
+                          #total-fare        
+                              
+                        
+                      #create_reservations
+                        = button_to 'Book My Bike', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
+                       
       .row
-        #revervaion-calendar
-          .col-xs-12.col-sm-6.col-md-12.col-lg-12.col-lg-push-0.col-md-push-0.col-sm-push-6.col-xs-push-0
-            .panel.panel-default.panel-picker.js-panel-picker
-              .panel-body
-                .panel-container.no-border
-                  #calendar
-                    / = form_for_filterrific @filterrific do |f|
-                    /   .row
-                    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /         %label Pickup
-                    /         = f.text_field :with_created_at_gte,
-                    /          :class => 'js-datepicker form-control'
-                    /   .row  
-                    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
-                    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-                    /         %label Drop
-                    /         = f.text_field :with_created_at_gte,
-                    /          :class => 'js-datepicker form-control'     
+        .col-xs-12.col-sm-6.col-md-12.col-lg-6
+        .col-xs-12.col-sm-6.col-md-12.col-lg-6
+          .panel.panel-default.panel-profile
+            .panel-heading.no-padding
+              .profile-img-blur{:style => "background-image: url(#{@profile_picture});"}
+
+              = link_to owner_path(@ride.user.owner), :class => "profile" do
+                = image_tag(@profile_picture, :class => "img-rounded pull-xs-left", :id => "owner_profile_pic")
+            .panel-body    
+              .panel-container
+                %h3=@ride.user.owner.first_name + " "+ @ride.user.owner.last_name
+
+                / .col-xs-12.col-sm-12.col-md-12.col-lg-8 
+                /   %h3= @ride.user.owner.first_name + " "+ @ride.user.owner.last_name
+                    
+                / .col-xs-12.col-sm-12.col-md-4.col-lg-4
+                /   .panel-action 
+                /     = link_to 'Edit', edit_rider_path(@rider), :class => 'btn btn-primary'
+
+      
+        / = form_for_filterrific @filterrific do |f|
+        /   .row
+        /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+        /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+        /         %label Pickup
+        /         = f.text_field :with_created_at_gte,
+        /          :class => 'js-datepicker form-control'
+        /   .row  
+        /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
+        /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
+        /         %label Drop
+        /         = f.text_field :with_created_at_gte,
+        /          :class => 'js-datepicker form-control'     
                     
     /   .container
     /     .col-md-5
@@ -185,9 +218,10 @@
 
 
 :javascript
+  $('#after-reservation').hide();
+  
 
-
-   $('#after-reservation').hide();
+   
 
   //For date picker in the filter 
   $('.js-datepicker').datepicker();

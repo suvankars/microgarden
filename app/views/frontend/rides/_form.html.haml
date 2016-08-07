@@ -3,11 +3,14 @@
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-6
         %dl
-          %dd= f.input :title, :placeholder=>"Like 'Rock Rider' or '2016 Specialized Shiv'" 
+          %dd= f.input :title, :placeholder=>"Like 'Rock Rider 5.0' or 'MERIDA MATTS 20 MD Bicycle'", :input_html => {:maxlength => 300}
           %dd= error_span(@ride[:title])
         %dl.description
-          %dd= f.input :description, :placeholder=>"Is this ride unique? Does it have any special components or parts? Renters want to know why they should rent your ride."
+          %dd= f.input :description, :placeholder=>"Renters want to know why they should rent your ride.", :input_html => {:maxlength => 1000}
           %dd= error_span(@ride[:description])
+          %dd
+            %span#description-count 0
+            characters used out of 1000
 
       .col-xs-12.col-sm-12.col-md-12.col-lg-6
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -53,7 +56,7 @@
           .input-group
             %span#basic-addon3.input-group-addon ₹
             = f.input_field :market_price, class: "form-control", :aria_describedby => "basic-addon3", :id => "price_info"
-   
+            
                     
                   
               
@@ -67,36 +70,54 @@
   /       %dd= f.input :brand_id, :label => "Brand", :collection => @brand_names, :selected => @default_brand
   /       %dd= error_span(@product[:brand])
             
-  = field_set_tag 'Rental information' do    
+  = field_set_tag 'Rental information' do
     .row
-      .col-xs-6.col-sm-6.col-md-6.col-lg-4
-        %label Morning Rental
-        .input-group
-          %span#basic-addon3.input-group-addon ₹
-          = f.input_field :morning_rental, class: "form-control", :aria_describedby => "basic-addon3"
-          = error_span(@ride[:morning_rental])
-      / .col-xs-6.col-sm-6.col-md-6.col-lg-3
-      /   %dl
-      /     %dd= f.input :evening_rental
-      /     %dd= error_span(@ride[:evening_rental])
-      / .col-xs-6.col-sm-6.col-md-6.col-lg-2
-      /   %dl  
-      /     %dd= f.input :hourly_rental
-      /     %dd= error_span(@ride[:hourly_rental])
-      .col-xs-6.col-sm-6.col-md-6.col-lg-4
-        %label Daily Rental
-        .input-group
-          %span#basic-addon3.input-group-addon ₹
-          = f.input_field :daily_rental, class: "form-control", :aria_describedby => "basic-addon3"  
-          = error_span(@ride[:daily_rental])  
-      .col-xs-6.col-sm-6.col-md-6.col-lg-4  
-        %label Weekly Rental
-        .input-group
-          %span#basic-addon3.input-group-addon ₹
-          = f.input_field :weekly_rental, class: "form-control", :aria_describedby => "basic-addon3"
-          = error_span(@ride[:weekly_rental])         
-    %dl
-      = f.input :willing_to_deliver
+    
+      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+        .row
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6
+            %label Morning Rental
+            .input-group
+              %span#basic-addon3.input-group-addon ₹
+              = f.input_field :morning_rental, class: "form-control", :aria_describedby => "basic-addon3"
+              = error_span(@ride[:morning_rental])
+              %span#basic-addon3.input-group-addon /slot
+              / .col-xs-6.col-sm-6.col-md-6.col-lg-3
+              /   %dl
+              /     %dd= f.input :evening_rental
+              /     %dd= error_span(@ride[:evening_rental])
+              / .col-xs-6.col-sm-6.col-md-6.col-lg-2
+              /   %dl  
+              /     %dd= f.input :hourly_rental
+              /     %dd= error_span(@ride[:hourly_rental])
+        .row
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6
+            %label Daily Rental
+            .input-group
+              %span#basic-addon3.input-group-addon ₹
+              = f.input_field :daily_rental, class: "form-control", :aria_describedby => "basic-addon3"  
+              = error_span(@ride[:daily_rental])
+              %span#basic-addon3.input-group-addon /day  
+        .row
+          .col-xs-6.col-sm-6.col-md-6.col-lg-6  
+            %label Weekly Rental
+            .input-group
+              %span#basic-addon3.input-group-addon ₹
+              = f.input_field :weekly_rental, class: "form-control", :aria_describedby => "basic-addon3"
+              = error_span(@ride[:weekly_rental])
+              %span#basic-addon3.input-group-addon /week
+      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+        %p Lower prices bring more ride requests. You can change your prices at any time. 
+        %p.large Price Suggestions
+        %p You choose your rental prices, but based on our suggestion 
+        %p 1% of your bike price per day is a good starting point
+        %p Example: if your bike price is 1000/-
+        %p Rs. 100/day
+        %p Rs. 50/slot (3 hr or less) 
+        %p Rs. 600/week 
+        %p An 8 day rental is charged 1 week and 1 day                   
+    / %dl
+    /   = f.input :willing_to_deliver
  
   / = f.input :address
   / = error_span(@ride[:address])
@@ -110,7 +131,7 @@
   /1= error_span(@ride[:landmark])
 
   = field_set_tag 'Attach Images' do
-    %p Please attach scanned copy of gov. issued id proof (PAN/Passport/DL/Aadhar) and address proof (Passport/DL/Aadhar)
+    %p Please upload few beautiful pictures of your Bicycle
     /DONT CHANGE ANY TAG NAME UNLESS UR ABSOLUTELY SURE
     /WAHT U R DOING, all those tag has hard dependency 
     %upload_image
@@ -141,5 +162,11 @@
 $(document).ready(function() {
   $('#ride_extras').multiselect({
     includeSelectAllOption: true
+  });
+
+  /* Description box word count*/
+  $("#ride_description").on("keyup", function(){
+    length = $(this).val().length;
+    $("#description-count").html(length);
   });
 });
