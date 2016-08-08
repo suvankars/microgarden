@@ -34,5 +34,10 @@
 //= require freelancer.min
 //= require jquery.easing.min
 //= require bootstrap-multiselect
+//= require ./rides/address-auto-complete
+//= require ./rides/reposition-markers
+//= require ./rides/make-resarvation
+//= require ./rides/compute-rental
+
 //= require_tree .
 

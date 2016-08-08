@@ -36,7 +36,8 @@ class Frontend::SchedulesController < FrontendController
     #TODO Clean it
     @schedule = @ride.schedules.new(schedule_params)
     morning_ride  = params[:schedule][:morning_ride]
-    #evening_ride = params[:schedule][:evening_ride]
+    all_day = params[:schedule][:all_day]
+    weekly_ride = params[:schedule][:weekly_ride]
 
     # if (  morning_ride and evening_ride )
     #   if ( create_slot(:morning, @ride.schedule.new(schedule_params)) and create_slot(:evening, @ride.schedule.new(schedule_params)) )
@@ -44,11 +45,9 @@ class Frontend::SchedulesController < FrontendController
     #   else
     #   end
     
-    @schedule.set_morning_slot if params[:schedule][:morning_ride] 
-    @schedule.set_daily_slot if params[:schedule][:all_day]
-
-    #Start time end time will be same as daily ride for weekly ride
-    @schedule.set_weekly_slot if params[:schedule][:weekly_ride]
+    @schedule.set_morning_slot if morning_ride.to_bool 
+    @schedule.set_daily_slot if all_day.to_bool
+    @schedule.set_weekly_slot if weekly_ride.to_bool
 
     
     if @schedule.save
