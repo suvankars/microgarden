@@ -6,12 +6,12 @@
         = f.input :morning_ride
       %span#cont  
         = f.input :weekly_ride
-      %span#cont  
+      %span#custom_ride
         = f.input :custom_ride
-
-    #allday  
-      = f.input :all_day, :label => 'Daily ride'
-  #custom-time
+      %span#cont
+        #allday  
+          = f.input :all_day, :label => 'Daily ride'
+  #custom_time{:style => "display:none"}
     = f.input :start_time
     = error_span(@schedule[:start_time])
     = f.input :end_time
@@ -22,4 +22,8 @@
     %span#creating_events.spinner{:style => "display:none;"} Creating, Please wait...
   %hr
 :javascript
-  $("#custom-time").hide()
+  
+
+  $('#custom_ride').change(function() {
+    $('#custom_time').toggle(this.checked);
+  });
