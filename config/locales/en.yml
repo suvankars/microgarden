@@ -76,3 +76,7 @@ en:
     new_ride: "Offer a Ride"
     cancel: Cancel
     show_me: "Show Me"
+    weekly_ride: "From 6:00 AM of first day to 8:00 PM of last day"
+    custom_ride: 'Select duration as you want'
+    daily_ride: '6:00 AM to 8:00 PM' 
+    morning_ride: '6:00 AM to 9:00 AM'  

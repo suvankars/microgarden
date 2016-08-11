@@ -243,11 +243,11 @@ showRental = function(startTime, endTime, slotType){
 getSlotType = function (schedule){
   // TBD Slot type should set by name rather than bool (in model)
   // Then could eliminate this nasty check
-
+  debugger;
   var slotType;
   if (schedule.morning_ride){
     slotType = "morning_slot";
-  } else if (schedule.evening_ride){
+  } else if (schedule.weekly_ride){
     slotType = "evening_slot";
   } else if (schedule.allDay){
     slotType = "all_day";
@@ -263,7 +263,7 @@ bookSlot = function(schedule){
   // and ploting 'em in the booking view
 
   var slotType = getSlotType(schedule);
-
+  debugger;
   var startTime = schedule.start;
   var endTime = schedule.end;
   showSchedule(startTime, endTime);

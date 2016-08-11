@@ -2,20 +2,30 @@
 = simple_form_for [@ride, @schedule], :html => { :class => 'form-horizontal' , id: 'event_form' } do |f|
   = field_set_tag 'Ride Slot' do
     #slot
-      %span#cont
-        = f.input :morning_ride
-      %span#cont  
-        = f.input :weekly_ride
-      %span#custom_ride
-        = f.input :custom_ride
-      %span#cont
-        #allday  
-          = f.input :all_day, :label => 'Daily ride'
+      .row
+        .col-xs-12.col-sm-8.col-md-8.col-lg-12
+          .col-xs-12.col-sm-8.col-md-8.col-lg-6
+            = f.input :morning_ride, hint: t('ride.morning_ride')
+          .col-xs-12.col-sm-8.col-md-8.col-lg-1
+          .col-xs-12.col-sm-8.col-md-8.col-lg-5
+            #allday  
+              = f.input :all_day, :label => 'Daily ride', hint: t('ride.daily_ride')
+      .row      
+        .col-xs-12.col-sm-8.col-md-8.col-lg-12
+          .col-xs-12.col-sm-8.col-md-8.col-lg-6
+            = f.input :weekly_ride, hint: t('ride.weekly_ride')
+          .col-xs-12.col-sm-8.col-md-8.col-lg-1   
+          .col-xs-12.col-sm-8.col-md-8.col-lg-5
+            #custom_ride
+              = f.input :custom_ride , hint: t('ride.custom_ride')
+  
   #custom_time{:style => "display:none"}
-    = f.input :start_time
-    = error_span(@schedule[:start_time])
-    = f.input :end_time
-    = error_span(@schedule[:end_time])
+    .row
+      .col-xs-12.col-sm-8.col-md-8.col-lg-12
+        = f.input :start_time
+    .row
+      .col-xs-12.col-sm-8.col-md-8.col-lg-12
+        = f.input :end_time
   
   %p
     = f.submit
@@ -27,3 +37,5 @@
   $('#custom_ride').change(function() {
     $('#custom_time').toggle(this.checked);
   });
+
+  

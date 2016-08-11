@@ -10,6 +10,19 @@ $(document).ready(function() {
   if(document.getElementById("ride-info")){
     var ride_id = $("#ride-info").data('ride').ride_id  
   }
+
+  set_default_date_time = function(moment, selector, default_hour){
+      moment.setHours(default_hour);
+      moment.setMinutes(0);
+      var $year = $('#' + selector + '_1i'), $month = $( '#' + selector + '_2i');
+      var $day = $('#' + selector + '_3i'), $hour = $( '#' + selector + '_4i'), $minute = $('#' + selector + '_5i')
+      
+      $year.val(moment.getFullYear());                // select the year in dro down
+      $month.prop('selectedIndex', moment.getMonth());// select the month getMonth() method is zero indexed
+      $day.prop('selectedIndex', moment.getDate()-1); // select date the index of the day
+      $hour.prop('selectedIndex', moment.getHours());
+      $minute.prop('selectedIndex', moment.getMinutes());
+  }
   
   var dialog_form = $('<div id="dialog-form">Loading form...</div>').dialog({
     autoOpen: false,
@@ -41,7 +54,7 @@ $(document).ready(function() {
     height: 400,
 
      
-    slotMinutes: 30,
+    slotMinutes: 60,
     eventSources: [
       {
         url: '/rides/' + ride_id + '/get_rides'
@@ -73,9 +86,10 @@ $(document).ready(function() {
       
     },
     select: function( startDate, endDate, allDay, jsEvent, view ) {
+      debugger;
       display({ 
-        starttime: new Date(startDate.toDate()), 
-        endtime:   endDate.toDate(), 
+        starttime: startDate.toDate(), 
+        endtime:   startDate.toDate(), 
         allDay:    allDay
       })
     },
@@ -103,37 +117,20 @@ destroy = function(action_url){
 },
 
 render= function(options){
-      debugger;
-      console.log(options['starttime']);
-      console.log(options['endtime']);
-
-      $('#event_form').trigger('reset');
+      //Setting default date time in the start_time and end_time 
+      // field for new schedule form (in the partial _form.haml.html)
       
-      var startTime = options['starttime']
-      var endTime = options['endtime'];
-      var type = '#schedule_start_time';
-      var time = startTime
-      var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
-      $year.val(time.getFullYear());
-      $month.prop('selectedIndex', time.getUTCMonth());
-      $day.prop('selectedIndex', time.getUTCDate() - 1);
-      $hour.prop('selectedIndex', time.getUTCHours());
-      $minute.prop('selectedIndex', time.getUTCMinutes());
-
-      var type = '#schedule_end_time';
-      var time = endTime;
-      var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
-      console.log($year.val(time.getFullYear()));
-      $year.val(time.getFullYear());
-      $month.prop('selectedIndex', time.getMonth());
-      $day.prop('selectedIndex', time.getDate() - 1);
-      $hour.prop('selectedIndex', time.getUTCHours());
-      $minute.prop('selectedIndex', time.getUTCMinutes());
+      $('#event_form').trigger('reset');
+    
+      
+      set_default_date_time(options['starttime'], 'schedule_start_time', 6)
+      set_default_date_time(options['starttime'], 'schedule_end_time', 20)
+      
 
       $('#create_event_dialog').dialog({
-        title: 'New Event',
+        title: 'New Schedule',
         modal: true,
-        width: 500,
+        width: 525,
         close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
       });
 },

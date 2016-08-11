@@ -144,7 +144,7 @@ class Frontend::SchedulesController < FrontendController
 
     # Never trust parameters from the scary internet, only allow the white ride through.
     def schedule_params
-      params.require(:schedule).permit(:start_time, :end_time, :morning_ride, :evening_ride, :all_day)
+      params.require(:schedule).permit(:start_time, :end_time, :morning_ride, :evening_ride, :all_day, :weekly_ride, :custom_ride)
     end
 
     def delta_to_time(event_time)

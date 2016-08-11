@@ -1,6 +1,6 @@
 - model_class = Ride
 %br
-#myCarousel.carousel.slide{"data-ride" => "carousel", "data-interval"=>"false"}
+.jumbotron.jumbotron-md-cover.img-fluid#myCarousel.carousel.slide{"data-ride" => "carousel", "data-interval"=>"false"}
   / Indicators
   %ol.carousel-indicators
     %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
@@ -14,21 +14,13 @@
       .carousel-caption
         %h3 Chania
         %p The atmosphere in Chania has a touch of Florence and Venice.
-    .item
-      %img{:alt => "Chania", :src => @cover_imageg}
-      .carousel-caption
-        %h3 Chania
-        %p The atmosphere in Chania has a touch of Florence and Venice.
-    .item
-      %img{:alt => "Flower", :src => @cover_image}
-      .carousel-caption
-        %h3 Flowers
-        %p Beatiful flowers in Kolymbari, Crete.
-    .item
-      %img{:alt => "Flower", :src => @cover_image}
-      .carousel-caption
-        %h3 Flowers
-        %p Beatiful flowers in Kolymbari, Crete.
+    -@ride.images.each do |img|   
+      .item
+        %img{:alt => "Chania", :src => img[:url]}
+        .carousel-caption
+          %h3 Chania
+          %p The atmosphere in Chania has a touch of Florence and Venice.
+    
   / Left and right controls
   %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
     %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}

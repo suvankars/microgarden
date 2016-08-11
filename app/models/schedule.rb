@@ -25,8 +25,8 @@ class Schedule < ActiveRecord::Base
       {
         :id => self.id,
         :title => ride.title,
-        :start => start_time.rfc822,
-        :end => end_time.rfc822,
+        :start => self.start_time.rfc822,
+        :end => self.end_time.rfc822,
         :recurring => false,
         :allDay => self.all_day,
         :morning_ride => self.morning_ride,
