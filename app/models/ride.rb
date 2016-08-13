@@ -105,6 +105,10 @@ class Ride < ActiveRecord::Base
   def included_extras
     Choices['extras']
   end
+
+  def image_urls
+    self.images.map {|image| image["url"]}
+  end
 end
 
 
