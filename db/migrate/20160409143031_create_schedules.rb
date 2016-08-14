@@ -8,6 +8,8 @@ class CreateSchedules < ActiveRecord::Migration
       t.boolean :all_day, default: false
       t.boolean :weekly_ride, default: false
       t.boolean :custom_ride, default: false
+      t.boolean :booked, default: false
+
       t.references :ride, index: true, foreign_key: true
 
       t.timestamps null: false

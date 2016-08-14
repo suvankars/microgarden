@@ -61,7 +61,7 @@ showDuration = function(startTime, endTime){
 };
 
 onDemandDuration = function(startTime, endTime, breakups){
-  //debugger
+  debugger
   // Once get the duration of hour, day, week of rent,
   // Retrive rate of each type rent duration and calculate the Rent
   // Rent calculation is easy: multiply each duration by corresponding duration 
@@ -76,50 +76,60 @@ onDemandDuration = function(startTime, endTime, breakups){
   // }
  
   var duration = computeDuration(startTime, endTime);   
-  var hours = duration.hours;
-  var days = duration.days;
-  var weeks = duration.weeks;
-
   var rent = 0;
 
-  if (hours.between(1, 24)){
+  if (duration.hours.between(3, 24)){
+    duration.days = duration.days + 1
+    duration.hours = 0;
+  };
+
+  if (duration.days == 7){
+    duration.weeks = duration.weeks + 1;
+    duration.days = 0;
+  }
+
+
+
+  if (duration.hours.between(1, 3)){
     //Per hour rate applicable ==> change to daily rate 
     //Now it will chargable for as a day TBD  
-    var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
+    var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
     var rent = rent + (rate * 1); 
     
     
     breakups.custom.hours =  {
-      duration: hours.humaines(hours, "hour"),
-      unit: "hour",
+      duration: duration.hours.humaines(duration.hours, "hour"),
+      unit: "slot",
       rate: rate,
-      rent: (rate * hours)
+      rent: (rate * duration.hours)
     };
   }
-  if (days.between(1, 6)){
+  
+  if (duration.days.between(1, 6)){
     // get Daily rate from the dom
+    debugger;
     var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
-    var rent = rent + (rate * days);
+    var rent = rent + (rate * duration.days);
    
     breakups.custom.days =  {
-      duration: days.humaines(days, "day"),
+      duration: duration.days.humaines(duration.days, "day"),
       unit: "day",
       rate: rate,
-      rent: (rate * days)
+      rent: (rate * duration.days)
     };
   }
-  if (weeks.between(1, 500)){
+  if (duration.weeks.between(1, 500)){
     // 500 weeks is just a large number; a work arround, unless max limit is set
     // need to limit maximum booking duation
     // Weekly rate
     var rate = parseInt( document.getElementById("weekly").getElementsByTagName('h1')[0].textContent );
-    var rent = rent + (rate * weeks);
+    var rent = rent + (rate * duration.weeks);
 
     breakups.custom.weeks =  {
-      duration: weeks.humaines(weeks, "week"),
+      duration: duration.weeks.humaines(duration.weeks, "week"),
       unit: "week",
       rate: rate,
-      rent: (rate * weeks)
+      rent: (rate * duration.weeks)
     };
   }
   
@@ -168,15 +178,21 @@ computeRental = function(startTime, endTime, slotType){
         rent: rent
       };
       break;
-    case "all_day":
-      var duration = computeDuration(startTime, endTime);
-      
+    case "daily_slot":
+    debugger;
+      /*var duration = computeDuration(startTime, endTime);*/
+      // As per rule daily_slot time is 6 am to 8 pm
+      // of the same day
+      // So we will consider duration as 1 day, if slot type is "daily_slot"
+      // 14 hour duration is considered as 1 day  
+      var duration = 1 //day
+
       var rate = parseInt( document.getElementById("days").getElementsByTagName('h1')[0].textContent );
-      var rent = duration.days*rate;
+      var rent = duration*rate;
 
       var slotType = breakups.all_day = {};
       slotType.day =  {
-        duration: duration.days.humaines(duration.days, "day"), 
+        duration: duration.humaines(duration, "day"), 
         unit: "day",
         rate: rate,
         rent: rent
@@ -249,13 +265,16 @@ getSlotType = function (schedule){
     slotType = "morning_slot";
   } else if (schedule.weekly_ride){
     slotType = "evening_slot";
-  } else if (schedule.allDay){
-    slotType = "all_day";
+  } else if (schedule.daily_ride){
+    slotType = "daily_slot";
   } else {
     slotType = "custom";
   }
   return slotType;
 };
+setScheduleID = function(id){
+  document.getElementById("schedule_id").innerHTML = id;
+}
 
 bookSlot = function(schedule){
   console.log(schedule)
@@ -263,9 +282,9 @@ bookSlot = function(schedule){
   // and ploting 'em in the booking view
 
   var slotType = getSlotType(schedule);
-  debugger;
   var startTime = schedule.start;
   var endTime = schedule.end;
+  setScheduleID(schedule.id);
   showSchedule(startTime, endTime);
   showDuration(startTime, endTime);
   showRental(startTime, endTime, slotType);

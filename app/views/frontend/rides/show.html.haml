@@ -29,9 +29,9 @@
           #slot.timer_box
             %h1= @ride.morning_rental.to_i 
             %p= "/Slot"
-            /#weekly.timer_box 
-            /  %h1= @ride.weekly_rental.to_i 
-            /%p= "/Week"     
+          #weekly.timer_box 
+            %h1= @ride.weekly_rental.to_i 
+            %p= "/Week"     
 /   / Indicators
 /   %ol.carousel-indicators
 /     %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
@@ -218,6 +218,7 @@
                     #reservation-details
                       = simple_form_for @ride do |f|
                         #ride_id{ :style => 'display: none' }= @ride.id
+                        #schedule_id{ :style => 'display: none' }= @ride.id
                         .row
                           .col-lg-6.col-sm-6.col-md-6
                             .ride-image

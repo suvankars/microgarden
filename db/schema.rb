@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 20160731094327) do
     t.boolean  "all_day",      default: false
     t.boolean  "weekly_ride",  default: false
     t.boolean  "custom_ride",  default: false
+    t.boolean  "booked",       default: false
     t.integer  "ride_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false

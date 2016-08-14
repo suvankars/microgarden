@@ -31,8 +31,7 @@ $(document).ready(function() {
     modal: true,
     buttons: {
         'Create event': function () {
-            debugger;
-            $(this).dialog('close');
+             $(this).dialog('close');
         },
         Cancel: function () {
             $(this).dialog('close');
@@ -63,6 +62,7 @@ $(document).ready(function() {
     timeFormat: 'h:mm',
     dragOpacity: "0.5",
 
+
     eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ){
       move(event, delta, revertFunc, jsEvent, ui, view);
     },
@@ -70,7 +70,6 @@ $(document).ready(function() {
       resize(event, delta, revertFunc, jsEvent, ui, view);
     },
     eventClick: function(event, jsEvent, view){
-      debugger;
       console.log("Event click happened....")
       var path  = window.location.pathname;
       var regexp = /rides\/\d+$/;
@@ -86,7 +85,6 @@ $(document).ready(function() {
       
     },
     select: function( startDate, endDate, allDay, jsEvent, view ) {
-      debugger;
       display({ 
         starttime: startDate.toDate(), 
         endtime:   startDate.toDate(), 

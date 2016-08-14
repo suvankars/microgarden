@@ -10,9 +10,7 @@ class Frontend::RidesController < FrontendController
   DEFAULT_CATEGORY_NAME = "Bicycle"
   MIN_NO_SEAT = 1
   
-  def is_owner?
-    render 'devise/registrations/instruction' and return unless current_user.is_owner?
-  end
+  
 
   def index
     #binding.pry
@@ -102,7 +100,7 @@ class Frontend::RidesController < FrontendController
   def get_rides
     events = []
     schedules = @ride.schedules.between(params[:start], params[:end])
-
+    schedules = schedules.select { |s| !s.booked  }
     schedules.each do |schedule|
       events << schedule.format(@ride)
     end
@@ -142,7 +140,7 @@ class Frontend::RidesController < FrontendController
 
 
   def new
-    is_owner?
+    _user_is_owner?
     #TBD: refactor
     #Run rake db:seed to populate categories
 
@@ -159,6 +157,7 @@ class Frontend::RidesController < FrontendController
   end
 
   def calendar
+    _user_is_owner?
     
   end
 
@@ -209,6 +208,10 @@ class Frontend::RidesController < FrontendController
       format.html { redirect_to root_path, notice: 'Listing was successfully destroyed.' }
       format.js {}
     end
+  end
+
+  def _user_is_owner?
+    render 'devise/registrations/instruction' and return unless current_user.is_owner?
   end
 
   private
