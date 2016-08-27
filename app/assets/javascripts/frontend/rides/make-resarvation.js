@@ -27,7 +27,10 @@ $(document).ready(function(){
       url: '/frontend/reservations/create',
       beforeSend: show_spinner,
       complete: hide_spinner,
-      success: show_resarvation_status(startTime, endTime, price),
+      success: function(){
+        show_resarvation_status(startTime, endTime, price);
+        refetch_events();
+      },
       error: handle_error
     });
 
@@ -49,11 +52,16 @@ $(document).ready(function(){
 
 
 show_resarvation_status = function (startTime, endTime, price){
+    debugger
     $('#after-reservation').show();
     $("#reservation-details").hide();
     //$("#revervaion-calendar").hide();
+    //$("#revervaion-calendar").load(location.href + " #revervaion-calendar");
+    //$//('#calendar').fullCalendar()
+    //$("#revervaion-calendar").load(location.href + " #calendar");
     //var msg = "<h3>A Slot has been booked for you<h3> </br> from " + startTime + " "  + endTime;
     //$("#reservation-details").replaceWith( msg );
+
     $('#ride-start-time').text(startTime);
     $('#ride-end-time').text(endTime);
     $('#ride-price').text(price);

@@ -22,7 +22,7 @@ class Schedule < ActiveRecord::Base
 
 
   def format(ride)
-      {
+      schedule_hash = {
         :id => self.id,
         :title => ride.title,
         :start => self.start_time.iso8601,
@@ -31,10 +31,19 @@ class Schedule < ActiveRecord::Base
         #:allDay => self.all_day,
         :daily_ride => self.all_day,
         :morning_ride => self.morning_ride,
-        :evening_ride => self.evening_ride
+        :evening_ride => self.evening_ride,
+        :weekly_ride => self.weekly_ride,
+        :booked => self.booked,
         #:url => Rails.application.routes.url_helpers.ride_schedule_path(ride, self)
-        #:color => "red"
+        :color => "#71A805"
       }
+      if self.booked 
+        schedule_hash[:color] = "rgba(233, 167, 0, 0.70);"
+      end
+      if self.start_time < Time.now 
+        schedule_hash[:color] = "red"
+      end
+      schedule_hash
   end
 
   def set_morning_slot

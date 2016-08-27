@@ -36,7 +36,7 @@ class Ability
         can [:update, :show_ride, :my_ride_offers], Ride, :user_id => user.id
         #cannot [:edit, :destroy], Ride, :user_id => user.id      
 
-        #can :manage, :all
+        can :manage, :all
         # can :manage, Product do |p|
         #     p.user == user
         # end  

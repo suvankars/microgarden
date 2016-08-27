@@ -1,12 +1,22 @@
+
+
 //For Schedule Calendar 
+
+
 $('#calendar').fullCalendar();
 var updateEvent;
 var display;
 var refetch_events_and_close_dialog;
+var refetch_events;
 var show_resarvation_status;
 
 //Initialized full callender 
 $(document).ready(function() {
+
+  //By default "book my bike" button will be disabled
+  // When user will select a ride, it will be enabled
+  //document.getElementById("book_my_bike").disabled = true;
+
   if(document.getElementById("ride-info")){
     var ride_id = $("#ride-info").data('ride').ride_id  
   }
@@ -50,9 +60,7 @@ $(document).ready(function() {
       right: 'month,agendaWeek,agendaDay'
     },
     defaultView: 'month',
-    height: 400,
-
-     
+    height: 400,   
     slotMinutes: 60,
     eventSources: [
       {
@@ -74,30 +82,71 @@ $(document).ready(function() {
       var path  = window.location.pathname;
       var regexp = /rides\/\d+$/;
       var booking_page = path.match(regexp)
+      debugger;
+      var upcoming_event = ( event.start >= moment() );
       if (booking_page){
-        console.log("Going to Book the Slot")
-        bookSlot(event);
+        if(event.booked){
+          alert("Alredy booked");
+          return false;
+        }
+        if (!upcoming_event){
+          alert("Expired schedule, try upcoming events");
+          return false;
+        }
+        if (!event.booked && upcoming_event) {
+          console.log("Going to Book the Slot")
+          bookSlot(event);
+          return false;
+        }
       } else {
         console.log("Going to Update the Event")
+        
         updateEventDetails(event);
       }
 
       
     },
+    dayRender: function (date, cell) {
+        var previous_day = moment().add(-1, 'days')
+        if (date < previous_day) {
+            $(cell).addClass('disabled_events');
+        }
+    },
     select: function( startDate, endDate, allDay, jsEvent, view ) {
-      display({ 
-        starttime: startDate.toDate(), 
-        endtime:   startDate.toDate(), 
-        allDay:    allDay
-      })
+      //Disable all day before today
+      if(startDate.isBefore(moment())) {
+        $('#calendar').fullCalendar('unselect');
+        return false;
+      }
+      debugger;
+      var path  = window.location.pathname;
+      var regexp = /rides\/\d+\/calendar$/;
+      var calendar_page = path.match(regexp)
+      if (calendar_page){
+        display({ 
+          starttime: startDate.toDate(), 
+          endtime:   startDate.toDate(), 
+          allDay:    allDay
+        })
+      }
     },
   });
 });
 
 refetch_events_and_close_dialog = function (){
-      $('#calendar').fullCalendar('refetchEvents');
-      $('.dialog:visible').dialog('destroy');
-    }
+  $('#calendar').fullCalendar('refetchEvents');
+  $('.dialog:visible').dialog('destroy');
+}
+
+refetch_events = function (){
+  $('#calendar').fullCalendar('refetchEvents');
+  //$('.dialog:visible').dialog('destroy');
+}
+
+toogle_reservation_form = function (){
+  $('#after-reservation').hide();
+  $("#reservation-details").show();
+}
 
 display = function(options) {
   $('#event_form').remove('');
@@ -114,19 +163,62 @@ destroy = function(action_url){
   });
 },
 
+set_day_in_header = function(startTime){
+  var selected_day = moment(startTime).format('DD MMMM');
+  var title = 'New Schedule ' + '  |  '+ selected_day;
+  return title;
+}
+
+get_existing_events =function(options){
+  var startDay = moment(options['starttime']).format('YYYY-d-mm');
+  var endDay = moment(options['endtime']).format('YYYY-d-mm');
+
+  return $.ajax({
+      url: '/rides/' + 18 + '/get_rides' + "?start="+ startDay + "end=" + endDay
+  });
+}
+
+disable_chekbox = function(element_id) {
+  var element = document.getElementById(element_id)
+  if (element){
+    element.disabled= true;
+  }  
+}
+
+find_events_on_selected_day = function(options){
+      debugger;
+      var today = moment(options['starttime']).format('YYYY-MM-DD'); 
+      //get all event in client side's memory 
+      var events = $('#calendar').fullCalendar('clientEvents')
+      for (i in events) { 
+        if ((events[i].start.format('YYYY-MM-DD') <= today) && (events[i].end.format('YYYY-MM-DD') >= today)){
+          if (events[i].morning_ride){
+            disable_chekbox("schedule_morning_ride");
+            disable_chekbox("edit_schedule_morning_ride");
+          }
+          if (events[i].daily_ride){
+            disable_chekbox("schedule_all_day");
+            disable_chekbox("edit_schedule_all_day");
+          }
+          if (events[i].weekly_ride){
+            disable_chekbox("schedule_weekly_ride");
+          }
+         }
+      };  
+}
+
 render= function(options){
+      find_events_on_selected_day(options)
+
+      $('#event_form').trigger('reset');
       //Setting default date time in the start_time and end_time 
       // field for new schedule form (in the partial _form.haml.html)
       
-      $('#event_form').trigger('reset');
-    
-      
-      set_default_date_time(options['starttime'], 'schedule_start_time', 6)
-      set_default_date_time(options['starttime'], 'schedule_end_time', 20)
-      
+      set_default_date_time(options['starttime'], 'schedule_start_time', 6) //By default start time is 6am
+      set_default_date_time(options['starttime'], 'schedule_end_time', 20) // end time is 8 pm
 
       $('#create_event_dialog').dialog({
-        title: 'New Schedule',
+        title: set_day_in_header(options['starttime']),
         modal: true,
         width: 525,
         close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
@@ -201,12 +293,18 @@ resize = function(the_event, delta, revertFunc, jsEvent, ui, view ) {
 
 
 
-renderUpdateForm = function(){
-
+updateEditForm = function(schedule){
+  debugger;
+  options = { 
+          starttime: schedule.start.toDate(), 
+          endtime:   schedule.end.toDate()
+        }
+  find_events_on_selected_day(options);
 };
 
 
 updateEventDetails = function(schedule){
+  debugger;
   var ride_id = $("#ride-info").data('ride').ride_id 
   $.ajax({
         type: 'GET',
@@ -214,15 +312,16 @@ updateEventDetails = function(schedule){
         async: true,
         url : "/rides/" + ride_id + "/schedules/" + schedule.id + "/edit",
 
-        success: function(){ renderUpdateForm() }
+        success: function(){ updateEditForm(schedule) }
   });
-  
+  debugger;
   $('#event_desc_dialog').dialog({
         title: "Update Schedules",
         modal: true,
         width: 500,
         close: function(event, ui){ $('#event_desc_dialog').html(''); $('#event_desc_dialog').dialog('destroy') }
-  }); 
+  });
+
 }  
 
 $(document).ready(function(){

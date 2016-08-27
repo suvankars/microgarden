@@ -218,7 +218,8 @@
                     #reservation-details
                       = simple_form_for @ride do |f|
                         #ride_id{ :style => 'display: none' }= @ride.id
-                        #schedule_id{ :style => 'display: none' }= @ride.id
+                        //Schedule id Will be over ride by compute-rental js
+                        #schedule_id{ :style => 'display: none' }= ''
                         .row
                           .col-lg-6.col-sm-6.col-md-6
                             .ride-image
@@ -261,7 +262,7 @@
                               
                         
                       #create_reservations
-                        = button_to 'Book My Bike', frontend_reservations_create_path, :class => 'btn btn-success btn-block'
+                        = button_to 'Book My Bike', frontend_reservations_create_path, :class => 'btn btn-success btn-block', :id => 'book_my_bike'
       /Owner Profile                 
       .row
         .col-xs-12.col-sm-6.col-md-12.col-lg-6

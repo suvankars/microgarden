@@ -5,19 +5,19 @@
       .row
         .col-xs-12.col-sm-8.col-md-8.col-lg-12
           .col-xs-12.col-sm-8.col-md-8.col-lg-6
-            = f.input :morning_ride, hint: t('ride.morning_ride')
+            = f.input :morning_ride, hint: t('ride.morning_ride'), :input_html => { :class => 'ride' }
           .col-xs-12.col-sm-8.col-md-8.col-lg-1
           .col-xs-12.col-sm-8.col-md-8.col-lg-5
             #allday  
-              = f.input :all_day, :label => 'Daily ride', hint: t('ride.daily_ride')
+              = f.input :all_day, :label => 'Daily ride', hint: t('ride.daily_ride'), :input_html => { :class => 'ride' }
       .row      
         .col-xs-12.col-sm-8.col-md-8.col-lg-12
           .col-xs-12.col-sm-8.col-md-8.col-lg-6
-            = f.input :weekly_ride, hint: t('ride.weekly_ride')
+            = f.input :weekly_ride, hint: t('ride.weekly_ride'), :input_html => { :class => 'ride' }
           .col-xs-12.col-sm-8.col-md-8.col-lg-1   
           .col-xs-12.col-sm-8.col-md-8.col-lg-5
             #custom_ride
-              = f.input :custom_ride , hint: t('ride.custom_ride')
+              = f.input :custom_ride , hint: t('ride.custom_ride'), :input_html => { :class => 'ride' }
   
   #custom_time{:style => "display:none"}
     .row
@@ -33,9 +33,17 @@
   %hr
 :javascript
   
-
+  //Ha ha there is a bug,  :)
+  // Select custom ride, then select other ride, then uncheck cstm ride, toogle will not work
+  
   $('#custom_ride').change(function() {
     $('#custom_time').toggle(this.checked);
+  });
+
+  $(document).ready(function(){
+    $('input.ride').on('change', function() {
+      $('input.ride').not(this).prop('checked', false);  
+    });
   });
 
   

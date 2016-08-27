@@ -1,21 +1,31 @@
 = simple_form_for [ride, schedule], :html => { :class => 'form-horizontal' , id: 'modify_form' } do |f|
   = field_set_tag 'Ride Slot' do
     #slot
-      %span#cont.ride
-        = f.input :morning_ride, :input_html => { :class => 'ride' }
-        = error_span(schedule[:morning_ride])
-      %span#cont.ride  
-        = f.input :evening_ride, :input_html => { :class => 'ride' }
-        = error_span(schedule[:evening_ride])
-
-    #allday  
-      = f.input :all_day, :input_html => { :class => 'ride' }
-      = error_span(schedule[:all_day])
+      .row
+        .col-xs-12.col-sm-8.col-md-8.col-lg-12
+          .col-xs-12.col-sm-8.col-md-8.col-lg-6
+            = f.input :morning_ride, hint: t('ride.morning_ride'), :input_html => { :class => 'edit_ride', :id => 'edit_schedule_morning_ride'  }
+          .col-xs-12.col-sm-8.col-md-8.col-lg-1
+          .col-xs-12.col-sm-8.col-md-8.col-lg-5
+            #allday  
+              = f.input :all_day, :label => 'Daily ride', hint: t('ride.daily_ride'), :input_html => { :class => 'edit_ride', :id => 'edit_schedule_all_day' }
+      .row      
+        .col-xs-12.col-sm-8.col-md-8.col-lg-12
+          .col-xs-12.col-sm-8.col-md-8.col-lg-6
+            = f.input :weekly_ride, hint: t('ride.weekly_ride'), :input_html => { :class => 'ride', :id => 'edit_schedule_weekly_ride' }
+          .col-xs-12.col-sm-8.col-md-8.col-lg-1   
+          .col-xs-12.col-sm-8.col-md-8.col-lg-5
+            #custom_ride
+              = f.input :custom_ride , hint: t('ride.custom_ride'), :input_html => { :class => 'ride' }
   
-  = f.input :start_time
-  = error_span(schedule[:start_time])
-  = f.input :end_time
-  = error_span(schedule[:end_time])
+  #custom_time{:style => "display:none"}
+    .row
+      .col-xs-12.col-sm-8.col-md-8.col-lg-12
+        = f.input :start_time
+    .row
+      .col-xs-12.col-sm-8.col-md-8.col-lg-12
+        = f.input :end_time
+    
   
   = link_to 'Delete', 'javascript:void()', id: 'delete_schedule', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
   %p
@@ -35,6 +45,10 @@ $(document).ready(function(){
       var action_url = document.getElementById('modify_form').action
       destroy(action_url);
       event.preventDefault();
+  });
+
+  $('#custom_ride').change(function() {
+    $('#custom_time').toggle(this.checked);
   });
 });
 

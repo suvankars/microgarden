@@ -100,7 +100,7 @@ class Frontend::RidesController < FrontendController
   def get_rides
     events = []
     schedules = @ride.schedules.between(params[:start], params[:end])
-    schedules = schedules.select { |s| !s.booked  }
+    #schedules = schedules.select { |s| !s.booked  }
     schedules.each do |schedule|
       events << schedule.format(@ride)
     end

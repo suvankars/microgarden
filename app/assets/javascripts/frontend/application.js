@@ -38,6 +38,7 @@
 //= require ./rides/reposition-markers
 //= require ./rides/make-resarvation
 //= require ./rides/compute-rental
+//= require particles.min
 
 //= require_tree .
 

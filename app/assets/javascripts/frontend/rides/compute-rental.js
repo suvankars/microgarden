@@ -277,6 +277,11 @@ setScheduleID = function(id){
 }
 
 bookSlot = function(schedule){
+  debugger;
+  toogle_reservation_form(); 
+  //Enable the booking button
+  document.getElementById("book_my_bike").disabled = false;
+
   console.log(schedule)
   //Get start time and event end time from Moment object
   // and ploting 'em in the booking view

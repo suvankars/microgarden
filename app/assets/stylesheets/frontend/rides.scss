@@ -177,3 +177,19 @@ label.info {
 #spacer-5 {
     padding: 10px;
 }
+
+.disabled_events{
+    background-color: rgba(229, 229, 229, 0.4);
+    color: #FFFFFF;
+    cursor: default;
+}
+
+
+#particles-js {
+    width: 100%;
+    padding: 0px;
+    top: 0px;
+    z-index: 99;
+    position: absolute;
+    /*background-color: #EDE9E8;*/
+}
