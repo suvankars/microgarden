@@ -32,6 +32,11 @@ computeDuration = function(startTime, endTime){
   if (weeks > 0){
     days = days%7
   }
+  //any duration greter than 3 hr will be trated as a day
+  if (hours > 3){
+    days = days + 1
+    hours = 0
+  }
 
   return {
         hours: hours,
@@ -46,7 +51,7 @@ Number.prototype.humaines = function(value, unit){
 };
 
 showDuration = function(startTime, endTime){
-  //"Format" is a ggod libreary but I dont need that so i write mt own
+  //"Format" is a good libreary but I dont need that so i write mt own
   var duration = computeDuration(startTime, endTime);   
   var hours = duration.hours;
   var days = duration.days;
@@ -148,7 +153,7 @@ computeRental = function(startTime, endTime, slotType){
   //var duration = getRentDuration(startTime, endTime);
   //var duration = moment.duration(startTime.diff(endTime));
 
-  //debugger;
+  debugger;
   var breakups= { };
   switch (slotType){
     case "morning_slot":
@@ -198,6 +203,27 @@ computeRental = function(startTime, endTime, slotType){
         rent: rent
       };
       break;
+
+    case "weekly_slot":
+    debugger;
+      /*var duration = computeDuration(startTime, endTime);*/
+      // As per rule daily_slot time is 6 am to 8 pm
+      // of the same day
+      // So we will consider duration as 1 day, if slot type is "daily_slot"
+      // 14 hour duration is considered as 1 day  
+      var duration = 1 //week
+
+      var rate = parseInt( document.getElementById("weekly").getElementsByTagName('h1')[0].textContent );
+      var rent = duration*rate;
+
+      var slotType = breakups.all_day = {};
+      slotType.day =  {
+        duration: duration.humaines(duration, "week"), 
+        unit: "week",
+        rate: rate,
+        rent: rent
+      };
+      break;  
     case "custom":
       breakups.custom= {};
       var rent_breakups = onDemandDuration(startTime, endTime, breakups);
@@ -228,7 +254,7 @@ showRentalBreakup = function(rentBreakups){
   function rentalBreakup(rentType, index, array) {
     var rentDetails = rentBreakups[slotType][rentType];
     //2 Weeks @ $70.00 / week $1200
-    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit  + rentDetails.rent + '</br>'
+    msg = msg + rentDetails.duration + ' @ Rs.' + rentDetails.rate + ' /' + rentDetails.unit + ' = ' + rentDetails.rent + '</br>'
   }
 
     rentTypes.forEach(rentalBreakup);
@@ -263,8 +289,10 @@ getSlotType = function (schedule){
   var slotType;
   if (schedule.morning_ride){
     slotType = "morning_slot";
-  } else if (schedule.weekly_ride){
+  } else if (schedule.evening_ride){
     slotType = "evening_slot";
+  } else if (schedule.weekly_ride){
+    slotType = "weekly_slot";
   } else if (schedule.daily_ride){
     slotType = "daily_slot";
   } else {
