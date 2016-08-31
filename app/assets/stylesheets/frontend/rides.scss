@@ -152,7 +152,7 @@ label.info {
 .ride-caption {
     position: absolute;
     width: 100%;
-    bottom: 180px;
+    bottom: 1px;
     left: 0px;
     margin: 0 auto;
     color: white;
@@ -167,12 +167,17 @@ label.info {
 }
 
 #event_form {
-    
     padding: 10px;
     padding-left: 15px; 
     padding-right: 0px;
-    
 }    
+
+
+#modify_form {
+    padding: 10px;
+    padding-left: 15px; 
+    padding-right: 0px;
+}
 
 #spacer-5 {
     padding: 10px;
@@ -193,3 +198,43 @@ label.info {
     position: absolute;
     /*background-color: #EDE9E8;*/
 }
+
+#location_filter{
+    margin-left: 40px;
+    margin-right: 10px;
+    margin-top: 12px;
+}
+
+.no-padding{
+    margin-left: 0px; 
+    margin-right: 0px; 
+}
+
+
+.sk-rotating-plane {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  margin: 40px auto;
+  -webkit-animation: sk-rotatePlane 1.2s infinite ease-in-out;
+          animation: sk-rotatePlane 1.2s infinite ease-in-out; }
+@-webkit-keyframes sk-rotatePlane {
+  0% {
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+            transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
+  50% {
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+            transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
+  100% {
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); } }
+@keyframes sk-rotatePlane {
+  0% {
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+            transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
+  50% {
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+            transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
+  100% {
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); } }

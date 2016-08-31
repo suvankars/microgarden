@@ -1,3 +1,4 @@
+
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -25,7 +26,7 @@
 //= require moment
 //= require filterrific/filterrific-jquery
 //= require chardinjs
-//= require bootstrap-datetimepicker
+//= require bootstrap-datepicker
 
 //= require  fullcalendar
 //= require contact_me
@@ -35,6 +36,7 @@
 //= require jquery.easing.min
 //= require bootstrap-multiselect
 //= require ./rides/address-auto-complete
+//= require ./rides/toggle_filter
 //= require ./rides/reposition-markers
 //= require ./rides/make-resarvation
 //= require ./rides/compute-rental

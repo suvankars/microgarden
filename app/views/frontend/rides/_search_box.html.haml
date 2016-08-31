@@ -1,0 +1,21 @@
+= form_tag rides_path, :method => :get, :class => 'search', :style => 'elm_styledo', :id => 'location-date-filter' do
+  .row
+    .input-group.input-group-lg
+      %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
+      .row
+        .col-md-6.search-box
+          .input-group.input-group-lg.col-md-12
+            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
+        .col-md-3.search-box
+          .input-group.input-group-lg.col-md-12.date{'data-provide'=>'datepicker'}
+            = text_field_tag :pick_up, params[:pick_up], :class => 'form-control', :placeholder => 'Pick up'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar
+        .col-md-3.search-box
+          .input-group.input-group-lg.col-md-12.date{'data-provide'=>'datepicker'}
+            = text_field_tag :drop_of, params[:drop_of], :class => 'form-control', :placeholder => 'Drop off'
+            %span.input-group-addon.search-box-icon
+              %span.glyphicon.glyphicon-calendar        
+      
+      %span.input-group-btn
+        = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'

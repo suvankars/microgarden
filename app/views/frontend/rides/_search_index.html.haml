@@ -1,25 +1,9 @@
-/ Header
-/= javascript_include_tag "https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"
-/ particles.js container
-
-/ particles.js lib - https://github.com/VincentGarreau/particles.js
-
-
-
 %header
   .container
-    %section#particles-js
-      %canvas.particles-js-canvas-el{:height => "365", :style => "width: 100%; height: 100%;", :width => "1351"}
     .intro-text
       .intro-lead-in= t(:tag_line)
       .intro-heading= t(:caption)
-      = form_tag rides_path, :method => :get , :id => 'search_box', :class => 'search', :style => 'elm_styledo' do
-        .row
-          .input-group.input-group-lg
-            %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
-            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
-            %span.input-group-btn
-              = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
+      = render 'frontend/rides/search_box'
             
 
 :javascript

@@ -16,6 +16,7 @@
  *= require_self
  *= require freelancer
  *= require bootstrap-multiselect
+ *= require bootstrap-datepicker
  */
 
 
@@ -56,6 +57,14 @@ form {
       padding:15px;
       padding-left: 40px;
       padding-right: 40px;
+      background-color: white;
+}
+
+#location-date-filter{
+      overflow:inherit;
+      padding: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
       background-color: white;
 }
 
@@ -189,9 +198,6 @@ form#new_user {
   top: 0px;
 }
 
-.search-box {
-    margin-left: -6px;
-}
 
 .col-md-3.search-box {
   margin-left: -16px;
@@ -256,3 +262,10 @@ hr.star-light.registration {
   height: 400px;
   max-height: 400px;
 }
+
+.datepicker {
+    padding: 2px;
+}
+.datepicker-days {
+  background-color: whitesmoke;
+}        

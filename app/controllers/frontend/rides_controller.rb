@@ -72,6 +72,16 @@ class Frontend::RidesController < FrontendController
       marker.lat ride.latitude
       marker.lng ride.longitude
       marker.json({:id => ride.id })
+      #marker.picture({
+      #   "url": ActionController::Base.helpers.image_path('marker.png'),
+      #   "width":  50,
+      #   "height": 50
+      # })
+      marker.title   "i'm the title"
+      
+      marker.infowindow render_to_string(:partial => "frontend/rides/map_infowindow", :locals => { :ride => ride})
+      #marker.infowindow (render_to_string :partial => "frontend/rides/map_infowindow", :locals => {ride})
+      #marker.infowindow "hello!"
     end
     
     if request.xhr?
@@ -112,7 +122,7 @@ class Frontend::RidesController < FrontendController
   end
   
   def show
-    @filterrific = initialize_filterrific(
+     @filterrific = initialize_filterrific(
       @ride,
       params[:filterrific],
        select_options: {
@@ -169,7 +179,7 @@ class Frontend::RidesController < FrontendController
     @ride.user = current_user
     respond_to do |format|
       if @ride.save
-        format.html { redirect_to show_ride_ride_path(@ride), notice: 'Listing was successfully created.' }
+        format.html { redirect_to calendar_ride_path(@ride), notice: 'Listing was successfully created.' }
         format.json { render :show, status: :created, location: @ride }
       else
         format.html { render :new }
@@ -230,8 +240,11 @@ class Frontend::RidesController < FrontendController
     end
 
     def filter_by_date(rides, pick_up, drop_of)
-      pick_up_time = DateTime.strptime(pick_up, "%m/%d/%Y %H:%M %P")
-      drop_of_time = DateTime.strptime(drop_of, "%m/%d/%Y %H:%M %P")
+      #pick_up_time = DateTime.strptime(pick_up, "%m/%d/%Y %H:%M %P")
+      #drop_of_time = DateTime.strptime(drop_of, "%m/%d/%Y %H:%M %P")
+      # Now only date, no time
+      pick_up_time = DateTime.strptime(pick_up, "%m/%d/%Y")
+      drop_of_time = DateTime.strptime(drop_of, "%m/%d/%Y")
       scheduled_ride = []
       rides.each do |ride|
           scheduled_ride.push(ride) if ride.avilable?(pick_up_time, drop_of_time)

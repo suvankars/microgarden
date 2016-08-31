@@ -81,3 +81,8 @@ section {
   @extend .btn-primary;
   @extend .btn-xs;
 }
+
+.container, main {
+  padding-left: 0px; 
+  padding-right: 0px;
+}

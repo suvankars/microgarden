@@ -1,0 +1,24 @@
+.row.no-padding.map-ride-details{:onclick => "toggle_spiner()"} 
+  .col-xs-12.col-sm-4.col-md-4.col-lg-12.no-padding
+    #ride-ride
+      = link_to ride_path(ride)do
+        .ride-details
+          .ride-image
+            - if !ride.images.nil?
+              - image = ride.images.first
+              - image_name = image['public_id']#.to_s + image.first['format'].to_s
+              = cl_image_tag(image_name, :width => 250, :height => 200 )
+              .col-xs-12.col-sm-4.col-md-4.col-lg-12
+                .ride-caption
+                  .caption-text
+                    %span.h3= truncate(ride.title, length: 20)
+                    .ride-list.truncate
+                      %span= '₹' + ride.daily_rental.to_s + '/day'
+                      %span= '₹' + ride.morning_rental.to_s + '/slot'
+                      /%span= '₹' + ride.weekly_rental.to_s + '/week'
+                      %span= ride.subcategory.name
+                      /%span= "#{ride.rider_height.to_i.to_feet} ( #{ride.rider_height.to_i.to_cm })"
+                      %span= ride.frame_size.to_i.to_cm
+
+:javascript
+

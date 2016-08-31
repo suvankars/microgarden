@@ -1,130 +1,35 @@
 - model_class = Ride
-%p
-%p
-%hr
-/TBD: refactor, Same form as search_index except 'id' field
-/ = form_tag rides_path, :method => :get, remote: true do
-/   %p
-/     = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...'
-/     = submit_tag "Search Near", :name => nil, :id=>"ajax" 
+.row
+  .col-xs-12.col-sm-12.col-md-12.col-lg-12#location_filter
+    .col-xs-12.col-sm-12.col-md-12.col-lg-9
+      = render 'frontend/rides/search_box'
+    .col-xs-12.col-sm-12.col-md-12.col-lg-3
+      %button.btn.btn-default.btn-lg#advanced_filter_button
+        %span.glyphicon.glyphicon-filter{"aria-hidden" => "true"} Advanced Filter
 
-= form_tag rides_path, :method => :get, :class => 'search', :style => 'elm_styledo' do
-  .row
-    .input-group.input-group-lg
-      %span#basic-addon1.input-group-addon.glyphicon.glyphicon-search
-      .row
-        .col-md-6.search-box
-          .input-group.input-group-lg.col-md-12
-            = text_field_tag :search, params[:search], :id => "gmaps-input-address", :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...', class: "form-control", :aria_describedby => "basic-addon1"
-        .col-md-3.search-box
-          #datetimepicker6.input-group.input-group-lg.col-md-12.date
-            = text_field_tag :pick_up, params[:pick_up], :class => 'form-control'
-            %span.input-group-addon.search-box-icon
-              %span.glyphicon.glyphicon-calendar
-        .col-md-3.search-box
-          #datetimepicker7.input-group.input-group-lg.col-md-12.date
-            = text_field_tag :drop_of, params[:drop_of], :class => 'form-control'
-            %span.input-group-addon.search-box-icon
-              %span.glyphicon.glyphicon-calendar        
-      / %span
-      /   .row
-      /     .col-md-2
-      /       .col-xs-12.col-sm-8.col-md-8.col-lg-8
-      /         .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-      /           %label Pickup
-      /           = text_field_tag :with_created_at_gte, params[:with_created_at_gte], :class => 'js-datepicker form-control'
-      /     .col-md-2  
-      /       .col-xs-12.col-sm-8.col-md-8.col-lg-8
-      /         .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-      /           %label Drop
-      /           = text_field_tag :with_created_at_lt, params[:with_created_at_lt], :class => 'js-datepicker form-control'
-      %span.input-group-btn
-        = submit_tag "Search Near", :name => nil , :class => 'btn btn-lg btn-success'
-//Adding filter
-= form_for_filterrific @filterrific do |f|
-  .row
-    .col-md-3
-      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by bike type' }
-        %label Bicycle Type
-        = f.select(:with_subcategory_id, @filterrific.select_options[:with_subcategory_id],{ include_blank: '- Any -' })
-
-    .col-md-3
-      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Rider Height' }
-        %label Rider Height
-        = f.select(:with_rider_height, @filterrific.select_options[:with_rider_height], { include_blank: '- Any -' } )
-
-    .col-md-3
-      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Frame Size' }
-        %label Frame Size
-        = f.select(:with_frame_size, @filterrific.select_options[:with_frame_size], { include_blank: '- Any -' } )
-    .col-md-3
-      .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Search by Rental' }
-        %label Rental
-        = f.select(:with_morning_rental_lt, @filterrific.select_options[:with_morning_rental_lt], { include_blank: '- Any -' } )         
-                        
-    / .row
-    /   .col-md-2
-    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
-    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-    /         %label Pickup
-    /         = f.text_field :with_created_at_gte,
-    /          :class => 'js-datepicker form-control'
-    /   .col-md-2  
-    /     .col-xs-12.col-sm-8.col-md-8.col-lg-8
-    /       .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-    /         %label Drop
-    /         = f.text_field :with_created_at_lt,
-    /                      :class => 'js-datepicker form-control'
-    / .col-md-2
-    /   .form-group.chardin_box{ :'data-position' => 'top', :'data-intro' => 'Filter by rideed date.' }
-    /     %label Listed after
-    /     = f.text_field :with_created_at_gte,
-    /                    :class => 'js-datepicker form-control'
-
-  .well.well-small
-    .pull-right{ :'data-position' => 'bottom', :'data-intro' => 'Reset the filter settings to defaults.' }
-      = link_to "Reset filters", reset_filterrific_url, :class => 'btn btn-default btn-sm'
-    .chardin_box{ :'data-position' => 'bottom', :'data-intro' => 'Spinner indicates update.' }
-      = render_filterrific_spinner
-/ #results
-/   = render :partial => 'students/ride',
-/            :locals => { :students => @students }
-
+.sk-rotating-plane#ride_spinner{:style => "display:none;"}
 
 .row.no-gutter
   .col-lg-6.col-md-6.col-sm-6.hidden-xs
     #map
-
+  .col-xs-12.col-sm-12.col-md-12.col-lg-6#advance_filter{:style => "display:none;"}    
+    = render 'frontend/rides/advance_filter'
   .col-lg-6.col-md-6.col-sm-6
     #main-list
       %ul.media-list
         #ride
         #rides
-          = render :partial => 'ride', :locals => { :rides => @rides } 
+          = render :partial => 'ride', :locals => {:rides => @rides} 
         
 
-/ #results
-/   = render :partial => 'students/ride',
-/            :locals => { :students => @students }
-
-/ = link_to t('.new', :default => t("helpers.links.new")), new_ride_path, :class => 'btn btn-primary'
-
-/ Downloaded those js files and kept under assets folder
-
-/ %script{:src => "//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"}
-/ %script{:src => "//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js", :type => "text/javascript"}
-
-
-
 :javascript
-
   $(document).ready(function(){
-  var handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    markers = handler.addMarkers(#{raw @hash.to_json });
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-  });
+    var handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(#{raw @hash.to_json });
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
   });
 
   //For date picker in the filter 
@@ -134,16 +39,17 @@
     $('body').chardinJs('start');
   });
   
-
-  $(function () {
-      $('#datetimepicker6').datetimepicker();
-      $('#datetimepicker7').datetimepicker({
-          useCurrent: false //Important! See issue #1075
-      });
-      $("#datetimepicker6").on("dp.change", function (e) {
-          $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-      });
-      $("#datetimepicker7").on("dp.change", function (e) {
-          $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-      });
-  });  
+  //Instated of date time now we are only going to take date 
+  // to filter out;
+  /* $(function () {
+  /     $('#datetimepicker6').datetimepicker();
+  /     $('#datetimepicker7').datetimepicker({
+  /         useCurrent: false //Important! See issue #1075
+  /     });
+  /     $("#datetimepicker6").on("dp.change", function (e) {
+  /         $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+  /     });
+  /     $("#datetimepicker7").on("dp.change", function (e) {
+  /         $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+  /     });
+  / }); */ 

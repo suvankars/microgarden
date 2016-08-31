@@ -358,6 +358,24 @@ $(document).ready(function(){
 
 });
 
+//To Show the spinner in rides page
+var toggle_spiner ;
+toggle_spiner =  function(){
+  debugger;
+    var div = document.getElementById('ride_spinner');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+    }
+    else {
+        div.style.display = 'block';
+    }
+};
+//Temporary fix To the spinner 
+$(window).on('popstate', function(event) {
+    var div = document.getElementById('ride_spinner');
+    div.style.display = 'none';
+});
+
 
 //To Show the map in the ride details page
 // $(document).ready(function() {
