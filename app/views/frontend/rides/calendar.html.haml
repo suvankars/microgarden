@@ -1,9 +1,8 @@
 /This content_tag is used to get ride_id in calendar view. Hidden tag might do the job
 
 .content
-  .container.padded-top
+  .container.padded-top-small
     .row
-      
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         .panel.panel-success
           .panel-heading
@@ -13,7 +12,7 @@
                   Availability Calendar
               .col-xs-12.col-sm-12.col-md-4.col-lg-4
                 .panel-action  
-                  = link_to t('.back', :default => t("helpers.links.back")), show_ride_ride_path(@ride), :class => 'btn btn-info'
+                  = link_to t('ride.show_ride'), show_ride_ride_path(@ride), :class => 'btn btn-info'
           .panel-body
             %p=t(:calendar_description)
             = content_tag "div", id: "ride-info", data: {ride: { ride_id: @ride.id} } do

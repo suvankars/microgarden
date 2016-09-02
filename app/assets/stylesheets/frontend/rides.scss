@@ -48,14 +48,16 @@ textarea#ride_description {
   overflow: hidden;
 }
 
-.timer_box{
-    margin: 35px 24px;
+.timer_box {
+    margin: 26px 10px;
+    margin-top: 14px;
+    margin-bottom: 5px;
     display: inline-block;
     padding: 20px 12px 0px 12px;
     text-align: center;
-    width: 130px;
+    width: 117px;
     border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, .6);
+    border: 4px solid rgba(255, 255, 255, 0.6);
 }
 .timer_box h1{
     font-size: 48px;
@@ -159,11 +161,22 @@ label.info {
     z-index: 412;
 }
 
+.ride-details-caption {
+    background-color: rgba(0, 0, 0, 0.38);
+    /* position: absolute; */
+    width: 100%;
+    bottom: 1px;
+    left: 0px;
+    margin: 0 auto;
+    color: white;
+    z-index: 412;
+}
+
 .caption-text {
   margin-left: 6px;
 }
 #display_ride{
-  padding: 1px;
+  padding-bottom: 15px;
 }
 
 #event_form {
@@ -237,4 +250,47 @@ label.info {
             transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
   100% {
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); } }
+            transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); 
+  } 
+}
+
+
+.padded-top-small{
+  padding-top: 10px;
+}
+#no-padding{
+  padding: 0px;
+}
+.no-left-pad {
+    padding-left: 0;
+}
+.no-right-pad {
+    padding-left: 0;
+}
+.card{
+  height: 120px;
+  transition: linear all .2s;
+  top: 0;
+  color: #1a1a1a;
+  position: relative;
+  padding: 10px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.spacer{
+  padding: 20px;
+}
+
+.card-img{
+  height: 100px;
+}
+
+.hr-small{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}   
+
+.ride-list-image {
+  height: inherit;
+}   

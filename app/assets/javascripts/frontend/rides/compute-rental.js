@@ -159,7 +159,7 @@ computeRental = function(startTime, endTime, slotType){
     case "morning_slot":
       var duration = computeDuration(startTime, endTime);
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = duration.hours*rate;
+      var rent = 1 * rate //(1 slot = 3 hr)//duration.hours*rate;
       //breakups += "Morning Slot @" + rate + "/slot"
       
       var slotType = breakups.morning_slot = {} ;
@@ -174,7 +174,7 @@ computeRental = function(startTime, endTime, slotType){
       var duration = computeDuration(startTime, endTime);
 
       var rate = parseInt( document.getElementById("slot").getElementsByTagName('h1')[0].textContent );
-      var rent = duration.hours*rate;
+      var rent = 1 * rate // ( 3 hr duration = 1 slot)duration.hours*rate;
       var slotType = breakups.evening_slot = {};
       slotType.slot =  {
         duration: duration.hours.humaines(duration.hours, "hour"), 

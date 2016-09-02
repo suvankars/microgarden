@@ -1,33 +1,63 @@
--rides.each_slice(2) do |ride_pair|
-  .row
-    .col-xs-12.col-sm-4.col-md-4.col-lg-12
-      -ride_pair.each do |ride|
-        .col-xs-12.col-sm-4.col-md-4.col-lg-6#display_ride
-          #ride-ride
-            %li[ride]
-              = link_to ride_path(ride), :remote => true do
-                .ride-details
-                  .ride-image
-                    - if !ride.images.nil?
-                      - image = ride.images.first
-                      - image_name = image['public_id']#.to_s + image.first['format'].to_s
-                      = cl_image_tag(image_name, :width => 322, :height => 350 )
-                      .col-xs-12.col-sm-4.col-md-4.col-lg-12
-                        .ride-caption
-                          .caption-text
-                            %span.h3= truncate(ride.title, length: 20)
-                            .ride-list.truncate
-                              %span= '₹' + ride.daily_rental.to_s + '/day'
-                              %span= '₹' + ride.morning_rental.to_s + '/slot'
-                              /%span= '₹' + ride.weekly_rental.to_s + '/week'
-                              %span= ride.subcategory.name
-                              /%span= "#{ride.rider_height.to_i.to_feet} ( #{ride.rider_height.to_i.to_cm })"
-                              %span= ride.frame_size.to_i.to_cm
-                         
-        
-          / .ride-body
-          /   %h4.media-heading= ride.title
-          /   %p= ride.description
-      
+-rides.each do |ride|
+  = link_to ride_path(ride) do
+    .col-xs-6.col-sm-12.col-md-12.col-lg-12#display_ride
+      .card.normal
+        .container-fluid
+          .row
+            .col-sm-6.no-left-pad
+              .card-img
+                - if !ride.images.nil?
+                  - image = ride.images.first
+                  - image_name = image['public_id']#.to_s + image.first['format'].to_s
+                  = cl_image_tag(image_name, :width => 180, :height => 130, :class => "ride-list-image img-rounded pull-xs-left")
+            .col-sm-6.no-left-pad
+              .card-top
+                .container-fluid
+                  %span.h4= truncate(ride.title, length: 20)  
+                  %p
+                  .row
+                    .col-sm-4.no-pad
+                      %span= ride.subcategory.name
+                    .col-sm-4.no-pad
+                      %span= ride.frame_size.to_i.to_cm
+              %hr.hr-small       
+              .card-bottom 
+                .container-fluid
+                  .row
+                    .col-sm-4.no-pad
+                      %span= '₹' + ride.daily_rental.to_i.to_s + '/day'
+                    .col-sm-4.no-pad
+                      %span= '₹' + ride.morning_rental.to_i.to_s + '/slot'
+                    .col-sm-4.no-pad   
+                      %span= '₹' + ride.weekly_rental.to_i.to_s + '/week'            
+                    
+  
+
+/ #ride-ride
+/   %li[ride]
+/     = link_to ride_path(ride), :remote => true do
+/       .ride-details
+/         .ride-image
+/           - if !ride.images.nil?
+/             - image = ride.images.first
+/             - image_name = image['public_id']#.to_s + image.first['format'].to_s
+/             = cl_image_tag(image_name, :width => 322, :height => 350 )
+/             .col-xs-12.col-sm-4.col-md-4.col-lg-12
+/               .ride-caption
+/                 .caption-text
+/                   %span.h3= truncate(ride.title, length: 20)
+/                   .ride-list.truncate
+/                     %span= '₹' + ride.daily_rental.to_s + '/day'
+/                     %span= '₹' + ride.morning_rental.to_s + '/slot'
+/                     /%span= '₹' + ride.weekly_rental.to_s + '/week'
+/                     %span= ride.subcategory.name
+/                     /%span= "#{ride.rider_height.to_i.to_feet} ( #{ride.rider_height.to_i.to_cm })"
+/                     %span= ride.frame_size.to_i.to_cm
+               
+
+/ .ride-body
+/   %h4.media-heading= ride.title
+/   %p= ride.description
+
 
 

@@ -2,98 +2,6 @@
 / .jumbotron.jumbotron-md-cover.img-fluid#myCarousel.carousel.slide{"data-ride" => "carousel", "data-interval"=>"false"}
 %br
 = carousel_for(@ride.image_urls)
-.ride-caption
-  .container
-    .row
-      .col-xs-12.col-sm-8.col-md-8.col-lg-8
-        %h2#ride_title= word_wrap(@ride.title, line_width:20)
-        .hidden-xs.ride-details
-          %h3= @ride.subcategory.name
-          .measurement
-            %p
-              = model_class.human_attribute_name(:rider_height)
-              = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
-            %p
-              = model_class.human_attribute_name(:frame_size)
-              = @ride.frame_size.to_i.to_cm
-             
-      .col-xs-12.col-sm-4.col-md-4.col-lg-4
-        #timer{"data-animated" => "FadeIn"}
-          %p#message
-          / #hours.timer_box
-          /   %h1= @ride.hourly_rental.to_i
-          /   %p= "/Hour"
-          #days.timer_box
-            %h1= @ride.daily_rental.to_i 
-            %p= "/Day"
-          #slot.timer_box
-            %h1= @ride.morning_rental.to_i 
-            %p= "/Slot"
-          #weekly.timer_box 
-            %h1= @ride.weekly_rental.to_i 
-            %p= "/Week"     
-/   / Indicators
-/   %ol.carousel-indicators
-/     %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
-/     -@ride.images.each_with_index do |img|
-/       %li{"data-slide-to" => "1", "data-target" => "#myCarousel"}
-/       %li{"data-slide-to" => "2", "data-target" => "#myCarousel"}
-/       %li{"data-slide-to" => "3", "data-target" => "#myCarousel"}
-/   / Wrapper for slides
-/   .carousel-inner{:role => "listbox"}
-/     .item.active
-/       %img{:alt => "Chania", :src => @cover_image}
-/       .carousel-caption
-/         %h3 Chania
-/         %p The atmosphere in Chania has a touch of Florence and Venice.
-/     -@ride.images.each do |img|   
-/       .item
-/         %img{:alt => "Chania", :src => img[:url]}
-/         .carousel-caption
-/           %h3 Chania
-/           %p The atmosphere in Chania has a touch of Florence and Venice.
-    
-/   / Left and right controls
-/   %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
-/     %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
-/     %span.sr-only Previous
-/   %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
-/     %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
-/     %span.sr-only Next
-
-/ .jumbotron.jumbotron-md-cover.img-fluid{:style => "background-image: url(#{@cover_image});"}
-/   .ride-caption
-/     .container
-/       .row
-/         .col-xs-12.col-sm-8.col-md-8.col-lg-8
-/           %h2#ride_title= word_wrap(@ride.title, line_width:20)
-/           .hidden-xs.ride-details
-/             %h3= @ride.subcategory.name
-/             .measurement
-/               %p
-/                 = model_class.human_attribute_name(:rider_height)
-/                 = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
-/               %p
-/                 = model_class.human_attribute_name(:frame_size)
-/                 = @ride.frame_size.to_i.to_cm
-               
-/         .col-xs-12.col-sm-4.col-md-4.col-lg-4
-/           #timer{"data-animated" => "FadeIn"}
-/             %p#message
-/             / #hours.timer_box
-/             /   %h1= @ride.hourly_rental.to_i
-/             /   %p= "/Hour"
-/             #days.timer_box
-/               %h1= @ride.daily_rental.to_i 
-/               %p= "/Day"
-/             #slot.timer_box
-/               %h1= @ride.morning_rental.to_i 
-/               %p= "/Slot"
-/             #weekly.timer_box 
-/               %h1= @ride.weekly_rental.to_i 
-/               %p= "/Week"     
-  
-
 .container
   .row
     .col-xs-12.col-sm-12.col-md-12.col-lg-12#ride_details_panel
@@ -103,12 +11,45 @@
           #exTab2
             %ul.nav.nav-tabs
               %li.active
-                %a{"data-toggle" => "tab", :href => "#1"} Description
+                %a{"data-toggle" => "tab", :href => "#1"} Rental
+              %li.active
+                %a{"data-toggle" => "tab", :href => "#2"} Description
               %li
-                %a{"data-toggle" => "tab", :href => "#2"} Specification
+                %a{"data-toggle" => "tab", :href => "#3"} Specification
             .tab-content
               #1.tab-pane.active
-                %p= simple_format(@ride.description)
+                .ride-details-caption
+                  .container
+                    .row.no-padding
+                      .col-xs-12.col-sm-8.col-md-8.col-lg-3
+                        %h3#ride_title= word_wrap(@ride.title, line_width:20)
+                        .hidden-xs.ride-details
+                          %h4= @ride.subcategory.name
+                          .measurement
+                            %p
+                              = model_class.human_attribute_name(:rider_height)
+                              = "#{@ride.rider_height.to_i.to_feet} ( #{@ride.rider_height.to_i.to_cm })"
+                            %p
+                              = model_class.human_attribute_name(:frame_size)
+                              = @ride.frame_size.to_i.to_cm
+                             
+                      .col-xs-12.col-sm-4.col-md-4.col-lg-5
+                        #timer{"data-animated" => "FadeIn"}
+                          %p#message
+                          / #hours.timer_box
+                          /   %h1= @ride.hourly_rental.to_i
+                          /   %p= "/Hour"
+                          #days.timer_box
+                            %h1= @ride.daily_rental.to_i 
+                            %p= "/Day"
+                          #slot.timer_box
+                            %h1= @ride.morning_rental.to_i 
+                            %p= "/Slot"
+                          #weekly.timer_box 
+                            %h1= @ride.weekly_rental.to_i 
+                            %p= "/Week"
+
+                
                 %hr
                 %p.large Free extras included in this ride
                 .row
@@ -117,8 +58,11 @@
                       %p.large#extra-stuff
                         %kbd
                           =extra
-                %hr           
+                %hr
               #2.tab-pane
+                .col-xs-12.col-sm-12.col-md-4.col-lg-12
+                  %p= simple_format(@ride.description)
+              #3.tab-pane
                 %ul.list-group
                   %li.list-group-item
                     %p
@@ -342,28 +286,3 @@
   });
   
   
-
-  $(function () {
-      window.onbeforeunload = function (e) {
-  var e = e || window.event;
-  var msg = "Do you really want to leave this page?"
-
-  // For IE and Firefox
-  if (e) {
-      e.returnValue = msg;
-  }
-
-  // For Safari / chrome
-  return msg;
-  }; 
-      $('#datetimepicker6').datetimepicker();
-      $('#datetimepicker7').datetimepicker({
-          useCurrent: false //Important! See issue #1075
-      });
-      $("#datetimepicker6").on("dp.change", function (e) {
-          $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-      });
-      $("#datetimepicker7").on("dp.change", function (e) {
-          $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-      });
-  });
