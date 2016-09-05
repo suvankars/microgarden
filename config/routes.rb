@@ -8,28 +8,30 @@ Rails.application.routes.draw do
   get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
-    resources :riders do
-      get 'my_rider_profile', :on => :collection
-    end
-    resources :owners do
-      get 'my_owner_profile', :on => :collection
-    end
+    # resources :riders do
+    #   get 'my_rider_profile', :on => :collection
+    # end
+    # resources :owners do
+    #   get 'my_owner_profile', :on => :collection
+    # end
+    # resources :notifications
+    # resources :calendars, :only => [:index ]
+    # resources :rides do
+    #   get 'search_index', :on => :collection 
+    #   get 'get_rides', :on => :collection
+    #   get 'my_ride_offers', :on => :collection
+    #    member do
+    #     get 'show_ride'
+    #     get 'calendar'
+    #   end
+    #   resources :schedules do
+    #     get 'home', :on => :collection
+    #     patch 'resize', on: :member
+    #     patch 'move', on: :member
+    #   end
+    # end
     resources :notifications
-    resources :calendars, :only => [:index ]
-    resources :rides do
-      get 'search_index', :on => :collection 
-      get 'get_rides', :on => :collection
-      get 'my_ride_offers', :on => :collection
-       member do
-        get 'show_ride'
-        get 'calendar'
-      end
-      resources :schedules do
-        get 'home', :on => :collection
-        patch 'resize', on: :member
-        patch 'move', on: :member
-      end
-    end
+    resources :rates, :only => [:index]
   end
 
 
