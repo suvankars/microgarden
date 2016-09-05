@@ -3,8 +3,8 @@
     .row
       .col-lg-12.text-center
         %h2  Tell Us 
-        %p If there is no bicycle available in your area send us your location and we will notify you; promise :)
-        %hr.star-primary
+        %p What we could do better in your area and we will get back to you; promise :)
+        .glyphicon.glyphicon-leaf
         #contact_status
     .row
       .col-lg-8.col-lg-offset-2
@@ -25,7 +25,7 @@
 :javascript
 $(document).ready(function() {
   $("#new_notification").on("ajax:success", function(e, data, status, xhr) {
-    $("#new_notification").append(xhr.responseText);
+   /* $("#new_notification").append(xhr.responseText);*/
   }).on("ajax:error", function(e, xhr, status, error) {
     $("#new_notification").append("<p>ERROR</p>");
   });

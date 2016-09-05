@@ -30,8 +30,8 @@ en:
         create: "Create Owner Profile"
         update: "Update Owner Profile"
           
-  caption: "Re discover the joy of riding ..." 
-  tag_line: "Rent a bicycle from someone like you" 
+  caption: "Connect the disconnect..." 
+  tag_line: "Charkhaa, a new way of crop management" 
   variants:
       no_products: 'No products to display.'
       variants_of: 'Variants of %{product}'
