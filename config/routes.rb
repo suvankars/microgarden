@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'users/index'
 
   #get '/rides/:id/calendar' => 'frontend/rides#calendar'
-  get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
+  #get '/rides/:id/get_rides' => 'frontend/rides#get_rides'
   
   scope module: 'frontend' do
     # resources :riders do
@@ -31,14 +31,14 @@ Rails.application.routes.draw do
     #   end
     # end
     resources :notifications
-    resources :rates, :only => [:index]
+    resources :products, :only => [:index]
   end
 
 
   namespace :frontend do
     get 'home/index'
-    get 'reservations/index'
-    post 'reservations/create'
+    #get 'reservations/index'
+    #post 'reservations/create'
   end
 
   #devise_for :users
@@ -102,7 +102,6 @@ Rails.application.routes.draw do
             get 'remove_all'
           end
         end
-
       end
 
       resources :categories do

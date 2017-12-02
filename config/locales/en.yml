@@ -30,8 +30,8 @@ en:
         create: "Create Owner Profile"
         update: "Update Owner Profile"
           
-  caption: "Connect the disconnect..." 
-  tag_line: "Charkhaa, a new way of crop management" 
+  caption: "Produce locally Fresher, Healthier, super foods ..." 
+  tag_line: "Microgarden" 
   variants:
       no_products: 'No products to display.'
       variants_of: 'Variants of %{product}'
